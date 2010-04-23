@@ -1,0 +1,110 @@
+= Osheet
+* Osheet is under development and should not be relied upon just yet.  Thx. *
+
+== Description
+
+Pronounced 'oh-sheeeeeet!' - this gem is a DSL wrapper to the spreadsheet gem that hopefully doesn't totally suck.
+
+== Installation
+
+    $ gem install osheet
+
+== Basic Usage
+
+    require 'osheet'
+    
+    Osheet::Workbook do |wb|
+      wb.worksheet "Users" do |sheet|
+        sheet.column
+        sheet.column
+        sheet.column
+  
+        sheet.row do |r|
+          r.cell "Characters on \"Friends\"", :colspan => 3
+        end
+        sheet.row do |r|
+          r.cell "man, that show was awesome...", :colspan => 3
+        end
+
+        sheet.row do |r|
+          r.cell "", :colspan => 1
+          r.cell 'only concern yourself with these columns', :colspan => 2
+        end
+  
+        sheet.row do |r|
+          r.cell "id"
+          r.cell "name"
+          r.cell "description"
+        end
+  
+        sheet.row do |r|
+          r.cell 1
+          r.cell "Ross"
+          r.cell "the nerdy one, brother of Monica, dated Rachel, likes impregnating women, loves Rachel"
+        end
+  
+        sheet.row do |r|
+          r.cell 2
+          r.cell "Rachel"
+          r.cell "the hot one, dated and impregnated by Ross, generally spoiled"
+        end
+  
+        sheet.row do |r|
+          r.cell 3
+          r.cell "Chandler"
+          r.cell "the responsible one, husband of Monica, insecure about everything"
+        end
+  
+        sheet.row do |r|
+          r.cell 4
+          r.cell "Monica"
+          r.cell "the smart one, wife of Chandler, sister of Ross, OCD about cleaning and controlling"
+        end
+  
+        sheet.row do |r|
+          r.cell 5
+          r.cell "Joey"
+          r.cell "the man-whore one, best-friend of Chandler, generally dumb, can't sustain sitcom on own"
+        end
+  
+        sheet.row do |r|
+          r.cell 6
+          r.cell "Phoebe"
+          r.cell "the crazy one, ex-roomate of Rachel, blond, free, weird, yet awesome"
+        end
+  
+      end
+    end
+
+== Links
+
+* *GitHub*
+  - http://github.com/kelredd/osheet
+
+* *Spreadsheet*
+  - http://spreadsheet.rubyforge.org/
+
+== License
+
+Copyright (c) 2010 and beyond, Kelly Redding (mailto:kelly@kelredd.com)
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
