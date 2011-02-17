@@ -1,13 +1,3 @@
 module Osheet
-  module Version
-    
-    MAJOR = 0
-    MINOR = 1
-    TINY  = 0
-    
-    def self.to_s # :nodoc:
-      [MAJOR, MINOR, TINY].join('.')
-    end
-    
-  end
+  VERSION = "0.1.0"
 end
