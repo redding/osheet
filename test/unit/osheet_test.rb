@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/../test_helper"
+require "test/helper"
 
 class OsheetTest < Test::Unit::TestCase
 
@@ -8,7 +8,7 @@ class OsheetTest < Test::Unit::TestCase
       assert_equal "application/vnd.ms-excel", Osheet::MIME_TYPE
       assert_equal "Excel", Osheet::SPREADSHEET_TYPE
     end
-    
+
   end
 
 end

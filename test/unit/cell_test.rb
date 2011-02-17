@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/../test_helper"
+require "test/helper"
 
 class Osheet::CellTest < Test::Unit::TestCase
 
