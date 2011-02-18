@@ -1,18 +1,17 @@
 require "test/helper"
+require "osheet/dsl/base"
 
-class Osheet::BaseTest < Test::Unit::TestCase
+class Osheet::Dsl::BaseTest < Test::Unit::TestCase
 
-  context "Osheet::Base" do
-    subject { Osheet::Base.new }
+  context "Osheet::Dsl::Base" do
+    subject { Osheet::Dsl::Base.new }
+    before { Osheet::Dsl::Base.defaults }
 
-    should_have_instance_methods :class, :style
-
-    should "default class to nil" do
-      assert subject.class.nil?
-    end
+    should_have_instance_method :style
+    should_have_class_method :defaults
 
     should "default style to nil" do
-      assert subject.style.nil?
+      assert_equal nil, subject.style_value
     end
 
   end
