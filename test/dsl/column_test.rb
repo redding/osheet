@@ -1,9 +1,10 @@
 require "test/helper"
+require "osheet/dsl/column"
 
-class Osheet::ColumnTest < Test::Unit::TestCase
+class Osheet::Dsl::ColumnTest < Test::Unit::TestCase
 
-  context "Osheet::Column" do
-    subject { Osheet::Column.new }
+  context "Osheet::Dsl::Column" do
+    subject { Osheet::Dsl::Column.new }
 
     should "initialize" do
       assert subject

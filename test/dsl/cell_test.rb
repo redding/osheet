@@ -1,46 +1,38 @@
 require "test/helper"
+require 'osheet/dsl/cell'
 
-class Osheet::CellTest < Test::Unit::TestCase
+class Osheet::Dsl::CellTest < Test::Unit::TestCase
 
-  context "Osheet::Cell" do
-    subject { Osheet::Cell.new }
+  context "Osheet::Dsl::Cell" do
+    subject { Osheet::Dsl::Cell.new }
 
     should_have_instance_methods :data, :format, :colspan, :rowspan
-    
-    should "default it's data to ''" do
-      assert_equal '', subject.data
+
+    should "set it's defaults" do
+      assert_equal nil, subject.data_value
+      assert_equal nil, subject.format_value
+      assert_equal 1,   subject.colspan_value
+      assert_equal 1,   subject.rowspan_value
     end
-    
-    # TODO: text format as default?
-    should "default it's format to nil" do
-      assert subject.format.nil?
-    end
-    
-    should "default it's rowspan to 1" do
-      assert 1, subject.rowspan
-    end
-    
-    should "default it's colspan to 1" do
-      assert 1, subject.colspan
-    end
-    
+
     context "that has attributes" do
       subject do
-        Osheet::Cell.new "More Poo", {
-          :format => :text,
-          :colspan => 4,
-          :rowspan => 2
-        }
+        Osheet::Dsl::Cell.new do
+          format  :text
+          colspan 4
+          rowspan 2
+          data    "Poo"
+        end
       end
 
-      should "should know it's attributes" do
-        assert_equal "More Poo", subject.data
-        assert_equal :text, subject.format
-        assert_equal 4, subject.colspan
-        assert_equal 2, subject.rowspan
+      should "should set them correctly" do
+        assert_equal "Poo", subject.data_value
+        assert_equal :text, subject.format_value
+        assert_equal 4,     subject.colspan_value
+        assert_equal 2,     subject.rowspan_value
       end
-    end    
-    
+    end
+
   end
 
 end

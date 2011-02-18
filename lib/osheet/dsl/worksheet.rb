@@ -1,6 +1,6 @@
-require 'osheet/base'
-require 'osheet/column'
-require 'osheet/row'
+require 'osheet/dsl/base'
+require 'osheet/dsl/column'
+require 'osheet/dsl/row'
 
 module Osheet::Dsl
   class Worksheet < Osheet::Dsl::Base

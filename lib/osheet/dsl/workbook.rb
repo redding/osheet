@@ -1,5 +1,5 @@
-require 'osheet/base'
-require 'osheet/worksheet'
+require 'osheet/dsl/base'
+require 'osheet/dsl/worksheet'
 
 module Osheet::Dsl
   class Workbook < Osheet::Dsl::Base

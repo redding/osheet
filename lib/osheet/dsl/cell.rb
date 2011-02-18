@@ -1,4 +1,4 @@
-require 'osheet/base'
+require 'osheet/dsl/base'
 
 module Osheet::Dsl
   class Cell < Osheet::Dsl::Base
@@ -10,10 +10,10 @@ module Osheet::Dsl
       :colspan => 1
     )
 
-    def data(data); @data = data; end
-    def format(format); @format = format; end
-    def rowspan(rowspan); @rowspan = rowspan; end
-    def colspan(colspan); @colspan = colspan; end
+    def data(value); self.data_value = value; end
+    def format(value); self.format_value = value; end
+    def rowspan(value); self.rowspan_value = value; end
+    def colspan(value); self.colspan_value = value; end
 
   end
 end
