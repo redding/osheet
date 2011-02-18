@@ -9,7 +9,7 @@ class Osheet::Dsl::RowTest < Test::Unit::TestCase
     should_have_instance_method :cell
 
     should "set it's defaults" do
-      assert_equal [], subject.cells_set
+      assert_equal [], subject.send(:instance_variable_get, "@cells")
     end
 
     context "that has some cells" do
@@ -30,11 +30,13 @@ class Osheet::Dsl::RowTest < Test::Unit::TestCase
       end
 
       should "should initialize and add them to it's collection" do
-        cells = subject.cells_set
+        cells = subject.send(:instance_variable_get, "@cells")
         assert !cells.empty?
         assert_equal 2, cells.size
-        assert_equal :text, cells.first.format_value
-        assert_equal :numeric, cells.last.format_value
+        assert_kind_of Osheet::Dsl::Cell, cells.first
+        assert_equal :text, cells.first.send(:instance_variable_get, "@format")
+        assert_kind_of Osheet::Dsl::Cell, cells.last
+        assert_equal :numeric, cells.last.send(:instance_variable_get, "@format")
       end
     end
 

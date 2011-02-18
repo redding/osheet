@@ -1,19 +1,20 @@
 require 'osheet/dsl/base'
 
 module Osheet::Dsl
-  class Cell < Osheet::Dsl::Base
+  class Cell
 
-    defaults(
-      :data => nil,
-      :format => nil,
-      :rowspan => 1,
-      :colspan => 1
-    )
+    def initialize(&block)
+      @data = nil
+      @format = nil
+      @rowspan = 1
+      @colspan = 1
+      instance_eval(&block) if block
+    end
 
-    def data(value); self.data_value = value; end
-    def format(value); self.format_value = value; end
-    def rowspan(value); self.rowspan_value = value; end
-    def colspan(value); self.colspan_value = value; end
+    def data(value); @data = value; end
+    def format(value); @format = value; end
+    def rowspan(value); @rowspan = value; end
+    def colspan(value); @colspan = value; end
 
   end
 end

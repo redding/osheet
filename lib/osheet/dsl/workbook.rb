@@ -2,12 +2,13 @@ require 'osheet/dsl/base'
 require 'osheet/dsl/worksheet'
 
 module Osheet::Dsl
-  class Workbook < Osheet::Dsl::Base
+  class Workbook
 
-    defaults(
-      :title => nil,
-      :worksheets => []
-    )
+    def initialize(&block)
+      @title = nil
+      @worksheets = []
+      instance_eval(&block) if block
+    end
 
     def title(title); @title = title; end
     def worksheet(&block); @worksheets << Worksheet.new(&block); end

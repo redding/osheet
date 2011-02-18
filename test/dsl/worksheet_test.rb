@@ -9,9 +9,9 @@ class Osheet::Dsl::WorksheetTest < Test::Unit::TestCase
     should_have_instance_methods :name, :column, :row
 
     should "set it's defaults" do
-      assert_equal nil, subject.name_value
-      assert_equal [], subject.columns_set
-      assert_equal [], subject.rows_set
+      assert_equal nil, subject.send(:instance_variable_get, "@name")
+      assert_equal [], subject.send(:instance_variable_get, "@columns")
+      assert_equal [], subject.send(:instance_variable_get, "@rows")
     end
 
     context "that has some columns and rows" do
@@ -36,13 +36,13 @@ class Osheet::Dsl::WorksheetTest < Test::Unit::TestCase
 
       should "set it's columns" do
         columns = subject.send(:instance_variable_get, "@columns")
-        assert_eqaul 1, columns.size
+        assert_equal 1, columns.size
         assert_kind_of Osheet::Dsl::Column, columns.first
       end
 
       should "set it's rows" do
         rows = subject.send(:instance_variable_get, "@rows")
-        assert_eqaul 1, rows.size
+        assert_equal 1, rows.size
         assert_kind_of Osheet::Dsl::Row, rows.first
       end
     end

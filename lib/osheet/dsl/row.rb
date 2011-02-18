@@ -2,13 +2,14 @@ require 'osheet/dsl/base'
 require 'osheet/dsl/cell'
 
 module Osheet::Dsl
-  class Row < Osheet::Dsl::Base
+  class Row
 
-    defaults(
-      :cells => []
-    )
+    def initialize(&block)
+      @cells = []
+      instance_eval(&block) if block
+    end
 
-    def cell(&block); self.cells_set << Cell.new(&block); end
+    def cell(&block); @cells << Cell.new(&block); end
 
   end
 end

@@ -9,10 +9,10 @@ class Osheet::Dsl::CellTest < Test::Unit::TestCase
     should_have_instance_methods :data, :format, :colspan, :rowspan
 
     should "set it's defaults" do
-      assert_equal nil, subject.data_value
-      assert_equal nil, subject.format_value
-      assert_equal 1,   subject.colspan_value
-      assert_equal 1,   subject.rowspan_value
+      assert_equal nil, subject.send(:instance_variable_get, "@data")
+      assert_equal nil, subject.send(:instance_variable_get, "@format")
+      assert_equal 1,   subject.send(:instance_variable_get, "@colspan")
+      assert_equal 1,   subject.send(:instance_variable_get, "@rowspan")
     end
 
     context "that has attributes" do
@@ -26,10 +26,10 @@ class Osheet::Dsl::CellTest < Test::Unit::TestCase
       end
 
       should "should set them correctly" do
-        assert_equal "Poo", subject.data_value
-        assert_equal :text, subject.format_value
-        assert_equal 4,     subject.colspan_value
-        assert_equal 2,     subject.rowspan_value
+        assert_equal "Poo", subject.send(:instance_variable_get, "@data")
+        assert_equal :text, subject.send(:instance_variable_get, "@format")
+        assert_equal 4,     subject.send(:instance_variable_get, "@colspan")
+        assert_equal 2,     subject.send(:instance_variable_get, "@rowspan")
       end
     end
 
