@@ -1,14 +1,14 @@
 require 'osheet/base'
 require 'osheet/cell'
 
-module Osheet
-  class Row < Osheet::Base
-    
-    has :cells => "Cell"
+module Osheet::Dsl
+  class Row < Osheet::Dsl::Base
 
-    def initialize(args={})
-      super(args)
-    end
-    
+    defaults(
+      :cells => []
+    )
+
+    def cell(&block); @cells << Cell.new(&block); end
+
   end
 end

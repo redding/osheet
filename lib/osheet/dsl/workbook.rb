@@ -1,23 +1,16 @@
 require 'osheet/base'
 require 'osheet/worksheet'
 
-# === Usage
-#
-#   require 'osheet'
-#
-#   Osheet::Workbook.configure do |book|
-#     book.worksheet ...
-#     book.worksheet ...
-#   end
+module Osheet::Dsl
+  class Workbook < Osheet::Dsl::Base
 
-module Osheet
-  class Workbook < Osheet::Base
-    
-    has :worksheets => "Worksheet"
+    defaults(
+      :title => nil,
+      :worksheets => []
+    )
 
-    def initialize(args={})
-      super(args)
-    end
-    
+    def title(title); @title = title; end
+    def worksheet(&block); @worksheets << Worksheet.new(&block); end
+
   end
 end

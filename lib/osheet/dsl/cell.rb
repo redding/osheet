@@ -1,18 +1,19 @@
 require 'osheet/base'
 
-module Osheet
-  class Cell < Osheet::Base
+module Osheet::Dsl
+  class Cell < Osheet::Dsl::Base
 
-    attr_accessor :data
+    defaults(
+      :data => nil,
+      :format => nil,
+      :rowspan => 1,
+      :colspan => 1
+    )
 
-    ATTRS = [:format, :rowspan, :colspan]
-    ATTRS.each {|a| attr_accessor a}
+    def data(data); @data = data; end
+    def format(format); @format = format; end
+    def rowspan(rowspan); @rowspan = rowspan; end
+    def colspan(colspan); @colspan = colspan; end
 
-    def initialize(data='', args={})
-      @data = data
-      set_args ATTRS, args
-      super(args)
-    end
-    
   end
 end

@@ -1,11 +1,7 @@
 require 'osheet/base'
 
-module Osheet
-  class Column < Osheet::Base
-    
-    def initialize(args={})
-      super(args)
-    end
-    
+module Osheet::Dsl
+  class Column < Osheet::Dsl::Base
+
   end
 end

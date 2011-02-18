@@ -2,28 +2,18 @@ require 'osheet/base'
 require 'osheet/column'
 require 'osheet/row'
 
-# === Usage
-#
-#   require 'osheet'
-#
-#   Osheet::Workbook.configure do |book|
-#     book.worksheet ...
-#     book.worksheet ...
-#   end
+module Osheet::Dsl
+  class Worksheet < Osheet::Dsl::Base
 
-module Osheet
-  class Worksheet < Osheet::Base
-    
-    attr_reader :name
+    defaults(
+      :name => nil,
+      :rows => [],
+      :columns => []
+    )
 
-    needs :workbook
-    has :columns => "Column"
-    has :rows => "Row"
+    def name(name); @name = name; end
+    def row(&block); @rows << Row.new(&block); end
+    def column(&block); @columns << Column.new(&block); end
 
-    def initialize(name=nil, args={})
-      @name = name
-      super(args)
-    end
-    
   end
 end
