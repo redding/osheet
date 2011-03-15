@@ -11,7 +11,7 @@ GEM
       json
     leftright (0.9.0)
     shoulda (2.11.3)
-    test-belt (0.2.0)
+    test-belt (0.2.1)
       kelredd-useful (~> 0.4.0)
       leftright (~> 0.9.0)
       shoulda (~> 2.11)
@@ -22,4 +22,4 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.0)
   osheet!
-  test-belt (= 0.2.0)
+  test-belt (= 0.2.1)
