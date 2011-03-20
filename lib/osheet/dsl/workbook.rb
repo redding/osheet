@@ -1,4 +1,3 @@
-require 'osheet/dsl/base'
 require 'osheet/dsl/worksheet'
 
 module Osheet::Dsl

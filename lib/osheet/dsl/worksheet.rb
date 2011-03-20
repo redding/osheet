@@ -1,4 +1,3 @@
-require 'osheet/dsl/base'
 require 'osheet/dsl/column'
 require 'osheet/dsl/row'
 
