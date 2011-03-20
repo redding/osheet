@@ -9,72 +9,114 @@ Pronounced 'oh-sheeeeeet!' - this gem is a DSL wrapper to the spreadsheet gem th
 
     $ gem install osheet
 
-== Basic Usage
+== Basic Example
+    fields = ['Sex', 'Age', 'Height', 'Weight']
+    data = {
+      'Tom' => ['M', 52, "6'2\"", '220 lbs.'],
+      'Dick' => ['M', 33, "6'5\"", '243 lbs.'],
+      'Sally' => ['F', 29, "5'3\"", '132 lbs.']
+    }
+
+    # this will dump the above data to a single-sheet workbook w/ no styles
 
     require 'osheet'
-    
-    Osheet::Workbook do |wb|
-      wb.worksheet "Users" do |sheet|
-        sheet.column
-        sheet.column
-        sheet.column
-  
-        sheet.row do |r|
-          r.cell "Characters on \"Friends\"", :colspan => 3
-        end
-        sheet.row do |r|
-          r.cell "man, that show was awesome...", :colspan => 3
+
+    wb = Osheet::Workbook.new {
+      worksheet {
+        name "Stats: #{fields.join(', ')}"
+
+        column {
+          width 200
+          meta(
+            :label => "Name"
+          )
+        }
+        fields.each_with_index do |f, i|
+          column {
+            width 80
+            meta(
+              :label => f.to_s,
+              :index => i
+            )
+          }
         end
 
-        sheet.row do |r|
-          r.cell "", :colspan => 1
-          r.cell 'only concern yourself with these columns', :colspan => 2
+        row {     # title row
+          cell {
+            colspan columns.count
+            data worksheet.name
+          }
+        }
+        row {     # empty row
+          cell {
+            colspan columns.count
+            data ''
+          }
+        }
+        row {     # header row
+          columns.each do |column|
+            cell {
+              data column.meta[:label]
+            }
+          end
+        }
+
+        data.each do |name, stats|
+          row {   # data row
+            cell {
+              data name
+            }
+            stats.each do |stat|
+              cell {
+                data stat
+              }
+            end
+          }
         end
-  
-        sheet.row do |r|
-          r.cell "id"
-          r.cell "name"
-          r.cell "description"
-        end
-  
-        sheet.row do |r|
-          r.cell 1
-          r.cell "Ross"
-          r.cell "the nerdy one, brother of Monica, dated Rachel, likes impregnating women, loves Rachel"
-        end
-  
-        sheet.row do |r|
-          r.cell 2
-          r.cell "Rachel"
-          r.cell "the hot one, dated and impregnated by Ross, generally spoiled"
-        end
-  
-        sheet.row do |r|
-          r.cell 3
-          r.cell "Chandler"
-          r.cell "the responsible one, husband of Monica, insecure about everything"
-        end
-  
-        sheet.row do |r|
-          r.cell 4
-          r.cell "Monica"
-          r.cell "the smart one, wife of Chandler, sister of Ross, OCD about cleaning and controlling"
-        end
-  
-        sheet.row do |r|
-          r.cell 5
-          r.cell "Joey"
-          r.cell "the man-whore one, best-friend of Chandler, generally dumb, can't sustain sitcom on own"
-        end
-  
-        sheet.row do |r|
-          r.cell 6
-          r.cell "Phoebe"
-          r.cell "the crazy one, ex-roomate of Rachel, blond, free, weird, yet awesome"
-        end
-  
-      end
-    end
+      } # worksheet
+    } # workbook
+
+    file = wb.to_file('stats')  # => <spreadsheet written to ./stats.xls>
+
+== API
+
+These classes define how a spreadsheet is constructed.
+=== Osheet::Workbook
+* *style(selector, &block)*: define a style for the workbook
+* *template(for, named, &block)*: define a named template for the workbook
+* *worksheet(&block)*: define a worksheet for the workbook
+# TODO: *use(module)*
+# TODO: *use(file)*
+
+=== Osheet::Worksheet
+* *name(value)*: set the name for this worksheet
+* *column(&block)*: define a column for the worksheet
+* *column(:template, *args): define a templated column for the worksheet
+* *row(&block)*: define a row for the worksheet
+* *row(:template, *args): define a templated row for the worksheet
+
+=== Xmlss::Column
+* *style_class(value)*: (string) the styles selectors should match against
+* *width(value)*: (numeric) set the explicit width for the column
+* *auto_fit_width(value)*: (bool) set whether the column should auto fit it's width, default: false
+* *hidden(value)*: (bool) set whether the column is hidden, default: false
+* *meta(data)*: (anything) a generic way to associate meta-data with the column
+
+=== Xmlss::Row
+* *style_class(value)*: (string) the styles selectors should match against
+* *height(value)*: (numeric) set the explicit width for the column
+* *auto_fit_height(value)*: (bool) set whether the row should auto fit it's height, default: false
+* *hidden(value)*: (bool) set whether the row is hidden, default: false
+* *cell(&block)*: define a cell for the row
+* *cell(:template, *args): define a templated cell for the row
+
+=== Xmlss::Cell
+* *style_class(value)*: (string) the styles selectors should match against
+* *data(value)*: (anything), data the cell should contain.  if not a string, numeric, or date, will cast data to sting using 'inspect'.
+* format(value)*: (anything), optional, custom formatting string for the data (see driver documentation for options)
+* *colspan(value)*: (int) the number of columns (l to r) the cell should occupy, default: 1
+* *rowspan(value)*: (int) the number of rows (t to b) the cell should occupy, default: 1
+* *href(value)*: (string) set the href the data should link to
 
 == Links
 
