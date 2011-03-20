@@ -1,6 +1,6 @@
-require 'osheet/dsl/cell'
+require 'osheet/cell'
 
-module Osheet::Dsl
+module Osheet
   class Row
 
     def initialize(&block)

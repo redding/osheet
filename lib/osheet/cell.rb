@@ -1,4 +1,4 @@
-module Osheet::Dsl
+module Osheet
   class Cell
 
     def initialize(&block)

@@ -1,10 +1,10 @@
 require "test/helper"
-require 'osheet/dsl/workbook'
+require 'osheet/workbook'
 
-class Osheet::Dsl::WorkbookTest < Test::Unit::TestCase
+class Osheet::WorkbookTest < Test::Unit::TestCase
 
-  context "Osheet::Dsl::Workbook" do
-    subject { Osheet::Dsl::Workbook.new }
+  context "Osheet::Workbook" do
+    subject { Osheet::Workbook.new }
 
     should_have_instance_methods :title, :worksheet
 
@@ -15,7 +15,7 @@ class Osheet::Dsl::WorkbookTest < Test::Unit::TestCase
 
     context "that has some columns and rows" do
       subject do
-        Osheet::Dsl::Workbook.new do
+        Osheet::Workbook.new do
           title "The Poo"
 
           worksheet do
@@ -40,7 +40,7 @@ class Osheet::Dsl::WorkbookTest < Test::Unit::TestCase
       should "set it's worksheets" do
         worksheets = subject.send(:instance_variable_get, "@worksheets")
         assert_equal 1, worksheets.size
-        assert_kind_of Osheet::Dsl::Worksheet, worksheets.first
+        assert_kind_of Osheet::Worksheet, worksheets.first
       end
     end
 

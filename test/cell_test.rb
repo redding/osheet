@@ -1,10 +1,10 @@
 require "test/helper"
-require 'osheet/dsl/cell'
+require 'osheet/cell'
 
-class Osheet::Dsl::CellTest < Test::Unit::TestCase
+class Osheet::CellTest < Test::Unit::TestCase
 
-  context "Osheet::Dsl::Cell" do
-    subject { Osheet::Dsl::Cell.new }
+  context "Osheet::Cell" do
+    subject { Osheet::Cell.new }
 
     should_have_instance_methods :data, :format, :colspan, :rowspan
 
@@ -17,7 +17,7 @@ class Osheet::Dsl::CellTest < Test::Unit::TestCase
 
     context "that has attributes" do
       subject do
-        Osheet::Dsl::Cell.new do
+        Osheet::Cell.new do
           format  :text
           colspan 4
           rowspan 2

@@ -1,6 +1,6 @@
-require 'osheet/dsl/worksheet'
+require 'osheet/worksheet'
 
-module Osheet::Dsl
+module Osheet
   class Workbook
 
     def initialize(&block)

@@ -1,10 +1,10 @@
 require "test/helper"
-require 'osheet/dsl/row'
+require 'osheet/row'
 
-class Osheet::Dsl::RowTest < Test::Unit::TestCase
+class Osheet::RowTest < Test::Unit::TestCase
 
-  context "Osheet::Dsl::Row" do
-    subject { Osheet::Dsl::Row.new }
+  context "Osheet::Row" do
+    subject { Osheet::Row.new }
 
     should_have_instance_method :cell
 
@@ -14,7 +14,7 @@ class Osheet::Dsl::RowTest < Test::Unit::TestCase
 
     context "that has some cells" do
       subject do
-        Osheet::Dsl::Row.new do
+        Osheet::Row.new do
           cell do
             format  :text
             colspan 4
@@ -33,9 +33,9 @@ class Osheet::Dsl::RowTest < Test::Unit::TestCase
         cells = subject.send(:instance_variable_get, "@cells")
         assert !cells.empty?
         assert_equal 2, cells.size
-        assert_kind_of Osheet::Dsl::Cell, cells.first
+        assert_kind_of Osheet::Cell, cells.first
         assert_equal :text, cells.first.send(:instance_variable_get, "@format")
-        assert_kind_of Osheet::Dsl::Cell, cells.last
+        assert_kind_of Osheet::Cell, cells.last
         assert_equal :numeric, cells.last.send(:instance_variable_get, "@format")
       end
     end

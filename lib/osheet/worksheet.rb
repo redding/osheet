@@ -1,7 +1,7 @@
-require 'osheet/dsl/column'
-require 'osheet/dsl/row'
+require 'osheet/column'
+require 'osheet/row'
 
-module Osheet::Dsl
+module Osheet
   class Worksheet
 
     def initialize(&block)
