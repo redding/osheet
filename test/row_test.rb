@@ -9,7 +9,6 @@ class Osheet::RowTest < Test::Unit::TestCase
     should_have_instance_method :height
     should_have_instance_methods :autofit, :autofit?
     should_have_instance_methods :hidden, :hidden?
-    should_have_instance_method :cell
 
     should_be_a_styled_element(Osheet::Row)
 
@@ -20,7 +19,7 @@ class Osheet::RowTest < Test::Unit::TestCase
       assert_equal false, subject.send(:instance_variable_get, "@hidden")
       assert !subject.hidden?
 
-      assert_equal [], subject.send(:instance_variable_get, "@cells")
+      assert_equal [], subject.cells
     end
 
     context "that has attributes" do
@@ -47,6 +46,11 @@ class Osheet::RowTest < Test::Unit::TestCase
       assert_kind_of ::TrueClass, rw.send(:instance_variable_get, "@hidden")
     end
 
+
+
+    should_have_reader :cells
+    should_have_instance_method :cell
+
     context "that has some cells" do
       subject do
         Osheet::Row.new do
@@ -61,6 +65,7 @@ class Osheet::RowTest < Test::Unit::TestCase
 
       should "should initialize and add them to it's collection" do
         cells = subject.send(:instance_variable_get, "@cells")
+        assert_equal cells, subject.cells
         assert !cells.empty?
         assert_equal 2, cells.size
         assert_kind_of Osheet::Cell, cells.first
