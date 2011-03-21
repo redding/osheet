@@ -7,10 +7,10 @@ class Osheet::CellTest < Test::Unit::TestCase
     subject { Osheet::Cell.new }
 
     should_have_instance_methods :data, :format, :colspan, :rowspan, :href
-    should_have_instance_methods :style_class
+
+    should_be_a_styled_element(Osheet::Cell)
 
     should "set it's defaults" do
-      assert_equal '', subject.send(:instance_variable_get, "@style_class")
       assert_equal nil, subject.send(:instance_variable_get, "@data")
       assert_equal nil, subject.send(:instance_variable_get, "@format")
       assert_equal 1,   subject.send(:instance_variable_get, "@colspan")
@@ -21,7 +21,6 @@ class Osheet::CellTest < Test::Unit::TestCase
     context "that has attributes" do
       subject do
         Osheet::Cell.new do
-          style_class "awesome thing"
           data    "Poo"
           format  '@'
           colspan 4
@@ -31,7 +30,6 @@ class Osheet::CellTest < Test::Unit::TestCase
       end
 
       should "should set them correctly" do
-        assert_equal "awesome thing", subject.send(:instance_variable_get, "@style_class")
         assert_equal "Poo", subject.send(:instance_variable_get, "@data")
         assert_equal '@', subject.send(:instance_variable_get, "@format")
         assert_equal 4,     subject.send(:instance_variable_get, "@colspan")

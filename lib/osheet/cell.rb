@@ -2,9 +2,9 @@ require 'date'
 
 module Osheet
   class Cell
+    include StyledElement
 
     def initialize(&block)
-      @style_class = ''
       @data = nil
       @format = nil
       @rowspan = 1
@@ -12,8 +12,6 @@ module Osheet
       @href = nil
       instance_eval(&block) if block
     end
-
-    def style_class(value); @style_class = value; end
 
     def data(value)
       @data = case value
