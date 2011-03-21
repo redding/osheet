@@ -23,7 +23,15 @@ module Osheet
         value.inspect.to_s
       end
     end
-    def format(value); @format = value; end
+
+    def format(value)
+      @format = if value.respond_to?('to_s')
+        value.to_s
+      else
+        value.inspect.to_s
+      end
+    end
+
     def rowspan(value); @rowspan = value; end
     def colspan(value); @colspan = value; end
     def href(value); @href = value; end

@@ -6,24 +6,54 @@ class Osheet::RowTest < Test::Unit::TestCase
   context "Osheet::Row" do
     subject { Osheet::Row.new }
 
+    should_have_instance_method :height
+    should_have_instance_methods :autofit, :autofit?
+    should_have_instance_methods :hidden, :hidden?
     should_have_instance_method :cell
 
+    should_be_a_styled_element(Osheet::Row)
+
     should "set it's defaults" do
+      assert_equal nil, subject.send(:instance_variable_get, "@height")
+      assert_equal false, subject.send(:instance_variable_get, "@autofit")
+      assert !subject.autofit?
+      assert_equal false, subject.send(:instance_variable_get, "@hidden")
+      assert !subject.hidden?
+
       assert_equal [], subject.send(:instance_variable_get, "@cells")
+    end
+
+    context "that has attributes" do
+      subject do
+        Osheet::Row.new do
+          height  100
+          autofit true
+          hidden true
+        end
+      end
+
+      should "should set them correctly" do
+        assert_equal 100, subject.send(:instance_variable_get, "@height")
+        assert_equal true, subject.send(:instance_variable_get, "@autofit")
+        assert subject.autofit?
+        assert_equal true, subject.send(:instance_variable_get, "@hidden")
+        assert subject.hidden?
+      end
+    end
+
+    should "cast autofit and hidden to bool" do
+      rw = Osheet::Row.new { autofit :true; hidden 'false'}
+      assert_kind_of ::TrueClass, rw.send(:instance_variable_get, "@autofit")
+      assert_kind_of ::TrueClass, rw.send(:instance_variable_get, "@hidden")
     end
 
     context "that has some cells" do
       subject do
         Osheet::Row.new do
           cell do
-            format  :text
-            colspan 4
-            rowspan 2
-            data    "Poo"
+            data "name"
           end
-
           cell do
-            format  :numeric
             data    1
           end
         end
@@ -34,9 +64,9 @@ class Osheet::RowTest < Test::Unit::TestCase
         assert !cells.empty?
         assert_equal 2, cells.size
         assert_kind_of Osheet::Cell, cells.first
-        assert_equal :text, cells.first.send(:instance_variable_get, "@format")
+        assert_equal "name", cells.first.send(:instance_variable_get, "@data")
         assert_kind_of Osheet::Cell, cells.last
-        assert_equal :numeric, cells.last.send(:instance_variable_get, "@format")
+        assert_equal 1, cells.last.send(:instance_variable_get, "@data")
       end
     end
 

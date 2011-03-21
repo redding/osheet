@@ -39,28 +39,33 @@ class Osheet::CellTest < Test::Unit::TestCase
     end
 
     should "type cast data strings/symbols" do
-      cell = Osheet::Cell.new{data "a string"}
-      assert_kind_of ::String, cell.send(:instance_variable_get, "@data")
-      cell = Osheet::Cell.new{data :awesome}
-      assert_kind_of ::String, cell.send(:instance_variable_get, "@data")
+      ['a string', :symbol].each do |thing|
+        cell = Osheet::Cell.new{data thing}
+        assert_kind_of ::String, cell.send(:instance_variable_get, "@data")
+      end
     end
     should "type cast data dates" do
       cell = Osheet::Cell.new{data Date.today}
       assert_kind_of ::Date, cell.send(:instance_variable_get, "@data")
     end
     should "type cast data numerics" do
-      cell = Osheet::Cell.new{data 1}
-      assert_kind_of ::Numeric, cell.send(:instance_variable_get, "@data")
-      cell = Osheet::Cell.new{data 1.0}
-      assert_kind_of ::Numeric, cell.send(:instance_variable_get, "@data")
+      [1, 1.0].each do |thing|
+        cell = Osheet::Cell.new{data thing}
+        assert_kind_of ::Numeric, cell.send(:instance_variable_get, "@data")
+      end
     end
     should "type cast all other data to string" do
-      cell = Osheet::Cell.new{data Osheet}
-      assert_kind_of String, cell.send(:instance_variable_get, "@data")
-      cell = Osheet::Cell.new{data([:a, 'Aye'])}
-      assert_kind_of String, cell.send(:instance_variable_get, "@data")
-      cell = Osheet::Cell.new{data({:a => 'Aye'})}
-      assert_kind_of String, cell.send(:instance_variable_get, "@data")
+      [Osheet, [:a, 'Aye'], {:a => 'Aye'}].each do |thing|
+        cell = Osheet::Cell.new{data thing}
+        assert_kind_of ::String, cell.send(:instance_variable_get, "@data")
+      end
+    end
+
+    should "type cast the format to always be a string" do
+      ['string', 1, 1.0, true, :symbol, [1,2], {:a => 'qye'}, Osheet].each do |thing|
+        cell = Osheet::Cell.new{format thing}
+        assert_kind_of ::String, cell.send(:instance_variable_get, "@format")
+      end
     end
 
 
