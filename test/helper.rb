@@ -24,5 +24,27 @@ class Test::Unit::TestCase
       end
     end
 
+    def should_hm(klass, collection, item_klass)
+      should_have_reader collection
+      should_have_instance_method collection.to_s.sub(/s$/, '')
+
+      subject do
+      end
+
+      should "should initialize and add them to it's collection" do
+        singular = collection.to_s.sub(/s$/, '')
+        thing = klass.new do
+          self.send(singular) {}
+        end
+
+        items = thing.send(:instance_variable_get, "@cells")
+        assert_equal items, thing.send(collection)
+        assert !items.empty?
+        assert_equal 1, items.size
+        assert_kind_of item_klass, items.first
+      end
+
+    end
+
   end
 end

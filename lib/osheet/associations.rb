@@ -31,11 +31,11 @@ module Osheet::Associations
         if instance_variable_get("@#{plural}").nil?
           instance_variable_set("@#{plural}", [])
         end
-        if block
+        if !args.empty? # TODO: if !workbook.template(:key)
+          # TODO: add by template
+        elsif !block.nil?
           # add by block
           instance_variable_get("@#{plural}") << klass.new(&block)
-        else
-          # TODO: add by template
         end
       end
 
