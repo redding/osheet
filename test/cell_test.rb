@@ -7,9 +7,9 @@ module Osheet
     context "Osheet::Cell" do
       subject { Cell.new }
 
-      should_have_instance_methods :data, :format, :colspan, :rowspan, :href
-
       should_be_a_styled_element(Cell)
+
+      should_have_instance_methods :data, :format, :colspan, :rowspan, :href
 
       should "set it's defaults" do
         assert_equal nil, subject.send(:instance_variable_get, "@data")

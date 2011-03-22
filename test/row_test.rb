@@ -7,11 +7,11 @@ module Osheet
     context "Osheet::Row" do
       subject { Row.new }
 
+      should_be_a_styled_element(Row)
+
       should_have_instance_method :height
       should_have_instance_methods :autofit, :autofit?
       should_have_instance_methods :hidden, :hidden?
-
-      should_be_a_styled_element(Row)
 
       should "set it's defaults" do
         assert_equal nil, subject.send(:instance_variable_get, "@height")
