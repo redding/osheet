@@ -18,23 +18,15 @@ module Osheet
         assert_equal ['worksheet', 'column', 'row', 'cell'], Template::ELEMENTS
       end
 
-      should_have_accessors :element, :name, :block
+      should_have_accessors :element, :name
+
+      should "be a Proc" do
+        assert_kind_of ::Proc, subject
+      end
 
       should "convert the element and name args to string and store off" do
         assert_equal 'column', subject.element
         assert_equal 'thing', subject.name
-      end
-      should "store off block" do
-        assert !subject.block.nil?
-      end
-
-      should "verify that a block is passed in" do
-        assert_raises ArgumentError do
-          Template.new('worksheet', :poo)
-        end
-        assert_nothing_raised do
-          Template.new('worksheet', :poo) {}
-        end
       end
 
       should "verify the element argument" do

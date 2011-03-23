@@ -1,5 +1,5 @@
 module Osheet
-  class Template
+  class Template < ::Proc
 
     # this class is essentially a way to define a named initializer
     #  block and associate that with an osheet element
@@ -8,26 +8,23 @@ module Osheet
 
     ELEMENTS = ['worksheet', 'column', 'row', 'cell']
 
-    attr_accessor :element, :name, :block
+    attr_accessor :element, :name
 
-    def initialize(element, name, &block)
-      verify(element, name, block)
+    def initialize(element, name)
+      verify(element, name)
       @element = element.to_s
       @name = name.to_s
-      @block = block
+      super()
     end
 
     private
 
-    def verify(element, name, block)
+    def verify(element, name)
       unless element.respond_to?(:to_s) && ELEMENTS.include?(element.to_s)
         raise ArgumentError, "you can only define a template for #{ELEMENTS.join(', ')} elements."
       end
       unless name.kind_of?(::String) || name.kind_of?(::Symbol)
         raise ArgumentError, "please use a string or symbol for the template name."
-      end
-      if block.nil?
-        raise ArgumentError, "you must provide a block for this template to use."
       end
     end
 
