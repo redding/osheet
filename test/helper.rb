@@ -16,10 +16,21 @@ class Test::Unit::TestCase
         end
       end
 
-      context "with a style class" do
-        before { @styled = klass.new{ style_class "awesome thing" } }
-        should "default an empty style class" do
-          assert_equal "awesome thing", @styled.send(:instance_variable_get, "@style_class")
+      should "default an empty style class" do
+        styled = klass.new{ style_class "awesome thing" }
+        assert_equal "awesome thing", styled.send(:instance_variable_get, "@style_class")
+      end
+
+      should "verify the style class string" do
+        ['.thing', 'thing.thing', 'thing .thing > thing', 'thin>g'].each do |s|
+          assert_raises ArgumentError do
+            klass.new { style_class s }
+          end
+        end
+        ['thing', '#thing 123', 'thing-one thing_one'].each do |s|
+          assert_nothing_raised do
+            klass.new { style_class s }
+          end
         end
       end
     end
