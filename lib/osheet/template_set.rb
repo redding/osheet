@@ -18,8 +18,8 @@ module Osheet
       end
     end
 
-    def templates(element, name)
-      # return the named template set for the element
+    # return the template set for the named element
+    def for(element, name)
       lookup(key(element.to_s, name.to_s))
     end
 
@@ -29,14 +29,14 @@ module Osheet
       self[key.first][key.last]
     end
 
+    # push the template onto the key set
     def push(key, template)
-      # push the template onto the key set
       self[key.first][key.last] << template
     end
 
+    # verify the template, init the key set, and return the key string
+    #  otherwise ArgumentError it up
     def verify(template)
-      # verify the template, init the key set, and return the key string
-      #  otherwise ArgumentError it up
       unless template.kind_of?(Template)
         raise ArgumentError, 'you can only push Osheet::Template objs to the template set'
       end

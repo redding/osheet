@@ -12,7 +12,7 @@ module Osheet
       end
 
       should_have_instance_method :<<
-      should_have_reader :templates
+      should_have_reader :for
 
       should "key templates using their element and name" do
         assert_equal [:row, :poo], subject.send(:key, :row, :poo)
@@ -71,8 +71,8 @@ module Osheet
       should "be able to lookup a template by element, name" do
         t = Template.new(:row, :poo) {}
         subject << t
-        assert_equal [t], subject.templates(:row, :poo)
-        assert_equal [t], subject.templates('row', 'poo')
+        assert_equal [t], subject.for(:row, :poo)
+        assert_equal [t], subject.for('row', 'poo')
       end
 
     end
