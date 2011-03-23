@@ -3,8 +3,14 @@ require 'date'
 module Osheet
   class Cell
     include StyledElement
+    include WorksheetElement
 
-    def initialize(&block)
+    def initialize(row_or_worksheet=nil, &block)
+      @worksheet = if row_or_worksheet.kind_of?(Worksheet)
+        row_or_worksheet
+      elsif row_or_worksheet.respond_to?(:worksheet)
+        row_or_worksheet.worksheet
+      end
       @data = nil
       @format = nil
       @rowspan = 1

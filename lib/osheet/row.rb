@@ -3,11 +3,13 @@ require 'osheet/cell'
 module Osheet
   class Row
     include StyledElement
+    include WorksheetElement
     include Associations
 
     hm :cells
 
-    def initialize(&block)
+    def initialize(worksheet=nil, &block)
+      @worksheet = worksheet
       @height = nil
       @autofit = false
       @hidden = false

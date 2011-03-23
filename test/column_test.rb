@@ -8,6 +8,8 @@ module Osheet
       subject { Column.new }
 
       should_be_a_styled_element(Column)
+      should_be_a_worksheet_element(Column)
+
       should_have_instance_method :width
       should_have_instance_methods :autofit, :autofit?
       should_have_instance_methods :hidden, :hidden?

@@ -2,9 +2,27 @@ require 'rubygems'
 require 'test_belt'
 require 'test/env'
 
-
 class Test::Unit::TestCase
   class << self
+
+    def should_be_a_worksheet_element(klass)
+      should_have_instance_methods :worksheet, :columns
+      context "given a worksheet" do
+        before do
+          @wksht = Osheet::Worksheet.new {
+            column {}
+            column {}
+            column {}
+          }
+          @klass = klass.new(@wksht)
+        end
+
+        should "be able to access the worksheet" do
+          assert_equal @wksht, @klass.worksheet
+          assert_equal @wksht.columns, @klass.columns
+        end
+      end
+    end
 
     def should_be_a_styled_element(klass)
       should_have_instance_methods :style_class
@@ -42,13 +60,13 @@ class Test::Unit::TestCase
       subject do
       end
 
-      should "should initialize and add them to it's collection" do
+      should "should initialize #{collection} and add them to it's collection" do
         singular = collection.to_s.sub(/s$/, '')
         thing = klass.new do
           self.send(singular) {}
         end
 
-        items = thing.send(:instance_variable_get, "@cells")
+        items = thing.send(:instance_variable_get, "@#{collection}")
         assert_equal items, thing.send(collection)
         assert !items.empty?
         assert_equal 1, items.size

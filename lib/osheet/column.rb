@@ -1,8 +1,10 @@
 module Osheet
   class Column
     include StyledElement
+    include WorksheetElement
 
-    def initialize(&block)
+    def initialize(worksheet=nil, &block)
+      @worksheet = worksheet
       @width = nil
       @autofit = false
       @hidden = false

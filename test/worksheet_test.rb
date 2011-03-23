@@ -7,13 +7,16 @@ module Osheet
     context "Osheet::Worksheet" do
       subject { Worksheet.new }
 
-      should_have_instance_methods :name, :column, :row
+      should_have_instance_methods :name
 
       should "set it's defaults" do
         assert_equal nil, subject.send(:instance_variable_get, "@name")
-        assert_equal [], subject.send(:instance_variable_get, "@columns")
-        assert_equal [], subject.send(:instance_variable_get, "@rows")
+        assert_equal [], subject.columns
+        assert_equal [], subject.rows
       end
+
+      should_hm(Worksheet, :columns, Column)
+      should_hm(Worksheet, :rows, Row)
 
       context "that has some columns and rows" do
         subject do
@@ -36,15 +39,18 @@ module Osheet
         end
 
         should "set it's columns" do
-          columns = subject.send(:instance_variable_get, "@columns")
+          columns = subject.columns
           assert_equal 1, columns.size
           assert_kind_of Column, columns.first
+          assert_equal subject.columns, columns.first.columns
         end
 
         should "set it's rows" do
-          rows = subject.send(:instance_variable_get, "@rows")
+          rows = subject.rows
           assert_equal 1, rows.size
           assert_kind_of Row, rows.first
+          assert_equal subject.columns, rows.first.columns
+          assert_equal subject.columns, rows.first.cells.first.columns
         end
       end
 

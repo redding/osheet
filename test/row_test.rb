@@ -8,6 +8,7 @@ module Osheet
       subject { Row.new }
 
       should_be_a_styled_element(Row)
+      should_be_a_worksheet_element(Row)
 
       should_have_instance_method :height
       should_have_instance_methods :autofit, :autofit?
