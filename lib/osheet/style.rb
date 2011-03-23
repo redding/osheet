@@ -1,6 +1,10 @@
 module Osheet
   class Style
 
+    # this class is essentially a set of collectors for style settings
+    #  each setting collects any arguments passed to it and
+    #  it is up to the drivers to determine how to use the settings
+
     BORDERS = [:border_top, :border_right, :border_bottom, :border_left]
     SETTINGS = [:align, :font, :bg_color, :bg_pattern] + BORDERS
 
