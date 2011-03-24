@@ -60,8 +60,10 @@ module Osheet
 
         should "add them to it's styles" do
           assert_equal 2, subject.styles.size
-          assert_equal '.test', subject.styles.first.selector
-          assert_equal '.test.awesome', subject.styles.last.selector
+          assert_equal 1, subject.styles.first.selectors.size
+          assert_equal '.test', subject.styles.first.selectors.first
+          assert_equal 1, subject.styles.last.selectors.size
+          assert_equal '.test.awesome', subject.styles.last.selectors.first
         end
       end
 

@@ -18,7 +18,7 @@ module Osheet
     end
 
     def title(title); @title = title; end
-    def style(selector, &block); @styles << Style.new(selector, &block); end
+    def style(*selectors, &block); @styles << Style.new(*selectors, &block); end
     def template(element, name, &block); @templates << Template.new(element, name, &block); end
 
   end

@@ -8,10 +8,10 @@ module Osheet
     BORDERS = [:border_top, :border_right, :border_bottom, :border_left]
     SETTINGS = [:align, :font, :bg_color, :bg_pattern] + BORDERS
 
-    attr_reader :selector
+    attr_reader :selectors
 
-    def initialize(selector, &block)
-      @selector = verify(selector)
+    def initialize(*selectors, &block)
+      @selectors = verify(selectors)
       SETTINGS.each do |setting|
         instance_variable_set("@#{setting}", [])
       end
@@ -32,11 +32,11 @@ module Osheet
 
     private
 
-    def verify(selector)
-      if !selector.kind_of?(::String) || invalid?(selector)
-        raise ArgumentError, "invalid selector: '#{selector}', selectors must be strings that begin with '.' and con't have spaces or '>'."
-      else
-        selector
+    def verify(selectors)
+      selectors.each do |selector|
+        if !selector.kind_of?(::String) || invalid?(selector)
+          raise ArgumentError, "invalid selector: '#{selector}', selectors must be strings that begin with '.' and con't have spaces or '>'."
+        end
       end
     end
 

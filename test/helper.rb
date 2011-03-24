@@ -15,8 +15,7 @@ class Test::Unit::TestCase
             style('.title') {
               font 14
             }
-            style('.header') {
-              font 14
+            style('.title', '.header') {
               font :bold
             }
           }

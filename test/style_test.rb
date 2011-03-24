@@ -7,7 +7,7 @@ module Osheet
     context "Osheet::Style" do
       subject { Style.new('.test') }
 
-      should_have_reader :selector
+      should_have_reader :selectors
       should_have_instance_methods :align, :font, :bg_color, :bg_pattern
       should_have_instance_methods :border, :border_left, :border_top, :border_right, :border_bottom
 
@@ -25,7 +25,8 @@ module Osheet
       end
 
       should "set it's defaults" do
-        assert_equal '.test', subject.selector
+        assert_equal 1, subject.selectors.size
+        assert_equal '.test', subject.selectors.first
         [ :align, :font, :bg_color, :bg_pattern,
           :border_left, :border_top, :border_right, :border_bottom
         ].each do |a|
