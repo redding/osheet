@@ -35,8 +35,15 @@ module Osheet::Associations
           # TODO: add by template
         else
           # add by block
-
-          instance_variable_get("@#{plural}") << klass.new(self.workbook, self, &block)
+          instance_variable_get("@#{plural}") << if self.respond_to?(:workbook)
+            # on: worksheet, column, row
+            # creating: column, row, cell
+            klass.new(self.workbook, self, &block)
+          else
+            # on: workbook
+            # creating: worksheet
+            klass.new(self, &block)
+          end
         end
       end
 

@@ -8,11 +8,13 @@ module Osheet
       subject { Workbook.new }
 
       should_have_readers :styles, :templates
-      should_have_instance_methods :title, :style, :template, :worksheet
+      should_have_instance_methods :title, :style, :template
+
+      should_hm(Workbook, :worksheets, Worksheet)
 
       should "set it's defaults" do
         assert_equal nil, subject.send(:instance_variable_get, "@title")
-        assert_equal [], subject.send(:instance_variable_get, "@worksheets")
+        assert_equal [], subject.worksheets
         assert_equal [], subject.styles
         assert_equal TemplateSet.new, subject.templates
       end
