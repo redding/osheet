@@ -35,7 +35,8 @@ module Osheet::Associations
           # TODO: add by template
         else
           # add by block
-          instance_variable_get("@#{plural}") << klass.new(self, &block)
+
+          instance_variable_get("@#{plural}") << klass.new(self.workbook, self, &block)
         end
       end
 

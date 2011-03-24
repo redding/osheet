@@ -7,6 +7,8 @@ module Osheet
     context "Osheet::Worksheet" do
       subject { Worksheet.new }
 
+      should_be_a_workbook_element(Worksheet)
+
       should_have_instance_methods :name
 
       should "set it's defaults" do

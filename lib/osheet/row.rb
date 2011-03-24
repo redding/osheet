@@ -2,13 +2,15 @@ require 'osheet/cell'
 
 module Osheet
   class Row
-    include StyledElement
-    include WorksheetElement
     include Associations
+    include WorkbookElement
+    include WorksheetElement
+    include StyledElement
 
     hm :cells
 
-    def initialize(worksheet=nil, &block)
+    def initialize(workbook=nil, worksheet=nil, &block)
+      @workbook = workbook
       @worksheet = worksheet
       @height = nil
       @autofit = false

@@ -1,9 +1,11 @@
 module Osheet
   class Column
-    include StyledElement
+    include WorkbookElement
     include WorksheetElement
+    include StyledElement
 
-    def initialize(worksheet=nil, &block)
+    def initialize(workbook=nil, worksheet=nil, &block)
+      @workbook = workbook
       @worksheet = worksheet
       @width = nil
       @autofit = false

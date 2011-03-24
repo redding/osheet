@@ -4,11 +4,13 @@ require 'osheet/row'
 module Osheet
   class Worksheet
     include Associations
+    include WorkbookElement
 
     hm :columns
     hm :rows
 
-    def initialize(&block)
+    def initialize(workbook=nil, &block)
+      @workbook = workbook
       @name = nil
       instance_eval(&block) if block
     end

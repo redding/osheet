@@ -2,15 +2,17 @@ require 'date'
 
 module Osheet
   class Cell
-    include StyledElement
+    include WorkbookElement
     include WorksheetElement
+    include StyledElement
 
-    def initialize(row_or_worksheet=nil, &block)
-      @worksheet = if row_or_worksheet.kind_of?(Worksheet)
-        row_or_worksheet
-      elsif row_or_worksheet.respond_to?(:worksheet)
-        row_or_worksheet.worksheet
-      end
+    def initialize(workbook=nil, worksheet=nil, &block)
+      @workbook = workbook
+      @worksheet = worksheet#if worksheet_or_row.kind_of?(Worksheet)
+      #   worksheet_or_row
+      # elsif worksheet_or_row.respond_to?(:worksheet)
+      #   worksheet_or_row.worksheet
+      # end
       @data = nil
       @format = nil
       @rowspan = 1

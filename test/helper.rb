@@ -5,19 +5,45 @@ require 'test/env'
 class Test::Unit::TestCase
   class << self
 
+    def should_be_a_workbook_element(klass)
+      should_have_instance_methods :workbook, :styles, :templates
+      context "given a workbook with templates and styles" do
+        before do
+          @wkbk = Osheet::Workbook.new {
+            template(:column, :thing) {}
+            template(:row, :empty) {}
+            style('.title') {
+              font 14
+            }
+            style('.header') {
+              font 14
+              font :bold
+            }
+          }
+          @klass = klass.new(@wkbk)
+        end
+
+        should "be able to read the workbook and it's styles/templates" do
+          assert_equal @wkbk, @klass.workbook
+          assert_equal @wkbk.styles, @klass.styles
+          assert_equal @wkbk.templates, @klass.templates
+        end
+      end
+    end
+
     def should_be_a_worksheet_element(klass)
       should_have_instance_methods :worksheet, :columns
-      context "given a worksheet" do
+      context "given a worksheet with columns" do
         before do
           @wksht = Osheet::Worksheet.new {
             column {}
             column {}
             column {}
           }
-          @klass = klass.new(@wksht)
+          @klass = klass.new(nil, @wksht)
         end
 
-        should "be able to access the worksheet" do
+        should "be able to read the worksheet and it's columns" do
           assert_equal @wksht, @klass.worksheet
           assert_equal @wksht.columns, @klass.columns
         end
@@ -56,9 +82,6 @@ class Test::Unit::TestCase
     def should_hm(klass, collection, item_klass)
       should_have_reader collection
       should_have_instance_method collection.to_s.sub(/s$/, '')
-
-      subject do
-      end
 
       should "should initialize #{collection} and add them to it's collection" do
         singular = collection.to_s.sub(/s$/, '')

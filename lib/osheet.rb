@@ -4,6 +4,9 @@ module Osheet
 
 end
 
-require 'osheet/styled_element'
-require 'osheet/worksheet_element'
 require 'osheet/associations'
+require 'osheet/workbook_element'
+require 'osheet/worksheet_element'
+require 'osheet/styled_element'
+
+require 'osheet/workbook'

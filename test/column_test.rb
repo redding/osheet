@@ -9,6 +9,7 @@ module Osheet
 
       should_be_a_styled_element(Column)
       should_be_a_worksheet_element(Column)
+      should_be_a_workbook_element(Column)
 
       should_have_instance_method :width
       should_have_instance_methods :autofit, :autofit?
