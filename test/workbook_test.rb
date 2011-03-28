@@ -95,6 +95,7 @@ module Osheet
           subject.worksheet(:go)
           assert_equal 1, subject.worksheets.size
           assert_equal 'blue', subject.worksheets.first.columns.first.meta[:color]
+          assert_equal 500, subject.worksheets.first.rows.first.instance_variable_get("@height")
         end
       end
 
