@@ -39,7 +39,28 @@ module Osheet
           end
           assert_kind_of ::Xmlss::Workbook, subject.workbook
           assert_equal @workbook.worksheets.size, subject.workbook.worksheets.size
-          assert_equal @workbook.worksheets.first.attributes[:name], subject.workbook.worksheets.first.name
+        end
+      end
+
+
+      context "when writing a worksheet" do
+        before do
+          @worksheet = Osheet::Worksheet.new {
+            name "testsheet2"
+            column { width 100 }
+            row { height 50 }
+          }
+        end
+
+        should "create an Xmlss workbook" do
+          xmlss_worksheet = subject.send(:worksheet, @worksheet)
+          assert_kind_of ::Xmlss::Worksheet, xmlss_worksheet
+          assert_equal "testsheet2", xmlss_worksheet.name
+          assert_kind_of ::Xmlss::Table, xmlss_worksheet.table
+          assert_equal @worksheet.columns.size, xmlss_worksheet.table.columns.size
+          #assert_equal @worksheet.columns.first.attributes[:width], xmlss_worksheet.table.columns.first.width
+          assert_equal @worksheet.rows.size, xmlss_worksheet.table.rows.size
+          #assert_equal @worksheet.rows.first.attributes[:height], xmlss_worksheet.table.rows.first.height
         end
       end
 

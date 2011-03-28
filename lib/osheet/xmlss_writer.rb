@@ -25,9 +25,35 @@ module Osheet
         worksheet(oworksheet)
       end
     end
-
     def worksheet(oworksheet)
-      ::Xmlss::Worksheet.new(oworksheet.attributes[:name])
+      ::Xmlss::Worksheet.new(oworksheet.attributes[:name], {
+        :table => table(oworksheet)
+      })
     end
+    def table(oworksheet)
+      ::Xmlss::Table.new({
+        :columns => columns(oworksheet.columns),
+        :rows => rows(oworksheet.rows)
+      })
+    end
+
+    def columns(ocolumns)
+      ocolumns.collect do |ocolumn|
+        column(ocolumn)
+      end
+    end
+    def column(ocolumn)
+      ::Xmlss::Column.new
+    end
+
+    def rows(orows)
+      orows.collect do |orow|
+        row(orow)
+      end
+    end
+    def row(orow)
+      ::Xmlss::Row.new
+    end
+
   end
 end
