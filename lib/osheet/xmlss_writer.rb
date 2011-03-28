@@ -3,9 +3,10 @@ require 'xmlss'
 module Osheet
   class XmlssWriter
 
-    attr_reader :workbook
+    attr_reader :workbook, :styles
 
     def initialize(opts={})
+      @styles = []
       self.workbook = opts[:workbook] if opts.has_key?(:workbook)
     end
 
@@ -19,6 +20,21 @@ module Osheet
     end
 
     protected
+
+    def style(style_class, format=nil)
+      key = style_key(style_class, format)
+      xmlss_style = @styles.find{|style| style.id == key}
+      if xmlss_style.nil?
+        @styles << (xmlss_style = ::Xmlss::Style::Base.new(key))
+      end
+      xmlss_style
+    end
+
+    def style_key(style_class, format)
+      (style_class || '').strip.split(/\s+/).collect do |c|
+        ".#{c}"
+      end.join('') + "..#{format}"
+    end
 
     def worksheets(oworksheets)
       oworksheets.collect do |oworksheet|
@@ -44,10 +60,10 @@ module Osheet
     end
     def column(ocolumn)
       ::Xmlss::Column.new({
+        :style_id => style(ocolumn.attributes[:style_class]).id,
         :width => ocolumn.attributes[:width],
         :auto_fit_width => ocolumn.attributes[:autofit],
         :hidden => ocolumn.attributes[:hidden]
-        # TODO: style_id
       })
     end
 

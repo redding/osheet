@@ -66,6 +66,7 @@ module Osheet
       context "when writing a column" do
         before do
           @column = Osheet::Column.new {
+            style_class "awesome"
             width  100
             autofit true
             hidden true
@@ -73,14 +74,24 @@ module Osheet
              :color => 'blue'
             })
           }
+          @xmlss_column = subject.send(:column, @column)
         end
 
         should "create an Xmlss column" do
-          xmlss_column = subject.send(:column, @column)
-          assert_kind_of ::Xmlss::Column, xmlss_column
-          assert_equal @column.attributes[:width], xmlss_column.width
-          assert_equal @column.attributes[:autofit], xmlss_column.auto_fit_width
-          assert_equal @column.attributes[:hidden], xmlss_column.hidden
+          assert_kind_of ::Xmlss::Column, @xmlss_column
+          assert_equal @column.attributes[:width], @xmlss_column.width
+          assert_equal @column.attributes[:autofit], @xmlss_column.auto_fit_width
+          assert_equal @column.attributes[:hidden], @xmlss_column.hidden
+        end
+
+        should "style an Xmlss column" do
+          # style handling basic tests:
+          #  just testing basic style_class setting and that an xmlss
+          #  style is added to the writer's style collection
+          assert_equal ".awesome..", @xmlss_column.style_id
+          assert_equal 1, subject.styles.size
+          assert_kind_of ::Xmlss::Style::Base, subject.styles.first
+          assert_equal ".awesome..", subject.styles.first.id
         end
       end
 

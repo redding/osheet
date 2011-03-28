@@ -48,7 +48,7 @@ module Osheet
         end
 
         should "know it's attribute(s)" do
-          [:width, :autofit, :hidden].each do |a|
+          [:style_class, :width, :autofit, :hidden].each do |a|
             assert subject.attributes.has_key?(a)
           end
           assert_equal 100, subject.attributes[:width]
