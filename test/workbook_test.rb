@@ -8,7 +8,7 @@ module Osheet
       subject { Workbook.new }
 
       should_have_readers :styles, :templates
-      should_have_instance_methods :title, :style, :template
+      should_have_instance_methods :title, :style, :template, :attributes
 
       should_hm(Workbook, :worksheets, Worksheet)
 
@@ -47,6 +47,13 @@ module Osheet
           worksheets = subject.send(:instance_variable_get, "@worksheets")
           assert_equal 1, worksheets.size
           assert_kind_of Worksheet, worksheets.first
+        end
+
+        should "know it's attribute(s)" do
+          [:title].each do |a|
+            assert subject.attributes.has_key?(a)
+          end
+          assert_equal "The Poo", subject.attributes[:title]
         end
       end
 
@@ -95,7 +102,7 @@ module Osheet
           subject.worksheet(:go)
           assert_equal 1, subject.worksheets.size
           assert_equal 'blue', subject.worksheets.first.columns.first.meta[:color]
-          assert_equal 500, subject.worksheets.first.rows.first.instance_variable_get("@height")
+          assert_equal 500, subject.worksheets.first.rows.first.attributes[:height]
         end
       end
 

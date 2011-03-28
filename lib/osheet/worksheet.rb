@@ -17,5 +17,11 @@ module Osheet
 
     def name(value); @name = value; end
 
+    def attributes
+      {
+        :name => @name
+      }
+    end
+
   end
 end

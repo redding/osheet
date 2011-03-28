@@ -24,5 +24,13 @@ module Osheet
     def hidden(value); @hidden = !!value; end
     def hidden?; @hidden; end
 
+    def attributes
+      {
+        :height => @height,
+        :autofit => @autofit,
+        :hidden => @hidden
+      }
+    end
+
   end
 end

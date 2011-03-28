@@ -9,7 +9,7 @@ module Osheet
 
       should_be_a_workbook_element(Worksheet)
 
-      should_have_instance_methods :name
+      should_have_instance_methods :name, :attributes
 
       should "set it's defaults" do
         assert_equal nil, subject.send(:instance_variable_get, "@name")
@@ -40,6 +40,12 @@ module Osheet
           assert_equal "Poo!", subject.send(:instance_variable_get, "@name")
         end
 
+        should "know it's attribute(s)" do
+          [:name].each do |a|
+            assert subject.attributes.has_key?(a)
+          end
+          assert_equal "Poo!", subject.attributes[:name]
+        end
         should "set it's columns" do
           columns = subject.columns
           assert_equal 1, columns.size

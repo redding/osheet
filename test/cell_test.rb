@@ -39,6 +39,17 @@ module Osheet
           assert_equal 2,     subject.send(:instance_variable_get, "@rowspan")
           assert_equal "http://www.google.com", subject.send(:instance_variable_get, "@href")
         end
+
+        should "know it's attribute(s)" do
+          [:data, :format, :rowspan, :colspan, :href].each do |a|
+            assert subject.attributes.has_key?(a)
+          end
+          assert_equal "Poo", subject.attributes[:data]
+          assert_equal "@", subject.attributes[:format]
+          assert_equal 4, subject.attributes[:colspan]
+          assert_equal 2, subject.attributes[:rowspan]
+          assert_equal "http://www.google.com", subject.attributes[:href]
+        end
       end
 
       should "type cast data strings/symbols" do

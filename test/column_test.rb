@@ -46,6 +46,16 @@ module Osheet
           assert subject.hidden?
           assert_equal({}, subject.meta)
         end
+
+        should "know it's attribute(s)" do
+          [:width, :autofit, :hidden].each do |a|
+            assert subject.attributes.has_key?(a)
+          end
+          assert_equal 100, subject.attributes[:width]
+          assert_equal true, subject.attributes[:autofit]
+          assert_equal true, subject.attributes[:hidden]
+        end
+
       end
 
       should "cast autofit and hidden to bool" do

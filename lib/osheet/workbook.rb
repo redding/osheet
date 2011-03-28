@@ -21,6 +21,12 @@ module Osheet
     def style(*selectors, &block); @styles << Style.new(*selectors, &block); end
     def template(element, name, &block); @templates << Template.new(element, name, &block); end
 
+    def attributes
+      {
+        :title => @title
+      }
+    end
+
     # def data(driver=:xmlss)
     #   Driver.new(driver, self).data
     # end

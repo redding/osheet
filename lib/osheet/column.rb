@@ -20,6 +20,14 @@ module Osheet
     def hidden(value); @hidden = !!value; end
     def hidden?; @hidden; end
 
+    def attributes
+      {
+        :width => @width,
+        :autofit => @autofit,
+        :hidden => @hidden
+      }
+    end
+
     def meta(value=nil)
       value.nil? ? @meta : (@meta = value)
     end

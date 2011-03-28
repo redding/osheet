@@ -30,6 +30,13 @@ module Osheet
       end
     end
 
+    def attributes
+      SETTINGS.inject({}) do |attrs, s|
+        attrs[s] = instance_variable_get("@#{s}")
+        attrs
+      end
+    end
+
     private
 
     def verify(selectors)

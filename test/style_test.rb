@@ -34,6 +34,16 @@ module Osheet
         end
       end
 
+      should "know it's attribute(s)" do
+        [ :align, :font, :bg_color, :bg_pattern,
+          :border_left, :border_top, :border_right, :border_bottom
+        ].each do |a|
+          assert subject.attributes.has_key?(a)
+        end
+      end
+
+
+
       [ :align, :font, :bg_color, :bg_pattern,
         :border_left, :border_top, :border_right, :border_bottom
       ].each do |a|

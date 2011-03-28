@@ -40,5 +40,15 @@ module Osheet
     def colspan(value); @colspan = value; end
     def href(value); @href = value; end
 
+    def attributes
+      {
+        :data => @data,
+        :format => @format,
+        :colspan => @colspan,
+        :rowspan => @rowspan,
+        :href => @href,
+      }
+    end
+
   end
 end

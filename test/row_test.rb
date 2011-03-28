@@ -41,6 +41,16 @@ module Osheet
           assert_equal true, subject.send(:instance_variable_get, "@hidden")
           assert subject.hidden?
         end
+
+        should "know it's attribute(s)" do
+          [:height, :autofit, :hidden].each do |a|
+            assert subject.attributes.has_key?(a)
+          end
+          assert_equal 100, subject.attributes[:height]
+          assert_equal true, subject.attributes[:autofit]
+          assert_equal true, subject.attributes[:hidden]
+        end
+
       end
 
       should "cast autofit and hidden to bool" do
