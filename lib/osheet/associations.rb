@@ -31,17 +31,24 @@ module Osheet::Associations
         if instance_variable_get("@#{plural}").nil?
           instance_variable_set("@#{plural}", [])
         end
-        if !args.empty?#self.respond_to?(:workbook) && self.workbook && (tmpl = self.workbook.template(singular, args.first))
-          #tmpl.block.call(*args[1..-1])
-        else
-          # add by block
-          instance_variable_get("@#{plural}") << if self.respond_to?(:workbook)
-            # on: worksheet, column, row
-            # creating: column, row, cell
-            klass.new(self.workbook, self, &block)
+        instance_variable_get("@#{plural}") << if self.respond_to?(:workbook)
+          # on: worksheet, column, row
+          # creating: column, row, cell
+          if self.workbook && (template = self.workbook.templates.get(singular, args.first))
+            # add by template
+            klass.new(self.workbook, self, *args[1..-1], &template)
           else
-            # on: workbook
-            # creating: worksheet
+            # add by block
+            klass.new(self.workbook, self, &block)
+          end
+        else
+          # on: workbook
+          # creating: worksheet
+          if (template = self.templates.get(singular, args.first))
+            # add by template
+            klass.new(self, *args[1..-1], &template)
+          else
+            # add by block
             klass.new(self, &block)
           end
         end

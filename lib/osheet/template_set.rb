@@ -19,19 +19,19 @@ module Osheet
     end
 
     # return the template set for the named element
-    def for(element, name)
+    def get(element, name)
       lookup(key(element.to_s, name.to_s))
     end
 
     private
 
     def lookup(key)
-      self[key.first][key.last]
+      self[key.first][key.last] if self[key.first]
     end
 
-    # push the template onto the key set
+    # push the template onto the key
     def push(key, template)
-      self[key.first][key.last] << template
+      self[key.first][key.last] = template
     end
 
     # verify the template, init the key set, and return the key string
@@ -42,7 +42,7 @@ module Osheet
       end
       key = template_key(template)
       self[key.first] ||= {}
-      self[key.first][key.last] ||= []
+      self[key.first][key.last] ||= nil
       key
     end
 

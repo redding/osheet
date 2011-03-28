@@ -70,12 +70,16 @@ module Osheet
       context "that defines templates" do
         subject do
           Workbook.new {
-            template(:column, :yo) {
+            template(:column, :yo) { |color|
               width 200
-              meta(:color => 'blue')
+              meta(:color => color)
             }
             template(:row, :yo_yo) {
               height 500
+            }
+            template(:worksheet, :go) {
+              column(:yo, 'blue')
+              row(:yo_yo)
             }
           }
         end
@@ -83,9 +87,14 @@ module Osheet
         should "add them to it's templates" do
           assert subject.templates
           assert_kind_of TemplateSet, subject.templates
-          assert_equal 2, subject.templates.keys.size
-          assert_kind_of Template, subject.templates.for('column', 'yo').first
-          assert_kind_of Template, subject.templates.for('row', 'yo_yo').first
+          assert_equal 3, subject.templates.keys.size
+          assert_kind_of Template, subject.templates.get('column', 'yo')
+          assert_kind_of Template, subject.templates.get('row', 'yo_yo')
+          assert_kind_of Template, subject.templates.get('worksheet', 'go')
+
+          subject.worksheet(:go)
+          assert_equal 1, subject.worksheets.size
+          assert_equal 'blue', subject.worksheets.first.columns.first.meta[:color]
         end
       end
 

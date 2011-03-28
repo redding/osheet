@@ -12,7 +12,7 @@ module Osheet
       end
 
       should_have_instance_method :<<
-      should_have_reader :for
+      should_have_reader :get
 
       should "key templates using their element and name" do
         assert_equal [:row, :poo], subject.send(:key, :row, :poo)
@@ -33,7 +33,7 @@ module Osheet
         key = subject.send(:verify, Template.new(:row, :poo) {})
         assert_equal ['row', 'poo'], key
         assert_equal({
-          key.first => { key.last => [] }
+          key.first => { key.last => nil }
         }, subject)
       end
 
@@ -49,30 +49,25 @@ module Osheet
         assert subject["row"]
         assert_equal 2, subject["row"].keys.size
         assert subject["row"]["poo"]
-        assert_kind_of ::Array, subject["row"]["poo"]
-        assert_equal 1, subject["row"]["poo"].size
-        assert_kind_of Template, subject["row"]["poo"].first
+        assert_kind_of Template, subject["row"]["poo"]
         assert subject["row"]["not_poo"]
-        assert_kind_of ::Array, subject["row"]["not_poo"]
-        assert_equal 1, subject["row"]["not_poo"].size
-        assert_kind_of Template, subject["row"]["not_poo"].first
+        assert_kind_of Template, subject["row"]["not_poo"]
         assert subject["column"]
         assert_equal 2, subject["column"].keys.size
         assert subject["column"]["awesome"]
-        assert_kind_of ::Array, subject["column"]["awesome"]
-        assert_equal 1, subject["column"]["awesome"].size
-        assert_kind_of Template, subject["column"]["awesome"].first
+        assert_kind_of Template, subject["column"]["awesome"]
         assert subject["column"]["not_awesome"]
-        assert_kind_of ::Array, subject["column"]["not_awesome"]
-        assert_equal 1, subject["column"]["not_awesome"].size
-        assert_kind_of Template, subject["column"]["not_awesome"].first
+        assert_kind_of Template, subject["column"]["not_awesome"]
       end
 
       should "be able to lookup a template by element, name" do
         t = Template.new(:row, :poo) {}
         subject << t
-        assert_equal [t], subject.for(:row, :poo)
-        assert_equal [t], subject.for('row', 'poo')
+        assert_equal t, subject.get(:row, :poo)
+        assert_equal t, subject.get('row', 'poo')
+
+        assert_equal nil, subject.get(:row, :ugh)
+        assert_equal nil, subject.get(:col, :ugh)
       end
 
     end
