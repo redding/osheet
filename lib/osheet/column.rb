@@ -4,14 +4,14 @@ module Osheet
     include WorksheetElement
     include StyledElement
 
-    def initialize(workbook=nil, worksheet=nil, &block)
+    def initialize(workbook=nil, worksheet=nil, *args, &block)
       @workbook = workbook
       @worksheet = worksheet
       @width = nil
       @autofit = false
       @hidden = false
       @meta = nil
-      instance_eval(&block) if block
+      instance_exec(*args, &block) if block_given?
     end
 
     def width(value); @width = value; end

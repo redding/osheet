@@ -15,7 +15,7 @@ module Osheet
       SETTINGS.each do |setting|
         instance_variable_set("@#{setting}", [])
       end
-      instance_eval(&block) if block
+      instance_eval(&block) if block_given?
     end
 
     SETTINGS.each do |setting|

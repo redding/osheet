@@ -31,8 +31,8 @@ module Osheet::Associations
         if instance_variable_get("@#{plural}").nil?
           instance_variable_set("@#{plural}", [])
         end
-        if !args.empty? # TODO: if !workbook.template(:key)
-          # TODO: add by template
+        if !args.empty?#self.respond_to?(:workbook) && self.workbook && (tmpl = self.workbook.template(singular, args.first))
+          #tmpl.block.call(*args[1..-1])
         else
           # add by block
           instance_variable_get("@#{plural}") << if self.respond_to?(:workbook)

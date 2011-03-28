@@ -6,19 +6,15 @@ module Osheet
     include WorksheetElement
     include StyledElement
 
-    def initialize(workbook=nil, worksheet=nil, &block)
+    def initialize(workbook=nil, worksheet=nil, *args, &block)
       @workbook = workbook
-      @worksheet = worksheet#if worksheet_or_row.kind_of?(Worksheet)
-      #   worksheet_or_row
-      # elsif worksheet_or_row.respond_to?(:worksheet)
-      #   worksheet_or_row.worksheet
-      # end
+      @worksheet = worksheet
       @data = nil
       @format = nil
       @rowspan = 1
       @colspan = 1
       @href = nil
-      instance_eval(&block) if block
+      instance_exec(*args, &block) if block_given?
     end
 
     def data(value)

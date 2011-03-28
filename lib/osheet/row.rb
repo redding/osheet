@@ -9,13 +9,13 @@ module Osheet
 
     hm :cells
 
-    def initialize(workbook=nil, worksheet=nil, &block)
+    def initialize(workbook=nil, worksheet=nil, *args, &block)
       @workbook = workbook
       @worksheet = worksheet
       @height = nil
       @autofit = false
       @hidden = false
-      instance_eval(&block) if block
+      instance_exec(*args, &block) if block_given?
     end
 
     def height(value); @height = value; end
