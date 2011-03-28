@@ -43,7 +43,12 @@ module Osheet
       end
     end
     def column(ocolumn)
-      ::Xmlss::Column.new
+      ::Xmlss::Column.new({
+        :width => ocolumn.attributes[:width],
+        :auto_fit_width => ocolumn.attributes[:autofit],
+        :hidden => ocolumn.attributes[:hidden]
+        # TODO: style_id
+      })
     end
 
     def rows(orows)

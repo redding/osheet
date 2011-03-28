@@ -52,15 +52,35 @@ module Osheet
           }
         end
 
-        should "create an Xmlss workbook" do
+        should "create an Xmlss worksheet" do
           xmlss_worksheet = subject.send(:worksheet, @worksheet)
           assert_kind_of ::Xmlss::Worksheet, xmlss_worksheet
-          assert_equal "testsheet2", xmlss_worksheet.name
+          assert_equal @worksheet.attributes[:name], xmlss_worksheet.name
           assert_kind_of ::Xmlss::Table, xmlss_worksheet.table
           assert_equal @worksheet.columns.size, xmlss_worksheet.table.columns.size
-          #assert_equal @worksheet.columns.first.attributes[:width], xmlss_worksheet.table.columns.first.width
           assert_equal @worksheet.rows.size, xmlss_worksheet.table.rows.size
-          #assert_equal @worksheet.rows.first.attributes[:height], xmlss_worksheet.table.rows.first.height
+        end
+      end
+
+
+      context "when writing a column" do
+        before do
+          @column = Osheet::Column.new {
+            width  100
+            autofit true
+            hidden true
+            meta({
+             :color => 'blue'
+            })
+          }
+        end
+
+        should "create an Xmlss column" do
+          xmlss_column = subject.send(:column, @column)
+          assert_kind_of ::Xmlss::Column, xmlss_column
+          assert_equal @column.attributes[:width], xmlss_column.width
+          assert_equal @column.attributes[:autofit], xmlss_column.auto_fit_width
+          assert_equal @column.attributes[:hidden], xmlss_column.hidden
         end
       end
 
