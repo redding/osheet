@@ -1,4 +1,5 @@
 require 'osheet/style'
+require 'osheet/style_set'
 require 'osheet/template'
 require 'osheet/template_set'
 require 'osheet/worksheet'
@@ -12,7 +13,7 @@ module Osheet
 
     def initialize(&block)
       @title = nil
-      @styles = []
+      @styles = StyleSet.new
       @templates = TemplateSet.new
       instance_eval(&block) if block_given?
     end

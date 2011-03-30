@@ -15,7 +15,7 @@ module Osheet
       should "set it's defaults" do
         assert_equal nil, subject.send(:instance_variable_get, "@title")
         assert_equal [], subject.worksheets
-        assert_equal [], subject.styles
+        assert_equal StyleSet.new, subject.styles
         assert_equal TemplateSet.new, subject.templates
       end
 

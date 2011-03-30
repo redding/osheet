@@ -37,6 +37,14 @@ module Osheet
       end
     end
 
+    def match?(style_class)
+      selectors.inject(false) do |match, s|
+        match ||= s.split('.').inject(true) do |result, part|
+          result && (part.empty? || style_class.include?(part))
+        end
+      end
+    end
+
     private
 
     def verify(selectors)
