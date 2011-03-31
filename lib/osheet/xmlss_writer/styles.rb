@@ -22,6 +22,9 @@ module Osheet::XmlssWriter::Styles
             border(settings[bp])
           end
         end
+        if format
+          number_format(:format => format)
+        end
       })
     end
     xmlss_style

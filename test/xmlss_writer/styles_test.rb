@@ -198,4 +198,18 @@ module Osheet
     end
   end
 
+  class XmlssWriter::NumberFormat < Test::Unit::TestCase
+    context("Xmlss style number format writer") do
+
+      subject { XmlssWriter::Base.new }
+
+      should "build a style obj with formatting" do
+        assert_equal '@', subject.send(:style, '', '@').number_format.format
+        assert_equal 'mm/dd/yy', subject.send(:style, '', 'mm/dd/yy').number_format.format
+      end
+
+    end
+  end
+
+
 end
