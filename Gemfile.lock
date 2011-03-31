@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     osheet (0.1.0)
-      xmlss (~> 0.0)
+      xmlss (~> 0.0.2)
 
 GEM
   remote: http://rubygems.org/
@@ -17,7 +17,7 @@ GEM
       kelredd-useful (~> 0.4.0)
       leftright (~> 0.9.0)
       shoulda (~> 2.11)
-    xmlss (0.0.1)
+    xmlss (0.0.2)
       nokogiri (~> 1.4.0)
 
 PLATFORMS
@@ -27,4 +27,4 @@ DEPENDENCIES
   bundler (~> 1.0)
   osheet!
   test-belt (= 0.2.1)
-  xmlss (~> 0.0)
+  xmlss (~> 0.0.2)
