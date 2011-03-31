@@ -15,6 +15,9 @@ module Osheet::XmlssWriter::Styles
         if settings.has_key?(:font) && !settings[:font].empty?
           font(settings[:font])
         end
+        if settings.has_key?(:bg) && !settings[:bg].empty?
+          interior(settings[:bg])
+        end
       })
     end
     xmlss_style
@@ -87,6 +90,35 @@ module Osheet::XmlssWriter::Styles
         font_settings[setting.first] = setting.last
       end
       font_settings
+    end
+  end
+
+  def bg_settings(bg_cmds)
+    bg_cmds.inject({}) do |bg_settings, bg_cmd|
+      if (settings = case bg_cmd
+        when ::String
+          if bg_cmd =~ /^#/
+            [[:color, bg_cmd]]
+          end
+        when ::Symbol
+          if ::Xmlss::Style::Interior.pattern_set.include?(bg_cmd)
+            [[:pattern, bg_cmd]]
+          end
+        when ::Hash
+          bg_cmd.inject([]) do |set, kv|
+            if ::Xmlss::Style::Interior.pattern_set.include?(kv.first) && kv.last =~ /^#/
+              set << [:pattern, kv.first]
+              set << [:pattern_color, kv.last]
+            end
+            set
+          end
+        end
+      )
+        settings.each do |setting|
+          bg_settings[setting.first] = setting.last
+        end
+      end
+      bg_settings
     end
   end
 

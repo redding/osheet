@@ -8,7 +8,7 @@ module Osheet
       subject { Style.new('.test') }
 
       should_have_reader :selectors
-      should_have_instance_methods :align, :font, :bg_color, :bg_pattern
+      should_have_instance_methods :align, :font, :bg
       should_have_instance_methods :border, :border_left, :border_top, :border_right, :border_bottom
       should_have_instance_method :match?
 
@@ -28,7 +28,7 @@ module Osheet
       should "set it's defaults" do
         assert_equal 1, subject.selectors.size
         assert_equal '.test', subject.selectors.first
-        [ :align, :font, :bg_color, :bg_pattern,
+        [ :align, :font, :bg,
           :border_left, :border_top, :border_right, :border_bottom
         ].each do |a|
           assert_equal [], subject.send(:instance_variable_get, "@#{a}")
@@ -36,7 +36,7 @@ module Osheet
       end
 
       should "know it's attribute(s)" do
-        [ :align, :font, :bg_color, :bg_pattern,
+        [ :align, :font, :bg,
           :border_left, :border_top, :border_right, :border_bottom
         ].each do |a|
           assert subject.attributes.has_key?(a)
@@ -45,7 +45,7 @@ module Osheet
 
 
 
-      [ :align, :font, :bg_color, :bg_pattern,
+      [ :align, :font, :bg,
         :border_left, :border_top, :border_right, :border_bottom
       ].each do |a|
         should "collect styles for #{a}" do

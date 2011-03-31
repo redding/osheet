@@ -109,4 +109,34 @@ module Osheet
     end
   end
 
+  class XmlssWriter::Bg < Test::Unit::TestCase
+    context("Font bg writer") do
+
+      subject { XmlssWriter::Base.new }
+      before do
+        subject.workbook = Workbook.new {
+          style('.bg.color') { bg '#FF0000' }
+          style('.bg.pattern-only') { bg :solid }
+          style('.bg.pattern-color') { bg :horz_stripe => '#0000FF' }
+        }
+      end
+
+      should "build a style obj with empty bg settings by default" do
+        assert_equal nil, subject.send(:style, 'bg').interior
+      end
+
+      should "build style objs for bg color" do
+        assert_equal '#FF0000', subject.send(:style, 'bg color').interior.color
+      end
+
+      should "build style objs for bg pattern settings" do
+        assert_equal ::Xmlss::Style::Interior.pattern(:solid), subject.send(:style, 'bg pattern-only').interior.pattern
+        assert_equal nil, subject.send(:style, 'bg pattern-only').interior.pattern_color
+        assert_equal ::Xmlss::Style::Interior.pattern(:horz_stripe), subject.send(:style, 'bg pattern-color').interior.pattern
+        assert_equal '#0000FF', subject.send(:style, 'bg pattern-color').interior.pattern_color
+      end
+
+    end
+  end
+
 end
