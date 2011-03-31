@@ -28,6 +28,7 @@ module Osheet
       context "that has attributes" do
         subject do
           Row.new do
+            style_class "poo"
             height  100
             autofit true
             hidden true
@@ -43,9 +44,10 @@ module Osheet
         end
 
         should "know it's attribute(s)" do
-          [:height, :autofit, :hidden].each do |a|
+          [:style_class, :height, :autofit, :hidden].each do |a|
             assert subject.attributes.has_key?(a)
           end
+          assert_equal 'poo', subject.attributes[:style_class]
           assert_equal 100, subject.attributes[:height]
           assert_equal true, subject.attributes[:autofit]
           assert_equal true, subject.attributes[:hidden]
@@ -60,7 +62,6 @@ module Osheet
       end
 
       should_hm(Row, :cells, Cell)
-      # TODO: template cell creation against a fixture
 
     end
 

@@ -29,6 +29,7 @@ module Osheet
       context "that has attributes" do
         subject do
           Column.new do
+            style_class "more poo"
             width  100
             autofit true
             hidden true
@@ -51,6 +52,7 @@ module Osheet
           [:style_class, :width, :autofit, :hidden].each do |a|
             assert subject.attributes.has_key?(a)
           end
+          assert_equal 'more poo', subject.attributes[:style_class]
           assert_equal 100, subject.attributes[:width]
           assert_equal true, subject.attributes[:autofit]
           assert_equal true, subject.attributes[:hidden]

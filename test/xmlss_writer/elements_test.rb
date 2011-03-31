@@ -49,9 +49,6 @@ module Osheet
       end
 
       should "style an Xmlss column" do
-        # style handling basic tests:
-        #  just testing basic style_class setting and that an xmlss
-        #  style is added to the writer's style collection
         assert_equal ".awesome..", @xmlss_column.style_id
         assert_equal 1, subject.styles.size
         assert_kind_of ::Xmlss::Style::Base, subject.styles.first
@@ -65,7 +62,7 @@ module Osheet
       subject { XmlssWriter::Base.new }
       before do
         @row = Osheet::Row.new do
-          style_class = "awesome thing"
+          style_class "awesome thing"
           height  100
           autofit true
           hidden true
@@ -92,14 +89,13 @@ module Osheet
       end
 
       should "style an Xmlss row" do
-        skip
-        # style handling basic tests:
-        #  just testing basic style_class setting and that an xmlss
-        #  style is added to the writer's style collection
         assert_equal ".awesome.thing..", @xmlss_row.style_id
         assert_equal 1, subject.styles.size
         assert_kind_of ::Xmlss::Style::Base, subject.styles.first
         assert_equal ".awesome.thing..", subject.styles.first.id
+        assert_equal 14, subject.styles.first.font.size
+        assert_equal true, subject.styles.first.font.bold?
+        assert_equal true, subject.styles.first.font.italic?
       end
     end
   end

@@ -24,6 +24,7 @@ module Osheet
       context "that has attributes" do
         subject do
           Cell.new do
+            style_class 'more poo'
             data    "Poo"
             format  '@'
             colspan 4
@@ -41,9 +42,10 @@ module Osheet
         end
 
         should "know it's attribute(s)" do
-          [:data, :format, :rowspan, :colspan, :href].each do |a|
+          [:style_class, :data, :format, :rowspan, :colspan, :href].each do |a|
             assert subject.attributes.has_key?(a)
           end
+          assert_equal "more poo", subject.attributes[:style_class]
           assert_equal "Poo", subject.attributes[:data]
           assert_equal "@", subject.attributes[:format]
           assert_equal 4, subject.attributes[:colspan]

@@ -26,6 +26,7 @@ module Osheet
 
     def attributes
       {
+        :style_class => @style_class,
         :height => @height,
         :autofit => @autofit,
         :hidden => @hidden

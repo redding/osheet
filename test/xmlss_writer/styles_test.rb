@@ -7,9 +7,23 @@ module Osheet
     context("Xmlss style writer") do
 
       subject { XmlssWriter::Base.new }
+      before do
+        subject.workbook = Workbook.new {
+          style('.font.size') { font 14 }
+          style('.font.weight') { font :bold }
+          style('.font.style') { font :italic }
+        }
+      end
 
       should "build a style obj when writing styles" do
         assert_kind_of ::Xmlss::Style::Base, subject.send(:style, '')
+      end
+
+      should "build a style obj from many matching osheet styles" do
+        xmlss_style = subject.send(:style, 'font size weight style')
+        assert_equal 14, xmlss_style.font.size
+        assert_equal true, xmlss_style.font.bold?
+        assert_equal true, xmlss_style.font.italic?
       end
 
     end

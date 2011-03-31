@@ -38,8 +38,17 @@ module Osheet::XmlssWriter::Styles
 
   def style_settings(key)
     @ostyles.for(key).inject({}) do |style_settings, ostyle|
-      style_settings.merge(ostyle_settings(ostyle))
+      merged_settings(style_settings, ostyle_settings(ostyle))
     end
+  end
+
+  def merged_settings(current, add)
+    # concat values for keys in both sets
+    current.keys.each do |k|
+      current[k].merge!(add.delete(k))
+    end
+    # merge keys for anything not in the current
+    current.merge(add)
   end
 
   def ostyle_settings(ostyle)

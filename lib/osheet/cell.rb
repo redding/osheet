@@ -42,6 +42,7 @@ module Osheet
 
     def attributes
       {
+        :style_class => @style_class,
         :data => @data,
         :format => @format,
         :colspan => @colspan,
