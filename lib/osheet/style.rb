@@ -5,7 +5,8 @@ module Osheet
     #  each setting collects any arguments passed to it and
     #  it is up to the drivers to determine how to use the settings
 
-    BORDERS = [:border_top, :border_right, :border_bottom, :border_left]
+    BORDER_POSITIONS = [:top, :right, :bottom, :left]
+    BORDERS = BORDER_POSITIONS.collect{|p| "border_#{p}".to_sym}
     SETTINGS = [:align, :font, :bg] + BORDERS
 
     attr_reader :selectors

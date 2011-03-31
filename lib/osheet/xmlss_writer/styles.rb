@@ -7,7 +7,6 @@ module Osheet::XmlssWriter::Styles
     xmlss_style = @styles.find{|style| style.id == key}
     if xmlss_style.nil?
       settings = style_settings(key)
-      #puts "settings: #{settings.inspect}"
       @styles << (xmlss_style = ::Xmlss::Style::Base.new(key) {
         if settings.has_key?(:align) && !settings[:align].empty?
           alignment(settings[:align])
@@ -17,6 +16,11 @@ module Osheet::XmlssWriter::Styles
         end
         if settings.has_key?(:bg) && !settings[:bg].empty?
           interior(settings[:bg])
+        end
+        ::Osheet::Style::BORDERS.each do |bp|
+          if settings.has_key?(bp) && !settings[bp].empty?
+            border(settings[bp])
+          end
         end
       })
     end
@@ -119,6 +123,34 @@ module Osheet::XmlssWriter::Styles
         end
       end
       bg_settings
+    end
+  end
+
+  def border_settings(border_cmds)
+    border_cmds.inject({}) do |border_settings, border_cmd|
+      if (setting = case border_cmd
+        when ::String
+          if border_cmd =~ /^#/
+            [:color, border_cmd]
+          end
+        when ::Symbol
+          if ::Xmlss::Style::Border.position_set.include?(border_cmd)
+            [:position, border_cmd]
+          elsif ::Xmlss::Style::Border.weight_set.include?(border_cmd)
+            [:weight, border_cmd]
+          elsif ::Xmlss::Style::Border.line_style_set.include?(border_cmd)
+            [:line_style, border_cmd]
+          end
+        end
+      )
+        border_settings[setting.first] = setting.last
+      end
+      border_settings
+    end
+  end
+  ::Osheet::Style::BORDER_POSITIONS.each do |p|
+    define_method("border_#{p}_settings") do |cmds|
+      border_settings(cmds+[p])
     end
   end
 

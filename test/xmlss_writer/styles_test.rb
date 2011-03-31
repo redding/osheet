@@ -139,4 +139,63 @@ module Osheet
     end
   end
 
+  class XmlssWriter::Border < Test::Unit::TestCase
+    context("Font border writer") do
+
+      subject { XmlssWriter::Base.new }
+      before do
+        subject.workbook = Workbook.new {
+          ::Osheet::Style::BORDER_POSITIONS.each do |p|
+            style(".border.#{p}") { send("border_#{p}", :thin) }
+          end
+          [:hairline, :thin, :medium, :thick].each do |w|
+            style(".border.#{w}") { border_top w }
+          end
+          [:none, :continuous, :dash, :dot, :dash_dot, :dash_dot_dot].each do |s|
+            style(".border.#{s}") { border_top s }
+          end
+          style('.border.color') { border_top '#FF0000' }
+          style('.border.all') { border :thick, :dash, '#FF0000' }
+        }
+      end
+
+      should "build a style obj with empty border settings by default" do
+        style = subject.send(:style, 'border')
+        assert_kind_of ::Xmlss::ItemSet, style.borders
+        assert_equal [], style.borders
+      end
+
+      should "build style objs with identical settings for all positions when using 'border'" do
+        style = subject.send(:style, 'border all')
+        assert_equal 4, style.borders.size
+        assert_equal 1, style.borders.collect{|p| p.weight}.uniq.size
+        assert_equal 1, style.borders.collect{|p| p.line_style}.uniq.size
+        assert_equal 1, style.borders.collect{|p| p.color}.uniq.size
+      end
+
+      should "build style objs for border specific positions" do
+        ::Osheet::Style::BORDER_POSITIONS.each do |p|
+          assert_equal ::Xmlss::Style::Border.position(p), subject.send(:style, "border #{p}").borders.first.position
+        end
+      end
+
+      should "build style objs for border weight settings" do
+        [:hairline, :thin, :medium, :thick].each do |w|
+          assert_equal ::Xmlss::Style::Border.weight(w), subject.send(:style, "border #{w}").borders.first.weight
+        end
+      end
+
+      should "build style objs for border style settings" do
+        [:none, :continuous, :dash, :dot, :dash_dot, :dash_dot_dot].each do |s|
+          assert_equal ::Xmlss::Style::Border.line_style(s), subject.send(:style, "border #{s}").borders.first.line_style
+        end
+      end
+
+      should "build style objs for border color" do
+        assert_equal '#FF0000', subject.send(:style, 'border color').borders.first.color
+      end
+
+    end
+  end
+
 end
