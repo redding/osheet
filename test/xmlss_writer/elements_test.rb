@@ -100,4 +100,51 @@ module Osheet
     end
   end
 
+  class XmlssWriter::CellTest < Test::Unit::TestCase
+    context "when writing a cell" do
+      subject { XmlssWriter::Base.new }
+      before do
+        @cell = Osheet::Cell.new do
+          style_class "awesome thing"
+          data  'one hundred'
+          format '@'
+          href 'http://example.com'
+          rowspan 2
+          colspan 5
+        end
+        subject.workbook = Workbook.new {
+          style('.awesome') {
+            font 14
+          }
+          style('.thing') {
+            font :italic
+          }
+          style('.awesome.thing') {
+            font :bold
+          }
+        }
+        @xmlss_cell = subject.send(:cell, @cell)
+      end
+
+      should "create an Xmlss cell with appropriate data" do
+        assert_kind_of ::Xmlss::Cell, @xmlss_cell
+        assert_kind_of ::Xmlss::Data, @xmlss_cell.data
+        assert_equal @cell.attributes[:data], @xmlss_cell.data.value
+        assert_equal ::Xmlss::Data.type(:string), @xmlss_cell.data.type
+        assert_equal 'http://example.com', @xmlss_cell.href
+      end
+
+      should "handle rowspan and colspan" do
+        assert_equal 1, @xmlss_cell.merge_down
+        assert_equal 4, @xmlss_cell.merge_across
+      end
+
+      should "style an Xmlss cell" do
+        assert_equal ".awesome.thing..@", @xmlss_cell.style_id
+        assert_equal ".awesome.thing..@", subject.styles.first.id
+        assert_equal '@', subject.styles.first.number_format.format
+      end
+    end
+  end
+
 end

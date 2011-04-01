@@ -34,9 +34,7 @@ module Osheet::XmlssWriter::Elements
   end
 
   def rows(orows)
-    orows.collect do |orow|
-      row(orow)
-    end
+    orows.collect{|orow| row(orow)}
   end
   def row(orow)
     ::Xmlss::Row.new({
@@ -44,7 +42,27 @@ module Osheet::XmlssWriter::Elements
       :height => orow.attributes[:height],
       :auto_fit_height => orow.attributes[:autofit],
       :hidden => orow.attributes[:hidden]
+      # cells => cells(orow.cells)
     })
+  end
+
+  def cells(ocells)
+    ocells.collect{|ocell| cell(ocell)}
+  end
+  def cell(ocell)
+    ::Xmlss::Cell.new({
+      :style_id => style(ocell.attributes[:style_class], ocell.attributes[:format]).id,
+      :href => ocell.attributes[:href],
+      :merge_across => cell_merge(ocell.attributes[:colspan]),
+      :merge_down => cell_merge(ocell.attributes[:rowspan]),
+      :data => data(ocell.attributes[:data])
+    })
+  end
+  def cell_merge(span)
+    span.kind_of?(::Fixnum) && span > 1 ? span-1 : 0
+  end
+  def data(ocell_data)
+    ::Xmlss::Data.new(ocell_data)
   end
 
 end
