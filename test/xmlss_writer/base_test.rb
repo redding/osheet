@@ -42,4 +42,51 @@ module Osheet
     end
   end
 
+  class XmlssWriter::ToData < Test::Unit::TestCase
+    context "XmlssWriter::Base" do
+      subject do
+        XmlssWriter::Base.new({
+          :workbook => Workbook.new {
+            title "written"
+            worksheet {
+              name "Poo!"
+              column
+              row {
+                cell {
+                  format  :numeric
+                  data    1
+                }
+              }
+            }
+          }
+        })
+      end
+      after do
+        # remove any test files this creates
+      end
+
+      should_have_instance_methods :to_data, :to_file
+
+      should "return string xml data" do
+        xml_data = nil
+        assert_nothing_raised do
+          xml_data = subject.to_data
+        end
+        assert_kind_of ::String, xml_data
+        assert_match /^<\?xml/, xml_data
+      end
+
+      should "write xml data to a file path" do
+        path = nil
+        assert_nothing_raised do
+          path = subject.to_file("./written.xls")
+        end
+        assert_kind_of ::String, path
+        assert_equal './written.xls', path
+        assert File.exists?(path)
+      end
+
+    end
+  end
+
 end

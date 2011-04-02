@@ -1,3 +1,4 @@
+require 'fileutils'
 module Osheet::XmlssWriter; end
 require 'xmlss'
 require 'osheet/xmlss_writer/elements'
@@ -24,6 +25,19 @@ module Osheet::XmlssWriter
       @workbook = ::Xmlss::Workbook.new({
         :worksheets => worksheets(oworkbook.worksheets)
       })
+    end
+
+    def to_data
+      @workbook.styles = @styles
+      @workbook.to_xml
+    end
+
+    def to_file(path)
+      FileUtils.mkdir_p(File.dirname(path))
+      File.open(path, 'w') do |file|
+        file.write self.to_data
+      end
+      File.exists?(path) ? path : false
     end
 
   end

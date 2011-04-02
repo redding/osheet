@@ -1,8 +1,7 @@
-require 'osheet/style'
 require 'osheet/style_set'
-require 'osheet/template'
 require 'osheet/template_set'
 require 'osheet/worksheet'
+require 'osheet/xmlss_writer'
 
 module Osheet
   class Workbook
@@ -23,15 +22,12 @@ module Osheet
     def template(element, name, &block); @templates << Template.new(element, name, &block); end
 
     def attributes
-      {
-        :title => @title
-      }
+      { :title => @title }
     end
 
-    # def data(driver=:xmlss)
-    #   Driver.new(driver, self).data
-    # end
-    # alias_method :to_data, :to_xls
+    def writer
+      XmlssWriter::Base.new(:workbook => self)
+    end
 
   end
 end

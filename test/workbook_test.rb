@@ -109,4 +109,25 @@ module Osheet
     end
 
   end
+
+  class WorkbookWriter < Test::Unit::TestCase
+    context "a workbook" do
+      subject do
+        Workbook.new {
+          style('.test')
+          style('.test.awesome')
+        }
+      end
+
+      should_have_instance_method :writer
+
+      should "provide a writer for itself" do
+        writer = subject.writer
+        assert writer
+        assert_kind_of XmlssWriter::Base, writer
+      end
+
+    end
+  end
+
 end
