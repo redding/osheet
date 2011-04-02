@@ -49,10 +49,10 @@ module Osheet
       end
 
       should "style an Xmlss column" do
-        assert_equal ".awesome..", @xmlss_column.style_id
+        assert_equal ".awesome", @xmlss_column.style_id
         assert_equal 1, subject.styles.size
         assert_kind_of ::Xmlss::Style::Base, subject.styles.first
-        assert_equal ".awesome..", subject.styles.first.id
+        assert_equal @xmlss_column.style_id, subject.styles.first.id
       end
     end
   end
@@ -66,6 +66,9 @@ module Osheet
           height  100
           autofit true
           hidden true
+          cell {
+            data  'one hundred'
+          }
         end
         subject.workbook = Workbook.new {
           style('.awesome') {
@@ -86,13 +89,14 @@ module Osheet
         assert_equal @row.attributes[:height], @xmlss_row.height
         assert_equal @row.attributes[:autofit], @xmlss_row.auto_fit_height
         assert_equal @row.attributes[:hidden], @xmlss_row.hidden
+        assert_equal 1, @xmlss_row.cells.size
       end
 
       should "style an Xmlss row" do
-        assert_equal ".awesome.thing..", @xmlss_row.style_id
+        assert_equal ".awesome.thing", @xmlss_row.style_id
         assert_equal 1, subject.styles.size
         assert_kind_of ::Xmlss::Style::Base, subject.styles.first
-        assert_equal ".awesome.thing..", subject.styles.first.id
+        assert_equal @xmlss_row.style_id, subject.styles.first.id
         assert_equal 14, subject.styles.first.font.size
         assert_equal true, subject.styles.first.font.bold?
         assert_equal true, subject.styles.first.font.italic?

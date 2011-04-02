@@ -15,8 +15,24 @@ module Osheet
         }
       end
 
-      should "build a style obj when writing styles" do
-        assert_kind_of ::Xmlss::Style::Base, subject.send(:style, '')
+      should "key styles based off class str and format" do
+        assert_equal '', subject.send(:style_key, '', nil)
+        assert_equal '.awesome', subject.send(:style_key, 'awesome', nil)
+        assert_equal '.awesome.thing', subject.send(:style_key, 'awesome thing', nil)
+        assert_equal '.awesome..something', subject.send(:style_key, 'awesome', 'something')
+        assert_equal '..something', subject.send(:style_key, '', 'something')
+      end
+
+      should "not build a style obj when writing styles with no class str or format" do
+        assert_equal nil, subject.send(:style, '')
+      end
+
+      should "build a style obj and add it to the writers styles" do
+        xmlss_style = subject.send(:style, 'awesome')
+        assert_kind_of ::Xmlss::Style::Base, xmlss_style
+        assert_equal '.awesome', xmlss_style.id
+        assert_equal 1, subject.styles.size
+        assert_equal xmlss_style, subject.styles.first
       end
 
       should "build a style obj from many matching osheet styles" do
@@ -24,6 +40,13 @@ module Osheet
         assert_equal 14, xmlss_style.font.size
         assert_equal true, xmlss_style.font.bold?
         assert_equal true, xmlss_style.font.italic?
+      end
+
+      should "provide style ids" do
+        assert_equal '', subject.send(:style_id, '')
+        assert_equal '.awesome', subject.send(:style_id, 'awesome')
+        assert_equal '..something', subject.send(:style_id, '', 'something')
+        assert_equal 2, subject.styles.size
       end
 
     end

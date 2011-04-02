@@ -2,10 +2,14 @@ module Osheet::XmlssWriter::Styles
 
   protected
 
+  def style_id(style_class, format=nil)
+    (xmlss_style = style(style_class, format)).nil? ? '' : xmlss_style.id
+  end
+
   def style(style_class, format=nil)
     key = style_key(style_class, format)
     xmlss_style = @styles.find{|style| style.id == key}
-    if xmlss_style.nil?
+    if !key.empty? && xmlss_style.nil?
       settings = style_settings(key)
       @styles << (xmlss_style = ::Xmlss::Style::Base.new(key) {
         if settings.has_key?(:align) && !settings[:align].empty?
@@ -33,7 +37,7 @@ module Osheet::XmlssWriter::Styles
   def style_key(style_class, format)
     (style_class || '').strip.split(/\s+/).collect do |c|
       ".#{c}"
-    end.join('') + "..#{format}"
+    end.join('') + (format.nil? || format.empty? ? '' : "..#{format}")
   end
 
   def style_settings(key)
