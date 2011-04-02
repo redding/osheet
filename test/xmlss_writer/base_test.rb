@@ -53,8 +53,8 @@ module Osheet
               column
               row {
                 cell {
-                  format  :numeric
-                  data    1
+                  data 1
+                  format "Currency"
                 }
               }
             }
@@ -79,10 +79,10 @@ module Osheet
       should "write xml data to a file path" do
         path = nil
         assert_nothing_raised do
-          path = subject.to_file("./written.xls")
+          path = subject.to_file("./tmp/base_test.xls")
         end
         assert_kind_of ::String, path
-        assert_equal './written.xls', path
+        assert_equal './tmp/base_test.xls', path
         assert File.exists?(path)
       end
 

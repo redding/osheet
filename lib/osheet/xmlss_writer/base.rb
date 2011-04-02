@@ -34,9 +34,7 @@ module Osheet::XmlssWriter
 
     def to_file(path)
       FileUtils.mkdir_p(File.dirname(path))
-      File.open(path, 'w') do |file|
-        file.write self.to_data
-      end
+      File.open(path, 'w') {|f| f.write self.to_data}
       File.exists?(path) ? path : false
     end
 
