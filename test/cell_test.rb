@@ -9,7 +9,7 @@ module Osheet
 
       should_be_a_styled_element(Cell)
       should_be_a_worksheet_element(Cell)
-      #should_be_a_workbook_element(Cell)
+      should_be_a_workbook_element(Cell)
 
       should_have_instance_methods :data, :format, :colspan, :rowspan, :href
 
