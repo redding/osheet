@@ -29,5 +29,9 @@ module Osheet
       XmlssWriter::Base.new(:workbook => self)
     end
 
+    [:to_data, :to_file].each do |meth|
+      define_method(meth) {|*args| writer.send(meth, *args) }
+    end
+
   end
 end

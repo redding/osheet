@@ -119,7 +119,7 @@ module Osheet
         }
       end
 
-      should_have_instance_method :writer
+      should_have_instance_method :writer, :to_data, :to_file
 
       should "provide a writer for itself" do
         writer = subject.writer
