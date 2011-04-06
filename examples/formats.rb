@@ -213,4 +213,51 @@ Osheet::Workbook.new {
 
 
 
+  # fraction format examples
+  worksheet {
+    name "fractions"
+
+    column {
+      width 250
+      meta(:label => 'Format')
+    }
+    column {
+      width 125
+      meta(:label => 'Fraction Example')
+    }
+
+    # header row
+    row {
+      columns.each do |col|
+        cell{ data col.meta[:label] }
+      end
+    }
+
+    # fraction data rows
+    data_opts = {
+      :one_digit => 0.5,
+      :two_digits => 0.0125,
+      :three_digits => 0.01,
+      :halves => 0.5,
+      :quarters => 0.25,
+      :eighths => 0.125,
+      :sixteenths => 0.0625,
+      :tenths => 0.1,
+      :hundredths => 0.01
+    }
+    data_opts.each do |k,v|
+      row {
+        cell {
+          data Osheet::Format.new(:fraction, :type => k).key
+        }
+        cell {
+          data v
+          format :fraction, :type => k
+        }
+      }
+    end
+  }
+
+
+
 }.to_file('examples/formats.xls')
