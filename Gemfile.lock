@@ -2,11 +2,13 @@ PATH
   remote: .
   specs:
     osheet (0.1.0)
+      enumeration (~> 1.1.0)
       xmlss (~> 0.0.2)
 
 GEM
   remote: http://rubygems.org/
   specs:
+    enumeration (1.1.0)
     json (1.5.1)
     kelredd-useful (0.4.1)
       json
@@ -25,6 +27,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0)
+  enumeration (~> 1.1.0)
   osheet!
   test-belt (= 0.2.1)
   xmlss (~> 0.0.2)

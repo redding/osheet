@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency("bundler", ["~> 1.0"])
   s.add_development_dependency("test-belt", ["= 0.2.1"]) # locked to a specific version for test stability
 
+  s.add_dependency("enumeration", ["~>1.1.0"])
   s.add_dependency("xmlss", "~>0.0.2")
 
 end
