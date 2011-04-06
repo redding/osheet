@@ -144,8 +144,8 @@ module Osheet
       end
 
       should "style an Xmlss cell" do
-        assert_equal ".awesome.thing..number_0_nocomma_black", @xmlss_cell.style_id
-        assert_equal ".awesome.thing..number_0_nocomma_black", subject.styles.first.id
+        assert_equal ".awesome.thing..number_none_0_nocomma_black", @xmlss_cell.style_id
+        assert_equal ".awesome.thing..number_none_0_nocomma_black", subject.styles.first.id
         assert_equal '0', subject.styles.first.number_format.format
       end
     end

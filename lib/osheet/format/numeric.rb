@@ -1,5 +1,58 @@
+require 'enumeration'
+
 module Osheet::Format
-  module Numeric
+
+  class Numeric
+    include Enumeration
+
+    attr_accessor :decimal_places, :comma_separator
+    enum :symbol, [:none, :dollar, :euro]
+    enum :negative_numbers, [:black, :black_parenth, :red, :red_parenth]
+
+    def initialize(opts={})
+      self.symbol = opts[:symbol] || :none
+      self.decimal_places = opts[:decimal_places] || 0
+      self.comma_separator = opts.has_key?(:comma_separator) ? opts[:comma_separator] : false
+      self.negative_numbers = opts[:negative_numbers] || :black
+    end
+
+    def decimal_places=(value)
+      if !value.kind_of?(::Fixnum) || value < 0 || value > 30
+        raise ArgumentError, ":decimal_places must be a Fixnum between 0 and 30."
+      end
+      @decimal_places = value
+    end
+
+    def comma_separator=(value)
+      @comma_separator = !!value
+    end
+
+    def style
+      negative_numbers_style
+    end
+
+    def key
+      "#{key_prefix}_#{symbol_key}_#{decimal_places_key}_#{comma_separator_key}_#{negative_numbers_key}"
+    end
+
+    protected
+
+    # used by 'key' in Numeric base class, override as necessary
+    def key_prefix
+      "number"
+    end
+
+    # used by 'numeric_style' in Numeric base class, override as necessary
+    def symbol_suffix
+      ""
+    end
+
+    private
+
+
+    def numeric_style
+      "#{symbol_style}#{symbol_suffix}#{comma_separator_style}#{decimal_places_style}"
+    end
 
 
     def negative_numbers_style
@@ -48,5 +101,6 @@ module Osheet::Format
     def symbol_key
       @symbol.to_s.gsub('_', '')
     end
+
   end
 end

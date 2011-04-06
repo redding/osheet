@@ -45,7 +45,7 @@ module Osheet
       should "provide style ids" do
         assert_equal '', subject.send(:style_id, '')
         assert_equal '.awesome', subject.send(:style_id, 'awesome')
-        assert_equal '..number_0_nocomma_black', subject.send(:style_id, '', Osheet::Format.new(:number))
+        assert_equal '..number_none_0_nocomma_black', subject.send(:style_id, '', Osheet::Format.new(:number))
         assert_equal 2, subject.styles.size
       end
 
