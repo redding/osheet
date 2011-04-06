@@ -63,9 +63,64 @@ Osheet::Workbook.new {
         end
       }
     end
-
-
-
-
   }
+
+
+  # currency format examples
+  worksheet {
+    name "currency"
+
+    column {
+      width 250
+      meta(:label => 'Format')
+    }
+    [1000, -20000].each do |n|
+      column {
+        width 125
+        meta(:label => n.to_s, :value => n)
+      }
+    end
+
+    # header row
+    row {
+      columns.each do |col|
+        cell{ data col.meta[:label] }
+      end
+    }
+
+    # data rows
+    [
+      {},
+      {
+        :symbol => :euro,
+        :decimal_places => 0,
+        :negative_numbers => :red
+      },
+      {
+        :decimal_places => 1,
+        :comma_separator => false,
+        :negative_numbers => :black_parenth
+      },
+      {
+        :decimal_places => 8,
+        :comma_separator => true,
+        :negative_numbers => :red_parenth
+      }
+    ].each do |opts|
+      row {
+        cell {
+          data Osheet::Format.new(:currency, opts).key
+        }
+        columns[1..-1].each do |col|
+          cell {
+            data col.meta[:value]
+            format :number, opts
+          }
+        end
+      }
+    end
+  }
+
+
+
 }.to_file('examples/formats.xls')
