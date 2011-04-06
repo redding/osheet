@@ -114,7 +114,7 @@ Osheet::Workbook.new {
         columns[1..-1].each do |col|
           cell {
             data col.meta[:value]
-            format :number, opts
+            format :currency, opts
           }
         end
       }

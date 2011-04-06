@@ -38,7 +38,7 @@ module Osheet::Format
     def symbol_style
       case @symbol
       when :dollar
-        "&quot;$&quot;"
+        '"$"'
       when :euro
         "[$€-2]\ "
       when :none
