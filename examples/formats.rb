@@ -323,4 +323,44 @@ Osheet::Workbook.new {
 
 
 
+  # datetime format examples
+  worksheet {
+    name "date, time"
+
+    column {
+      width 250
+      meta(:label => 'Format')
+    }
+    column {
+      width 125
+      meta(:label => 'Datetime')
+    }
+
+    # header row
+    row {
+      columns.each do |col|
+        cell{ data col.meta[:label] }
+      end
+    }
+
+    # datetime data row
+    [ 'm','d','y', 'mm', 'dd', 'yy', 'yyyy',
+      'mm/dd/yy', 'mm/dd/yyyy', 'mmmm', 'mmmmm', 'mmmmm',
+      'h','m','s', 'hh', 'mm', 'ss',
+      'h:mm:ss', 'h:mm:ss.0', 'hh:mm:ss AM/PM'
+    ].each do |s|
+      row {
+        cell {
+          data Osheet::Format.new(:datetime, s).key
+        }
+        cell {
+          data Date.today
+          format :datetime, s
+        }
+      }
+    end
+  }
+
+
+
 }.to_file('examples/formats.xls')

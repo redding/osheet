@@ -2,7 +2,7 @@ require 'osheet/format/general'
 require 'osheet/format/number'
 require 'osheet/format/currency'
 require 'osheet/format/accounting'
-
+require 'osheet/format/datetime'
 require 'osheet/format/percentage'
 require 'osheet/format/fraction'
 require 'osheet/format/scientific'
@@ -14,7 +14,7 @@ module Osheet::Format
 
   VALUES = [
     :general,:number, :currency, :accounting,
-    :date, :time, :percentage, :fraction, :scientific,
+    :datetime, :percentage, :fraction, :scientific,
     :text, :special, :custom
   ]
 
