@@ -6,6 +6,7 @@ require 'osheet/format/accounting'
 require 'osheet/format/percentage'
 require 'osheet/format/fraction'
 require 'osheet/format/scientific'
+require 'osheet/format/text'
 
 module Osheet::Format
 

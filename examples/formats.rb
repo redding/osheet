@@ -260,4 +260,38 @@ Osheet::Workbook.new {
 
 
 
+  # text format examples
+  worksheet {
+    name "text"
+
+    column {
+      width 250
+      meta(:label => 'Format')
+    }
+    column {
+      width 125
+      meta(:label => 'Text Example')
+    }
+
+    # header row
+    row {
+      columns.each do |col|
+        cell{ data col.meta[:label] }
+      end
+    }
+
+    # text data rows
+    row {
+      cell {
+        data Osheet::Format.new(:text).key
+      }
+      cell {
+        data "001122 blah blah"
+        format :text
+      }
+    }
+  }
+
+
+
 }.to_file('examples/formats.xls')
