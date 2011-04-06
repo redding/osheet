@@ -14,7 +14,7 @@ Osheet::Workbook.new {
     row {
       cell {
         data 1
-        format "Currency"
+        format :number
       }
     }
   }

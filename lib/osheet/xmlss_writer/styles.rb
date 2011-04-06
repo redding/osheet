@@ -1,13 +1,16 @@
+require 'osheet/format'
 module Osheet::XmlssWriter::Styles
 
   protected
 
-  def style_id(style_class, format=nil)
-    (xmlss_style = style(style_class, format)).nil? ? '' : xmlss_style.id
+  def style_id(style_class, oformat=nil)
+    oformat ||= Osheet::Format.new(:general)
+    (xmlss_style = style(style_class, oformat)).nil? ? '' : xmlss_style.id
   end
 
-  def style(style_class, format=nil)
-    key = style_key(style_class, format)
+  def style(style_class, oformat=nil)
+    oformat ||= Osheet::Format.new(:general)
+    key = style_key(style_class, oformat.key)
     xmlss_style = @styles.find{|style| style.id == key}
     if !key.empty? && xmlss_style.nil?
       settings = style_settings(key)
@@ -26,18 +29,18 @@ module Osheet::XmlssWriter::Styles
             border(settings[bp])
           end
         end
-        if format
-          number_format(:format => format)
+        if oformat
+          number_format(:format => oformat.style)
         end
       })
     end
     xmlss_style
   end
 
-  def style_key(style_class, format)
+  def style_key(style_class, format_key)
     (style_class || '').strip.split(/\s+/).collect do |c|
       ".#{c}"
-    end.join('') + (format.nil? || format.empty? ? '' : "..#{format}")
+    end.join('') + (format_key.nil? || format_key.empty? ? '' : "..#{format_key}")
   end
 
   def style_settings(key)

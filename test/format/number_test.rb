@@ -70,6 +70,21 @@ module Osheet::Format
         }).style)
       end
 
+      should "provide unique format keys" do
+        assert_equal("number_2_nocomma_blackparenth", Number.new({
+          :decimal_places => 2,
+          :negative_numbers => :black_parenth,
+          :comma_separator => false
+        }).key)
+        assert_equal("number_4_comma_redparenth", Number.new({
+          :decimal_places => 4,
+          :negative_numbers => :red_parenth,
+          :comma_separator => true
+        }).key)
+      end
+
+
+
     end
   end
 

@@ -29,14 +29,24 @@ module Osheet::Format
       negative_numbers_style
     end
 
+    def key
+      "number_#{decimal_places_key}_#{comma_separator_key}_#{negative_numbers_key}"
+    end
+
     private
 
     def decimal_places_style
       "#{comma_separator_style}0#{'.'+'0'*@decimal_places if @decimal_places > 0}"
     end
+    def decimal_places_key
+      @decimal_places.to_s
+    end
 
     def comma_separator_style
       @comma_separator ? '#,##' : ''
+    end
+    def comma_separator_key
+      @comma_separator ? 'comma' : 'nocomma'
     end
 
     def negative_numbers_style
@@ -50,6 +60,9 @@ module Osheet::Format
       when :red_parenth
         "#{decimal_places_style}_);[Red]\(#{decimal_places_style}\)"
       end
+    end
+    def negative_numbers_key
+      @negative_numbers.to_s.sub('_', '')
     end
 
   end

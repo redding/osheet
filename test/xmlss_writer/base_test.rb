@@ -54,7 +54,7 @@ module Osheet
               row {
                 cell {
                   data 1
-                  format "Currency"
+                  format :number
                 }
               }
             }

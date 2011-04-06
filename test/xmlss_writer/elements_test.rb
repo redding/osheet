@@ -110,9 +110,9 @@ module Osheet
       before do
         @cell = Osheet::Cell.new do
           style_class "awesome thing"
-          data  'one hundred'
-          format '@'
-          href 'http://example.com'
+          data    100
+          format  :number
+          href    'http://example.com'
           rowspan 2
           colspan 5
         end
@@ -134,7 +134,7 @@ module Osheet
         assert_kind_of ::Xmlss::Cell, @xmlss_cell
         assert_kind_of ::Xmlss::Data, @xmlss_cell.data
         assert_equal @cell.attributes[:data], @xmlss_cell.data.value
-        assert_equal ::Xmlss::Data.type(:string), @xmlss_cell.data.type
+        assert_equal ::Xmlss::Data.type(:number), @xmlss_cell.data.type
         assert_equal 'http://example.com', @xmlss_cell.href
       end
 
@@ -144,9 +144,9 @@ module Osheet
       end
 
       should "style an Xmlss cell" do
-        assert_equal ".awesome.thing..@", @xmlss_cell.style_id
-        assert_equal ".awesome.thing..@", subject.styles.first.id
-        assert_equal '@', subject.styles.first.number_format.format
+        assert_equal ".awesome.thing..number_0_nocomma_black", @xmlss_cell.style_id
+        assert_equal ".awesome.thing..number_0_nocomma_black", subject.styles.first.id
+        assert_equal '0', subject.styles.first.number_format.format
       end
     end
   end

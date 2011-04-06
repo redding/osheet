@@ -31,7 +31,7 @@ module Osheet
 
               row {
                 cell {
-                  format  :numeric
+                  format  :number
                   data    1
                 }
               }

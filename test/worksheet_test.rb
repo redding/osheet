@@ -29,7 +29,7 @@ module Osheet
 
             row do
               cell do
-                format  :numeric
+                format  :number
                 data    1
               end
             end

@@ -8,7 +8,11 @@ module Osheet::Format
       subject { General.new }
 
       should "always provide a nil style string" do
-        assert_equal nil, General.new.style
+        assert_equal nil, subject.style
+      end
+
+      should "always provide and empty format key" do
+        assert_equal '', subject.key
       end
 
     end
