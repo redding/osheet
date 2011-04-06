@@ -7,6 +7,8 @@ module Osheet::Format
     context "Number format" do
       subject { Number.new }
 
+      should_have_accessors :decimal_places, :comma_separator, :negative_numbers
+
       should "provide options for negative numbers" do
         assert_equal 4, Number.negative_numbers_set.size
         [:black, :black_parenth, :red, :red_parenth].each do |a|

@@ -14,10 +14,6 @@ module Osheet::Format
       self.negative_numbers = opts[:negative_numbers] || :black
     end
 
-    def type
-      :number
-    end
-
     def decimal_places=(value)
       if !value.kind_of?(::Fixnum) || value < 0
         raise ArgumentError, ":decimal_places must be a positive Fixnum."
