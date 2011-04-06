@@ -54,7 +54,7 @@ module Osheet::Format
         assert_equal "fraction_quarters", f.key
       end
 
-      should "generate a quarters type style strings and key" do
+      should "generate a eighths type style strings and key" do
         f = Fraction.new(:type => :eighths)
         assert_equal "#\ ?/8", f.style
         assert_equal "fraction_eighths", f.key

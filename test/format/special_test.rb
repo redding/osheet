@@ -39,7 +39,7 @@ module Osheet::Format
         assert_equal "special_phonenumber", f.key
       end
 
-      should "generate a zip_code_plus_4 type style strings and key" do
+      should "generate a social_security_number type style strings and key" do
         f = Special.new(:type => :social_security_number)
         assert_equal "000-00-0000", f.style
         assert_equal "special_socialsecuritynumber", f.key
