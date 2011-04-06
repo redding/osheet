@@ -56,7 +56,6 @@ module Osheet::XmlssWriter::Elements
       :merge_across => cell_merge(ocell.attributes[:colspan]),
       :merge_down => cell_merge(ocell.attributes[:rowspan]),
       :data => data(ocell.attributes[:data])
-      # TODO: use the cell format class to force a data format value
     })
   end
   def cell_merge(span)

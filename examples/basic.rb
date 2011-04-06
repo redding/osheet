@@ -13,11 +13,7 @@ Osheet::Workbook.new {
     column
     row {
       cell {
-        data 1000
-        format :number, {
-          :decimal_places => 4,
-          :comma_separator => true
-        }
+        data 1
       }
     }
   }
