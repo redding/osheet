@@ -7,7 +7,7 @@ require 'osheet/format/percentage'
 require 'osheet/format/fraction'
 require 'osheet/format/scientific'
 require 'osheet/format/text'
-
+require 'osheet/format/special'
 require 'osheet/format/custom'
 
 module Osheet::Format

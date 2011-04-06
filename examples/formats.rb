@@ -292,6 +292,22 @@ Osheet::Workbook.new {
     }
 
     # special data rows
+    {
+      :zip_code => 12345,
+      :zip_code_plus_4 => 123456789,
+      :phone_number => 5551112222,
+      :social_security_number => 333224444
+    }.each do |k,v|
+      row {
+        cell {
+          data Osheet::Format.new(:special, :type => k).key
+        }
+        cell {
+          data v
+          format :special, :type => k
+        }
+      }
+    end
 
     # custom data row
     row {

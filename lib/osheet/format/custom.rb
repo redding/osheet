@@ -2,12 +2,12 @@ module Osheet::Format
 
   class Custom
 
-    def initialize(style_string)
-      @style_string = style_string
+    def initialize(type)
+      @type = type
     end
 
-    def style; @style_string; end
-    def key; "custom_#{@style_string}"; end
+    def style; @type; end
+    def key; "custom_#{@type}"; end
 
   end
 end
