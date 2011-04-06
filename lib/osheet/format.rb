@@ -3,6 +3,8 @@ require 'osheet/format/number'
 require 'osheet/format/currency'
 require 'osheet/format/accounting'
 
+require 'osheet/format/percentage'
+
 module Osheet::Format
 
   VALUES = [

@@ -7,12 +7,12 @@ module Osheet::Format
 
     protected
 
-    # used by 'key' in Numeric base class, override as necessary
+    # used by 'key' in Numeric base class
     def key_prefix
       "accounting"
     end
 
-    # used by 'numeric_style' in Numeric base class, override as necessary
+    # used by 'numeric_style' in Numeric base class
     def symbol_suffix
       "* "
     end

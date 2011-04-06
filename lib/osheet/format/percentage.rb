@@ -3,12 +3,10 @@ require 'osheet/format/numeric'
 
 module Osheet::Format
 
-  class Currency < Osheet::Format::Numeric
+  class Percentage < Osheet::Format::Numeric
     def initialize(opts={})
       super({
-        :symbol => :dollar,
-        :decimal_places => 2,
-        :comma_separator => true
+        :decimal_places => 2
       }.merge(opts))
     end
 
@@ -16,8 +14,12 @@ module Osheet::Format
 
     # used by 'key' in Numeric base class
     def key_prefix
-      "currency"
+      "percentage"
     end
 
+    # used by 'decimal_places_style' in Numeric base class
+    def decimal_places_suffix
+      "%"
+    end
   end
 end

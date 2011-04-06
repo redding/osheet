@@ -42,8 +42,13 @@ module Osheet::Format
       "number"
     end
 
-    # used by 'numeric_style' in Numeric base class, override as necessary
+    # used by 'symbol_style' in Numeric base class, override as necessary
     def symbol_suffix
+      ""
+    end
+
+    # used by 'decimal_places_style' in Numeric base class, override as necessary
+    def decimal_places_suffix
       ""
     end
 
@@ -51,7 +56,9 @@ module Osheet::Format
 
 
     def numeric_style
-      "#{symbol_style}#{comma_separator_style}#{decimal_places_style}"
+      symbol_style +
+      comma_separator_style +
+      decimal_places_style
     end
 
 
@@ -73,7 +80,7 @@ module Osheet::Format
 
 
     def decimal_places_style
-      "0#{'.'+'0'*@decimal_places if @decimal_places > 0}"
+      "0#{'.'+'0'*@decimal_places if @decimal_places > 0}#{decimal_places_suffix}"
     end
     def decimal_places_key
       @decimal_places.to_s
