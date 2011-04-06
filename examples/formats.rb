@@ -68,7 +68,7 @@ Osheet::Workbook.new {
 
   # currency format examples
   worksheet {
-    name "currency"
+    name "currency, accounting"
 
     column {
       width 250
@@ -88,8 +88,7 @@ Osheet::Workbook.new {
       end
     }
 
-    # data rows
-    [
+    data_opts = [
       {},
       {
         :symbol => :euro,
@@ -106,7 +105,10 @@ Osheet::Workbook.new {
         :comma_separator => true,
         :negative_numbers => :red_parenth
       }
-    ].each do |opts|
+    ]
+
+    # currency data rows
+    data_opts.each do |opts|
       row {
         cell {
           data Osheet::Format.new(:currency, opts).key
@@ -115,6 +117,21 @@ Osheet::Workbook.new {
           cell {
             data col.meta[:value]
             format :currency, opts
+          }
+        end
+      }
+    end
+
+    # accounting data rows
+    data_opts.each do |opts|
+      row {
+        cell {
+          data Osheet::Format.new(:accounting, opts).key
+        }
+        columns[1..-1].each do |col|
+          cell {
+            data col.meta[:value]
+            format :accounting, opts
           }
         end
       }
