@@ -4,7 +4,7 @@ require 'osheet/format/currency'
 require 'osheet/format/accounting'
 
 require 'osheet/format/percentage'
-
+require 'osheet/format/fraction'
 require 'osheet/format/scientific'
 
 module Osheet::Format
