@@ -95,14 +95,14 @@
   <Style ss:ID="s46">
    <NumberFormat ss:Format="0.000_);[Red]\(0.000\)"/>
   </Style>
-  <Style ss:ID="s47">
-   <NumberFormat ss:Format="0.0000_);[Red]\(0.0000\)"/>
-  </Style>
   <Style ss:ID="s50">
    <NumberFormat ss:Format="#,##0.0"/>
   </Style>
   <Style ss:ID="s51">
    <NumberFormat ss:Format="0.0"/>
+  </Style>
+  <Style ss:ID="s52">
+   <NumberFormat ss:Format="#,##0.0000_);[Red]\(#,##0.0000\)"/>
   </Style>
  </Styles>
  <Worksheet ss:Name="one dollar">
@@ -111,7 +111,7 @@
    <Column ss:Width="220.0"/>
    <Column ss:Index="3" ss:Width="76.0"/>
    <Row>
-    <Cell ss:StyleID="s21"><Data ss:Type="String">General</Data></Cell>
+    <Cell><Data ss:Type="String">General</Data></Cell>
     <Cell><Data ss:Type="Number">1.0</Data></Cell>
    </Row>
    <Row>
@@ -150,7 +150,7 @@
     <Cell ss:StyleID="s30"><Data ss:Type="Number">-1.0</Data></Cell>
     <Cell ss:StyleID="s37"><Data ss:Type="Number">-1.0</Data></Cell>
     <Cell ss:StyleID="s42"><Data ss:Type="Number">-1.0</Data></Cell>
-    <Cell ss:StyleID="s47"><Data ss:Type="Number">-1.0</Data></Cell>
+    <Cell ss:StyleID="s52"><Data ss:Type="Number">-1.0</Data></Cell>
    </Row>
    <Row ss:Index="9">
     <Cell><Data ss:Type="String">Comma Numbers</Data></Cell>
@@ -169,8 +169,8 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>8</ActiveRow>
-     <ActiveCol>1</ActiveCol>
+     <ActiveRow>24</ActiveRow>
+     <ActiveCol>3</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
