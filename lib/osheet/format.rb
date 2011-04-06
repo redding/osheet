@@ -8,6 +8,8 @@ require 'osheet/format/fraction'
 require 'osheet/format/scientific'
 require 'osheet/format/text'
 
+require 'osheet/format/custom'
+
 module Osheet::Format
 
   VALUES = [

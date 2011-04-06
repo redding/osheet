@@ -262,7 +262,7 @@ Osheet::Workbook.new {
 
   # text format examples
   worksheet {
-    name "text"
+    name "text, special, custom"
 
     column {
       width 250
@@ -270,7 +270,7 @@ Osheet::Workbook.new {
     }
     column {
       width 125
-      meta(:label => 'Text Example')
+      meta(:label => 'Result')
     }
 
     # header row
@@ -280,7 +280,7 @@ Osheet::Workbook.new {
       end
     }
 
-    # text data rows
+    # text data row
     row {
       cell {
         data Osheet::Format.new(:text).key
@@ -288,6 +288,19 @@ Osheet::Workbook.new {
       cell {
         data "001122 blah blah"
         format :text
+      }
+    }
+
+    # special data rows
+
+    # custom data row
+    row {
+      cell {
+        data Osheet::Format.new(:custom, '@').key
+      }
+      cell {
+        data "001122 blah blah"
+        format :custom, '@'
       }
     }
   }
