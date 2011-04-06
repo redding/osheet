@@ -11,7 +11,7 @@ module Osheet::Format
       :three_digits => '???/???',
       :halves => '?/2',
       :quarters => '?/4',
-      :eigths => '?/8',
+      :eighths => '?/8',
       :sixteenths => '??/16',
       :tenths => '?/10',
       :hundredths => '??/100'

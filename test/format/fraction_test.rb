@@ -12,7 +12,7 @@ module Osheet::Format
       should "provide options for type" do
         assert_equal 9, Fraction.type_set.size
         [ :one_digit, :two_digits, :three_digits,
-          :halves, :quarters, :eigths, :sixteenths,
+          :halves, :quarters, :eighths, :sixteenths,
           :tenths, :hundredths
         ].each do |a|
           assert Fraction.type_set.include?(a)
@@ -55,9 +55,9 @@ module Osheet::Format
       end
 
       should "generate a quarters type style strings and key" do
-        f = Fraction.new(:type => :eigths)
+        f = Fraction.new(:type => :eighths)
         assert_equal "#\ ?/8", f.style
-        assert_equal "fraction_eigths", f.key
+        assert_equal "fraction_eighths", f.key
       end
 
       should "generate a sixteenths type style strings and key" do
