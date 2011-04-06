@@ -142,7 +142,7 @@ Osheet::Workbook.new {
 
   # percentage format examples
   worksheet {
-    name "percentage"
+    name "percentage, scientific"
 
     column {
       width 250
@@ -190,6 +190,21 @@ Osheet::Workbook.new {
           cell {
             data col.meta[:value]
             format :percentage, opts
+          }
+        end
+      }
+    end
+
+    # scientific data rows
+    data_opts.each do |opts|
+      row {
+        cell {
+          data Osheet::Format.new(:scientific, opts).key
+        }
+        columns[1..-1].each do |col|
+          cell {
+            data col.meta[:value]
+            format :scientific, opts
           }
         end
       }
