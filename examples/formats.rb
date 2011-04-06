@@ -66,7 +66,7 @@ Osheet::Workbook.new {
   }
 
 
-  # currency format examples
+  # currency/accounting format examples
   worksheet {
     name "currency, accounting"
 
@@ -132,6 +132,64 @@ Osheet::Workbook.new {
           cell {
             data col.meta[:value]
             format :accounting, opts
+          }
+        end
+      }
+    end
+  }
+
+
+
+  # percentage format examples
+  worksheet {
+    name "percentage"
+
+    column {
+      width 250
+      meta(:label => 'Format')
+    }
+    [1000, -20000].each do |n|
+      column {
+        width 125
+        meta(:label => n.to_s, :value => n)
+      }
+    end
+
+    # header row
+    row {
+      columns.each do |col|
+        cell{ data col.meta[:label] }
+      end
+    }
+
+    data_opts = [
+      {},
+      {
+        :decimal_places => 0,
+        :negative_numbers => :red
+      },
+      {
+        :decimal_places => 1,
+        :comma_separator => false,
+        :negative_numbers => :black_parenth
+      },
+      {
+        :decimal_places => 8,
+        :comma_separator => true,
+        :negative_numbers => :red_parenth
+      }
+    ]
+
+    # percentage data rows
+    data_opts.each do |opts|
+      row {
+        cell {
+          data Osheet::Format.new(:percentage, opts).key
+        }
+        columns[1..-1].each do |col|
+          cell {
+            data col.meta[:value]
+            format :percentage, opts
           }
         end
       }
