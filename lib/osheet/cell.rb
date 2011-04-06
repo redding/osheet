@@ -1,4 +1,5 @@
 require 'date'
+require 'osheet/format'
 
 module Osheet
   class Cell
@@ -10,7 +11,7 @@ module Osheet
       @workbook = workbook
       @worksheet = worksheet
       @data = nil
-      @format = nil
+      @format = Format.new(:general)
       @rowspan = 1
       @colspan = 1
       @href = nil
@@ -28,12 +29,8 @@ module Osheet
       end
     end
 
-    def format(value)
-      @format = if value.respond_to?('to_s')
-        value.to_s
-      else
-        value.inspect.to_s
-      end
+    def format(type, opts={})
+      @format = Format.new(type, opts)
     end
 
     def rowspan(value); @rowspan = value; end

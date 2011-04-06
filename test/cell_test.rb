@@ -15,7 +15,7 @@ module Osheet
 
       should "set it's defaults" do
         assert_equal nil, subject.send(:instance_variable_get, "@data")
-        assert_equal nil, subject.send(:instance_variable_get, "@format")
+        assert_kind_of Format::General, subject.send(:instance_variable_get, "@format")
         assert_equal 1,   subject.send(:instance_variable_get, "@colspan")
         assert_equal 1,   subject.send(:instance_variable_get, "@rowspan")
         assert_equal nil,   subject.send(:instance_variable_get, "@href")
@@ -26,7 +26,7 @@ module Osheet
           Cell.new do
             style_class 'more poo'
             data    "Poo"
-            format  '@'
+            format  :number
             colspan 4
             rowspan 2
             href "http://www.google.com"
@@ -35,7 +35,7 @@ module Osheet
 
         should "should set them correctly" do
           assert_equal "Poo", subject.send(:instance_variable_get, "@data")
-          assert_equal '@', subject.send(:instance_variable_get, "@format")
+          assert_kind_of Format::Number, subject.send(:instance_variable_get, "@format")
           assert_equal 4,     subject.send(:instance_variable_get, "@colspan")
           assert_equal 2,     subject.send(:instance_variable_get, "@rowspan")
           assert_equal "http://www.google.com", subject.send(:instance_variable_get, "@href")
@@ -47,7 +47,7 @@ module Osheet
           end
           assert_equal "more poo", subject.attributes[:style_class]
           assert_equal "Poo", subject.attributes[:data]
-          assert_equal "@", subject.attributes[:format]
+          assert_kind_of Format::Number, subject.attributes[:format]
           assert_equal 4, subject.attributes[:colspan]
           assert_equal 2, subject.attributes[:rowspan]
           assert_equal "http://www.google.com", subject.attributes[:href]
@@ -76,14 +76,6 @@ module Osheet
           assert_kind_of ::String, cell.send(:instance_variable_get, "@data")
         end
       end
-
-      should "type cast the format to always be a string" do
-        ['string', 1, 1.0, true, :symbol, [1,2], {:a => 'qye'}, Osheet].each do |thing|
-          cell = Cell.new{format thing}
-          assert_kind_of ::String, cell.send(:instance_variable_get, "@format")
-        end
-      end
-
 
     end
 
