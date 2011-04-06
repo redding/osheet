@@ -1,6 +1,7 @@
 require 'osheet/format/general'
 require 'osheet/format/number'
 require 'osheet/format/currency'
+require 'osheet/format/accounting'
 
 module Osheet::Format
 

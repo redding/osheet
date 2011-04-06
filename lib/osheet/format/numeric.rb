@@ -51,7 +51,7 @@ module Osheet::Format
 
 
     def numeric_style
-      "#{symbol_style}#{symbol_suffix}#{comma_separator_style}#{decimal_places_style}"
+      "#{symbol_style}#{comma_separator_style}#{decimal_places_style}"
     end
 
 
@@ -91,9 +91,9 @@ module Osheet::Format
     def symbol_style
       case @symbol
       when :dollar
-        '"$"'
+        "\"$\"#{symbol_suffix}"
       when :euro
-        "[$€-2]\ "
+        "[$€-2]\ #{symbol_suffix}"
       when :none
         ''
       end
