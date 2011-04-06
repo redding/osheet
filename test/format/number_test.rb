@@ -20,12 +20,14 @@ module Osheet::Format
         assert_equal 0, subject.decimal_places
         assert_equal false, subject.comma_separator
         assert_equal :black, subject.negative_numbers
-        assert_equal "0", Number.new.style
       end
 
-      should "only allow positive Fixnum decimal places" do
+      should "only allow Fixnum decimal places between 0 and 30" do
         assert_raises ArgumentError do
           Number.new({:decimal_places => -1})
+        end
+        assert_raises ArgumentError do
+          Number.new({:decimal_places => 31})
         end
         assert_raises ArgumentError do
           Number.new({:decimal_places => 'poo'})
