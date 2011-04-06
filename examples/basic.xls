@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet">
   <Styles>
-    <Style ss:ID="..Currency">
+    <Style ss:ID="..number_4_comma_black">
       <Borders/>
-      <NumberFormat ss:Format="Currency"/>
+      <NumberFormat ss:Format="#,##0.0000"/>
     </Style>
   </Styles>
   <Worksheet ss:Name="one dollar">
     <Table>
       <Column/>
       <Row>
-        <Cell ss:StyleID="..Currency">
-          <Data ss:Type="Number">1</Data>
+        <Cell ss:StyleID="..number_4_comma_black">
+          <Data ss:Type="Number">1000</Data>
         </Cell>
       </Row>
     </Table>
