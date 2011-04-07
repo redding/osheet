@@ -34,12 +34,13 @@ module Osheet::Associations
         instance_variable_get("@#{plural}") << if self.respond_to?(:workbook)
           # on: worksheet, column, row
           # creating: column, row, cell
+          worksheet = self.respond_to?(:worksheet) ? self.worksheet : self
           if self.workbook && (template = self.workbook.templates.get(singular, args.first))
             # add by template
-            klass.new(self.workbook, self, *args[1..-1], &template)
+            klass.new(self.workbook, worksheet, *args[1..-1], &template)
           else
             # add by block
-            klass.new(self.workbook, self, &block)
+            klass.new(self.workbook, worksheet, &block)
           end
         else
           # on: workbook

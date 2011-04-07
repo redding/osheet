@@ -48,6 +48,15 @@ module Osheet
           assert_equal({}, subject.meta)
         end
 
+        should "know it's width" do
+          subject.width(false)
+          assert_equal false, subject.width
+          subject.width(180)
+          assert_equal 180, subject.width
+          subject.width(nil)
+          assert_equal 180, subject.width
+        end
+
         should "know it's attribute(s)" do
           [:style_class, :width, :autofit, :hidden].each do |a|
             assert subject.attributes.has_key?(a)

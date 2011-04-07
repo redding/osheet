@@ -1,6 +1,6 @@
 # To run:
-# $ gem install osheet
-# $ ruby examples/formats.rb
+# $ bundle install
+# $ bundle exec ruby examples/formats.rb
 # $ open examples/formats.xls
 
 require 'rubygems'

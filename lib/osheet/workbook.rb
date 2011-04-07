@@ -17,7 +17,9 @@ module Osheet
       instance_eval(&block) if block_given?
     end
 
-    def title(title); @title = title; end
+    def title(value=nil)
+      !value.nil? ? @title = value : @title
+    end
     def style(*selectors, &block); @styles << Style.new(*selectors, &block); end
     def template(element, name, &block); @templates << Template.new(element, name, &block); end
 

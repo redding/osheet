@@ -43,6 +43,15 @@ module Osheet
           assert_equal "The Poo", subject.send(:instance_variable_get, "@title")
         end
 
+        should "know it's title" do
+          subject.title(false)
+          assert_equal false, subject.title
+          subject.title('la')
+          assert_equal 'la', subject.title
+          subject.title(nil)
+          assert_equal 'la', subject.title
+        end
+
         should "set it's worksheets" do
           worksheets = subject.send(:instance_variable_get, "@worksheets")
           assert_equal 1, worksheets.size

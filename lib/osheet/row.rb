@@ -18,7 +18,9 @@ module Osheet
       instance_exec(*args, &block) if block_given?
     end
 
-    def height(value); @height = value; end
+    def height(value=nil)
+      !value.nil? ? @height = value : @height
+    end
     def autofit(value); @autofit = !!value; end
     def autofit?; @autofit; end
     def hidden(value); @hidden = !!value; end

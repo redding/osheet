@@ -15,12 +15,12 @@ module Osheet
       instance_exec(*args, &block) if block_given?
     end
 
-    def name(value); @name = value; end
+    def name(value=nil)
+      !value.nil? ? @name = value : @name
+    end
 
     def attributes
-      {
-        :name => @name
-      }
+      { :name => @name }
     end
 
   end

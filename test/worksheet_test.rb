@@ -40,6 +40,15 @@ module Osheet
           assert_equal "Poo!", subject.send(:instance_variable_get, "@name")
         end
 
+        should "know it's name" do
+          subject.name(false)
+          assert_equal false, subject.name
+          subject.name('la')
+          assert_equal 'la', subject.name
+          subject.name(nil)
+          assert_equal 'la', subject.name
+        end
+
         should "know it's attribute(s)" do
           [:name].each do |a|
             assert subject.attributes.has_key?(a)

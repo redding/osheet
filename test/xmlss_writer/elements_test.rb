@@ -22,6 +22,20 @@ module Osheet
         assert_equal @worksheet.columns.size, xmlss_worksheet.table.columns.size
         assert_equal @worksheet.rows.size, xmlss_worksheet.table.rows.size
       end
+
+      should "filter invalid worksheet names" do
+        { 'valid name' => 'valid name',
+          'valid 2' => 'valid 2',
+          'invalid :' => 'invalid ',
+          'invalid ;' => 'invalid ',
+          'invalid *' => 'invalid ',
+          'invalid /' => 'invalid ',
+          'invalid \\' => 'invalid ',
+          '[invalid]' => "invalid]"
+        }.each do |k,v|
+          assert_equal v, subject.send(:worksheet, Worksheet.new { name k}).name
+        end
+      end
     end
   end
 

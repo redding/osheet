@@ -43,6 +43,15 @@ module Osheet
           assert subject.hidden?
         end
 
+        should "know it's height" do
+          subject.height(false)
+          assert_equal false, subject.height
+          subject.height(180)
+          assert_equal 180, subject.height
+          subject.height(nil)
+          assert_equal 180, subject.height
+        end
+
         should "know it's attribute(s)" do
           [:style_class, :height, :autofit, :hidden].each do |a|
             assert subject.attributes.has_key?(a)
