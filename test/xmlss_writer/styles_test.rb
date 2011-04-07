@@ -12,6 +12,7 @@ module Osheet
           style('.font.size') { font 14 }
           style('.font.weight') { font :bold }
           style('.font.style') { font :italic }
+          style('.align.center') { align :center }
         }
       end
 
@@ -36,7 +37,7 @@ module Osheet
       end
 
       should "build a style obj from many matching osheet styles" do
-        xmlss_style = subject.send(:style, 'font size weight style')
+        xmlss_style = subject.send(:style, 'font size weight style align center')
         assert_equal 14, xmlss_style.font.size
         assert_equal true, xmlss_style.font.bold?
         assert_equal true, xmlss_style.font.italic?
@@ -241,9 +242,8 @@ module Osheet
       subject { XmlssWriter::Base.new }
 
       should "build a style obj with formatting" do
-        # TODO: uncomment when further styles defined
-        #assert_equal '@', subject.send(:style, '', Osheet::Format.new(:text)).number_format.format
-        #assert_equal 'mm/dd/yy', subject.send(:style, '', 'mm/dd/yy').number_format.format
+        assert_equal '@', subject.send(:style, '', Osheet::Format.new(:text)).number_format.format
+        assert_equal 'mm/dd/yy', subject.send(:style, '', Osheet::Format.new(:datetime, 'mm/dd/yy')).number_format.format
       end
 
     end

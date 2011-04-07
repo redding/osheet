@@ -52,7 +52,7 @@ module Osheet::XmlssWriter::Styles
   def merged_settings(current, add)
     # concat values for keys in both sets
     current.keys.each do |k|
-      current[k].merge!(add.delete(k))
+      current[k].merge!(add.delete(k) || {})
     end
     # merge keys for anything not in the current
     current.merge(add)
