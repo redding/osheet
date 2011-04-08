@@ -21,6 +21,16 @@ module Osheet::XmlssWriter
       unless oworkbook.kind_of?(::Osheet::Workbook)
         raise ArgumentError, "'#{oworkbook.inspect}' is not an Osheet::Workbook"
       end
+      # if oworkbook && oworkbook.worksheets.collect{|ws| ws.name}.include?(name_value)
+      #   # puts "ERRORR!!!!!!!!!!!!!!"
+      #   # puts "names: #{names.inspect}"
+      #   # puts "name value: #{name_value}"
+      #   raise ArgumentError, "the sheet name '#{name_value}' is already in use.  enter a sheet name that is not used by another sheet"
+      # end
+      # # puts "names: #{names.inspect}"
+      # # puts "name value: #{name_value}"
+      # # name_value
+      
       @ostyles = oworkbook.styles
       @workbook = ::Xmlss::Workbook.new({
         :worksheets => worksheets(oworkbook.worksheets)

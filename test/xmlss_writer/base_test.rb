@@ -23,12 +23,22 @@ module Osheet
         }
       end
 
-      should "allow writing an Osheet::Workbook" do
+      should "only allow writing an Osheet::Workbook" do
         assert_nothing_raised do
           subject.workbook = @workbook
         end
         assert_raises ArgumentError do
           subject.workbook = "poo"
+        end
+      end
+
+      should "not allow writing a workbook that has multiple worksheets with the same name" do
+        assert_raises ArgumentError do
+          subject.workbook = Workbook.new {
+            title "invalid"
+            worksheet { name "testsheet1" }
+            worksheet { name "testsheet1" }
+          }
         end
       end
 

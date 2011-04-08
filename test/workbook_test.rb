@@ -58,6 +58,25 @@ module Osheet
           assert_kind_of Worksheet, worksheets.first
         end
 
+        should "not allow multiple worksheets with the same name" do
+          assert_raises ArgumentError do
+            Workbook.new {
+              title "should fail"
+
+              worksheet { name "awesome" }
+              worksheet { name "awesome" }
+            }
+          end
+          assert_nothing_raised do
+            Workbook.new {
+              title "should not fail"
+
+              worksheet { name "awesome" }
+              worksheet { name "awesome1" }
+            }
+          end
+        end
+
         should "know it's attribute(s)" do
           [:title].each do |a|
             assert subject.attributes.has_key?(a)

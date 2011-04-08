@@ -92,22 +92,26 @@ module Osheet::XmlssWriter::Styles
   def font_settings(font_cmds)
     font_cmds.inject({}) do |font_settings, font_cmd|
       if (setting = case font_cmd
-        when :underline
-          [:underline, :single]
-        when :double_underline
-          [:underline, :double]
-        when :subscript, :superscript
-          [:alignment, font_cmd]
-        when :bold, :italic
-          [font_cmd, true]
-        when :strikethrough
-          [:strike_through, true]
         when ::Fixnum
           [:size, font_cmd]
         when ::String
           if font_cmd =~ /^#/
             [:color, font_cmd]
           end
+        when :bold, :italic, :shadow
+          [font_cmd, true]
+        when :subscript, :superscript
+          [:alignment, font_cmd]
+        when :strikethrough
+          [:strike_through, true]
+        when :underline
+          [:underline, :single]
+        when :double_underline
+          [:underline, :double]
+        when :accounting_underline
+          [:underline, :single_accounting]
+        when :double_accounting_underline
+          [:underline, :double_accounting]
         end
       )
         font_settings[setting.first] = setting.last
@@ -140,6 +144,9 @@ module Osheet::XmlssWriter::Styles
         settings.each do |setting|
           bg_settings[setting.first] = setting.last
         end
+      end
+      if !bg_settings[:color].nil? && bg_settings[:pattern].nil?
+        bg_settings[:pattern] = :solid
       end
       bg_settings
     end

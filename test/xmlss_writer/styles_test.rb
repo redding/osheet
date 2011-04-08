@@ -103,11 +103,9 @@ module Osheet
       subject { XmlssWriter::Base.new }
       before do
         subject.workbook = Workbook.new {
-          [
-            :underline, :double_underline,
-            :subscript, :superscript,
-            :bold, :italic, :strikethrough,
-            :wrap
+          [ :underline, :double_underline, :accounting_underline, :double_accounting_underline,
+            :subscript, :superscript, :shadow, :strikethrough, :wrap,
+            :bold, :italic
           ].each do |s|
             style(".font.#{s}") { font s }
           end
@@ -123,6 +121,8 @@ module Osheet
       should "build style objs for font underline settings" do
         assert_equal ::Xmlss::Style::Font.underline(:single), subject.send(:style, 'font underline').font.underline
         assert_equal ::Xmlss::Style::Font.underline(:double), subject.send(:style, 'font double_underline').font.underline
+        assert_equal ::Xmlss::Style::Font.underline(:single_accounting), subject.send(:style, 'font accounting_underline').font.underline
+        assert_equal ::Xmlss::Style::Font.underline(:double_accounting), subject.send(:style, 'font double_accounting_underline').font.underline
       end
 
       should "build style objs for font alignment settings" do
@@ -134,6 +134,7 @@ module Osheet
         assert_equal true, subject.send(:style, 'font bold').font.bold?
         assert_equal true, subject.send(:style, 'font italic').font.italic?
         assert_equal true, subject.send(:style, 'font strikethrough').font.strike_through?
+        assert_equal true, subject.send(:style, 'font shadow').font.shadow?
       end
 
       should "build style objs for font size" do
@@ -148,7 +149,7 @@ module Osheet
   end
 
   class XmlssWriter::Bg < Test::Unit::TestCase
-    context("Font bg writer") do
+    context("Bg writer") do
 
       subject { XmlssWriter::Base.new }
       before do
@@ -156,6 +157,8 @@ module Osheet
           style('.bg.color') { bg '#FF0000' }
           style('.bg.pattern-only') { bg :solid }
           style('.bg.pattern-color') { bg :horz_stripe => '#0000FF' }
+          style('.bg.color-first') { bg '#00FF00', {:horz_stripe => '#0000FF'} }
+          style('.bg.pattern-first') { bg({:horz_stripe => '#0000FF'}, '#00FF00') }
         }
       end
 
@@ -163,7 +166,7 @@ module Osheet
         assert_equal nil, subject.send(:style, 'bg').interior
       end
 
-      should "build style objs for bg color" do
+      should "build style objs for bg color and auto set the pattern to solid" do
         assert_equal '#FF0000', subject.send(:style, 'bg color').interior.color
       end
 
@@ -172,6 +175,18 @@ module Osheet
         assert_equal nil, subject.send(:style, 'bg pattern-only').interior.pattern_color
         assert_equal ::Xmlss::Style::Interior.pattern(:horz_stripe), subject.send(:style, 'bg pattern-color').interior.pattern
         assert_equal '#0000FF', subject.send(:style, 'bg pattern-color').interior.pattern_color
+      end
+
+      should "set pattern to solid when setting bg color" do
+        assert_equal ::Xmlss::Style::Interior.pattern(:solid), subject.send(:style, 'bg color').interior.pattern
+      end
+
+      should "set pattern to pattern setting when first setting bg color then pattern" do
+        assert_equal ::Xmlss::Style::Interior.pattern(:horz_stripe), subject.send(:style, 'bg color-first').interior.pattern
+      end
+
+      should "set pattern to pattern setting when first setting bg pattern then color" do
+        assert_equal ::Xmlss::Style::Interior.pattern(:horz_stripe), subject.send(:style, 'bg pattern-first').interior.pattern
       end
 
     end
