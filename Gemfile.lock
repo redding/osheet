@@ -3,7 +3,7 @@ PATH
   specs:
     osheet (0.2.0)
       enumeration (~> 1.1.0)
-      xmlss (~> 0.0.2)
+      xmlss (~> 0.1.0)
 
 GEM
   remote: http://rubygems.org/
@@ -19,7 +19,8 @@ GEM
       kelredd-useful (~> 0.4.0)
       leftright (~> 0.9.0)
       shoulda (~> 2.11)
-    xmlss (0.0.2)
+    xmlss (0.1.0)
+      enumeration (~> 1.1.0)
       nokogiri (~> 1.4.0)
 
 PLATFORMS
@@ -30,4 +31,4 @@ DEPENDENCIES
   enumeration (~> 1.1.0)
   osheet!
   test-belt (= 0.2.1)
-  xmlss (~> 0.0.2)
+  xmlss (~> 0.1.0)
