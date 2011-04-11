@@ -78,6 +78,10 @@ Pronounced 'oh-sheeeeeet!' - this gem is a DSL wrapper to the spreadsheet gem th
 
     file = wb.to_file('stats')  # => <spreadsheet written to ./stats.xls>
 
+== Examples
+
+I've add a few examples to ./examples.  Please refer to these for examples on basic usage, using templates, formatting data, and styling data.
+
 == API
 
 These classes define how a spreadsheet is constructed.
