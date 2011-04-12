@@ -1,9 +1,8 @@
 = Osheet
-* Osheet is under development and should not be relied upon just yet.  Thx. *
 
 == Description
 
-Pronounced 'oh-sheeeeeet!' - this gem is a DSL wrapper to the spreadsheet gem that hopefully doesn't totally suck.
+A DSL for specifying and generating spreadsheets using Ruby.
 
 == Installation
 
@@ -78,57 +77,21 @@ Pronounced 'oh-sheeeeeet!' - this gem is a DSL wrapper to the spreadsheet gem th
 
     file = wb.to_file('stats')  # => <spreadsheet written to ./stats.xls>
 
-== Examples
-
-I've add a few examples to ./examples.  Please refer to these for examples on basic usage, using templates, formatting data, and styling data.
-
 == API
 
-These classes define how a spreadsheet is constructed.
-=== Osheet::Workbook
-* *style(selector, &block)*: define a style for the workbook
-* *template(for, named, &block)*: define a named template for the workbook
-* *worksheet(&block)*: define a worksheet for the workbook
-# TODO: *use(module)*
-# TODO: *use(file)*
+Check out the [[Osheet Wiki|https://github.com/kelredd/osheet/wiki]].  It covers the full Osheet API.
 
-=== Osheet::Worksheet
-* *name(value)*: set the name for this worksheet
-* *column(&block)*: define a column for the worksheet
-* *column(:template, *args): define a templated column for the worksheet
-* *row(&block)*: define a row for the worksheet
-* *row(:template, *args): define a templated row for the worksheet
+== Examples
 
-=== Xmlss::Column
-* *style_class(value)*: (string) the styles selectors should match against
-* *width(value)*: (numeric) set the explicit width for the column
-* *auto_fit_width(value)*: (bool) set whether the column should auto fit it's width, default: false
-* *hidden(value)*: (bool) set whether the column is hidden, default: false
-* *meta(data)*: (anything) a generic way to associate meta-data with the column
-
-=== Xmlss::Row
-* *style_class(value)*: (string) the styles selectors should match against
-* *height(value)*: (numeric) set the explicit width for the column
-* *auto_fit_height(value)*: (bool) set whether the row should auto fit it's height, default: false
-* *hidden(value)*: (bool) set whether the row is hidden, default: false
-* *cell(&block)*: define a cell for the row
-* *cell(:template, *args): define a templated cell for the row
-
-=== Xmlss::Cell
-* *style_class(value)*: (string) the styles selectors should match against
-* *data(value)*: (anything), data the cell should contain.  if not a string, numeric, or date, will cast data to sting using 'inspect'.
-* format(value)*: (anything), optional, custom formatting string for the data (see driver documentation for options)
-* *colspan(value)*: (int) the number of columns (l to r) the cell should occupy, default: 1
-* *rowspan(value)*: (int) the number of rows (t to b) the cell should occupy, default: 1
-* *href(value)*: (string) set the href the data should link to
+I've add a few examples to ./examples.  Please refer first to the API then to these for examples on basic usage, using templates, formatting data, and styling data.
 
 == Links
 
-* *GitHub*
+* *Osheet*
   - http://github.com/kelredd/osheet
 
-* *Spreadsheet*
-  - http://spreadsheet.rubyforge.org/
+* *Wiki*
+  - https://github.com/kelredd/osheet/wiki
 
 == License
 

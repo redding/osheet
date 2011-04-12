@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Kelly Redding"]
   s.email       = ["kelly@kelredd.com"]
   s.homepage    = "http://github.com/kelredd/osheet"
-  s.summary     = %q{A DSL for generating spreadsheets that doesn't totally suck - pronounced 'Oh sheeeeeet!'}
-  s.description = %q{A DSL for specifying and generating rich spreasheetML.  Specify your spreadsheet using the richness of Ruby and easily produce the corresponding spreadsheetML to render in MS Excel.}
+  s.summary     = %q{A DSL for specifying and generating spreadsheets using Ruby}
+  s.description = %q{A DSL for specifying and generating spreadsheets using Ruby}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
