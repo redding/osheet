@@ -9,6 +9,9 @@ A DSL for specifying and generating spreadsheets using Ruby.
     $ gem install osheet
 
 == Basic Example
+
+    require 'osheet'
+
     fields = ['Sex', 'Age', 'Height', 'Weight']
     data = {
       'Tom' => ['M', 52, "6'2\"", '220 lbs.'],
@@ -18,9 +21,50 @@ A DSL for specifying and generating spreadsheets using Ruby.
 
     # this will dump the above data to a single-sheet workbook w/ no styles
 
-    require 'osheet'
+    Osheet::Workbook.new {
+      title "basic"
 
-    wb = Osheet::Workbook.new {
+      template(:column, :data) { |field, index|
+        width 80
+        meta(
+          :label => field.to_s,
+          :index => index
+        )
+      }
+
+      template(:row, :title) {
+        cell {
+          colspan columns.count
+          data worksheet.name
+        }
+      }
+
+      template(:row, :empty) {
+        cell {
+          colspan columns.count
+          data ''
+        }
+      }
+
+      template(:row, :header) {
+        columns.each do |column|
+          cell {
+            data column.meta[:label]
+          }
+        end
+      }
+
+      template(:row, :data) { |name, stats|
+        cell {
+          data name
+        }
+        stats.each do |stat|
+          cell {
+            data stat
+          }
+        end
+      }
+
       worksheet {
         name "Stats: #{fields.join(', ')}"
 
@@ -31,51 +75,18 @@ A DSL for specifying and generating spreadsheets using Ruby.
           )
         }
         fields.each_with_index do |f, i|
-          column {
-            width 80
-            meta(
-              :label => f.to_s,
-              :index => i
-            )
-          }
+          column :data, f, i
         end
 
-        row {     # title row
-          cell {
-            colspan columns.count
-            data worksheet.name
-          }
-        }
-        row {     # empty row
-          cell {
-            colspan columns.count
-            data ''
-          }
-        }
-        row {     # header row
-          columns.each do |column|
-            cell {
-              data column.meta[:label]
-            }
-          end
-        }
+        row :title
+        row :empty
+        row :header
 
         data.each do |name, stats|
-          row {   # data row
-            cell {
-              data name
-            }
-            stats.each do |stat|
-              cell {
-                data stat
-              }
-            end
-          }
+          row :data, name, stats
         end
-      } # worksheet
-    } # workbook
-
-    file = wb.to_file('stats')  # => <spreadsheet written to ./stats.xls>
+      }
+    }.to_file('stats.xls')
 
 == API
 
