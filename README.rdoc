@@ -79,7 +79,7 @@ A DSL for specifying and generating spreadsheets using Ruby.
 
 == API
 
-Check out the [[Osheet Wiki|https://github.com/kelredd/osheet/wiki]].  It covers the full Osheet API.
+Check out the wiki: https://github.com/kelredd/osheet/wiki.  It covers the full Osheet API.
 
 == Examples
 
