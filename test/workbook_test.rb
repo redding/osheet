@@ -1,5 +1,6 @@
 require "test/helper"
 require 'osheet/workbook'
+require 'test/mixins'
 
 module Osheet
   class WorkbookTest < Test::Unit::TestCase
@@ -8,7 +9,7 @@ module Osheet
       subject { Workbook.new }
 
       should_have_readers :styles, :templates
-      should_have_instance_methods :title, :style, :template, :attributes
+      should_have_instance_methods :title, :style, :template, :attributes, :use
 
       should_hm(Workbook, :worksheets, Worksheet)
 
@@ -136,6 +137,40 @@ module Osheet
 
     end
 
+  end
+
+  class WorkbookMixins < Test::Unit::TestCase
+    context "a workbook w/ mixins" do
+      subject do
+        Workbook.new {
+          use StyledMixin
+          use TemplatedMixin
+        }
+      end
+
+      should "add the mixin styles to it's styles" do
+        assert_equal 2, subject.styles.size
+        assert_equal 1, subject.styles.first.selectors.size
+        assert_equal '.test', subject.styles.first.selectors.first
+        assert_equal 1, subject.styles.last.selectors.size
+        assert_equal '.test.awesome', subject.styles.last.selectors.first
+      end
+
+      should "add the mixin templates to it's templates" do
+        assert subject.templates
+        assert_kind_of TemplateSet, subject.templates
+        assert_equal 3, subject.templates.keys.size
+        assert_kind_of Template, subject.templates.get('column', 'yo')
+        assert_kind_of Template, subject.templates.get('row', 'yo_yo')
+        assert_kind_of Template, subject.templates.get('worksheet', 'go')
+
+        subject.worksheet(:go)
+        assert_equal 1, subject.worksheets.size
+        assert_equal 'blue', subject.worksheets.first.columns.first.meta[:color]
+        assert_equal 500, subject.worksheets.first.rows.first.attributes[:height]
+      end
+
+    end
   end
 
   class WorkbookWriter < Test::Unit::TestCase

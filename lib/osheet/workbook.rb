@@ -27,6 +27,11 @@ module Osheet
       { :title => @title }
     end
 
+    def use(mixin)
+      (mixin.styles || []).each{ |s| @styles << s }
+      (mixin.templates || []).each{ |t| @templates << t }
+    end
+
     def writer
       XmlssWriter::Base.new(:workbook => self)
     end
