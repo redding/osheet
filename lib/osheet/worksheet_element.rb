@@ -5,11 +5,14 @@ module Osheet::WorksheetElement
     end
   end
 
-  def columns
-    if worksheet && worksheet.respond_to?(:columns)
-      worksheet.columns
-    else
-      nil
+  [:columns, :rows].each do |meth|
+    define_method(meth) do
+      if worksheet && worksheet.respond_to?(meth)
+        worksheet.send(meth)
+      else
+        nil
+      end
     end
   end
+
 end
