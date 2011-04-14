@@ -14,6 +14,7 @@ module Osheet
       should_have_instance_method :height
       should_have_instance_methods :autofit, :autofit?
       should_have_instance_methods :hidden, :hidden?
+      should_have_instance_method :meta
 
       should "set it's defaults" do
         assert_equal nil, subject.send(:instance_variable_get, "@height")
@@ -23,6 +24,7 @@ module Osheet
         assert !subject.hidden?
 
         assert_equal [], subject.cells
+        assert_equal nil, subject.meta
       end
 
       context "that has attributes" do
@@ -32,6 +34,9 @@ module Osheet
             height  100
             autofit true
             hidden true
+            meta(
+              {}
+            )
           end
         end
 
@@ -41,6 +46,7 @@ module Osheet
           assert subject.autofit?
           assert_equal true, subject.send(:instance_variable_get, "@hidden")
           assert subject.hidden?
+          assert_equal({}, subject.meta)
         end
 
         should "know it's height" do

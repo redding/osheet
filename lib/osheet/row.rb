@@ -6,6 +6,7 @@ module Osheet
     include WorkbookElement
     include WorksheetElement
     include StyledElement
+    include MetaElement
 
     hm :cells
 

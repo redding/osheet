@@ -10,11 +10,14 @@ module Osheet
       should_be_a_workbook_element(Worksheet)
 
       should_have_instance_methods :name, :attributes
+      should_have_instance_method :meta
 
       should "set it's defaults" do
         assert_equal nil, subject.send(:instance_variable_get, "@name")
         assert_equal [], subject.columns
         assert_equal [], subject.rows
+
+        assert_equal nil, subject.meta
       end
 
       should_hm(Worksheet, :columns, Column)
@@ -24,6 +27,9 @@ module Osheet
         subject do
           Worksheet.new do
             name "Poo!"
+            meta(
+              {}
+            )
 
             column
 
@@ -36,8 +42,9 @@ module Osheet
           end
         end
 
-        should "set it's name" do
+        should "set it's name and meta" do
           assert_equal "Poo!", subject.send(:instance_variable_get, "@name")
+          assert_equal({}, subject.meta)
         end
 
         should "know it's name" do

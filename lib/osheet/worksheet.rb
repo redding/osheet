@@ -5,6 +5,7 @@ module Osheet
   class Worksheet
     include Associations
     include WorkbookElement
+    include MetaElement
 
     hm :columns
     hm :rows

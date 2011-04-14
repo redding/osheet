@@ -3,6 +3,7 @@ module Osheet
     include WorkbookElement
     include WorksheetElement
     include StyledElement
+    include MetaElement
 
     def initialize(workbook=nil, worksheet=nil, *args, &block)
       @workbook = workbook
@@ -10,7 +11,6 @@ module Osheet
       @width = nil
       @autofit = false
       @hidden = false
-      @meta = nil
       instance_exec(*args, &block) if block_given?
     end
 
@@ -31,8 +31,5 @@ module Osheet
       }
     end
 
-    def meta(value=nil)
-      value.nil? ? @meta : (@meta = value)
-    end
   end
 end
