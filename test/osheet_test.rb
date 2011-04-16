@@ -3,10 +3,12 @@ require "test/helper"
 class OsheetTest < Test::Unit::TestCase
 
   context "Osheet" do
+    subject {::Osheet}
 
-    should "use Excel" do
+    should_have_instance_method :register
+
+    should "use provide a default mime type" do
       assert_equal "application/vnd.ms-excel", Osheet::MIME_TYPE
-      assert_equal "Excel", Osheet::SPREADSHEET_TYPE
     end
 
   end

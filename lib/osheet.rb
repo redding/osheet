@@ -1,6 +1,13 @@
 module Osheet
-  SPREADSHEET_TYPE = "Excel"
+
   MIME_TYPE = "application/vnd.ms-excel"
+
+  class << self
+    # used to register an appropriate template engine
+    def register
+      require 'osheet/template_engine'
+    end
+  end
 
 end
 

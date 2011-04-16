@@ -5,6 +5,7 @@ require 'test/env'
 class Test::Unit::TestCase
   class << self
 
+
     def should_be_a_workbook_element(klass)
       should_have_instance_methods :workbook, :styles, :templates
       context "given a workbook with templates and styles" do
