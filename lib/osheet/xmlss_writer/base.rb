@@ -30,21 +30,21 @@ module Osheet::XmlssWriter
       # # puts "names: #{names.inspect}"
       # # puts "name value: #{name_value}"
       # # name_value
-      
+
       @ostyles = oworkbook.styles
       @workbook = ::Xmlss::Workbook.new({
         :worksheets => worksheets(oworkbook.worksheets)
       })
     end
 
-    def to_data
+    def to_data(*options)
       @workbook.styles = @styles
-      @workbook.to_xml
+      @workbook.to_xml(*options)
     end
 
-    def to_file(path)
+    def to_file(path, *options)
       FileUtils.mkdir_p(File.dirname(path))
-      File.open(path, 'w') {|f| f.write self.to_data}
+      File.open(path, 'w') {|f| f.write self.to_data(*options)}
       File.exists?(path) ? path : false
     end
 

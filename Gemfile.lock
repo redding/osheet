@@ -3,7 +3,7 @@ PATH
   specs:
     osheet (0.4.0)
       enumeration (~> 1.1.0)
-      xmlss (~> 0.1.0)
+      xmlss (~> 0.2.0)
 
 GEM
   remote: http://rubygems.org/
@@ -30,7 +30,7 @@ GEM
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
-    xmlss (0.1.0)
+    xmlss (0.2.0)
       enumeration (~> 1.1.0)
       nokogiri (~> 1.4.0)
 
@@ -45,4 +45,4 @@ DEPENDENCIES
   sinatra (>= 0.9.4)
   test-belt (= 0.2.1)
   webrat (>= 0.6.0)
-  xmlss (~> 0.1.0)
+  xmlss (~> 0.2.0)

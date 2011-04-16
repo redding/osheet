@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency("webrat", [">= 0.6.0"])
 
   s.add_dependency("enumeration", ["~>1.1.0"])
-  s.add_dependency("xmlss", "~>0.1.0")
+  s.add_dependency("xmlss", "~>0.2.0")
 
 end

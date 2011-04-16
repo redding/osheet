@@ -18,4 +18,4 @@ Osheet::Workbook.new {
       }
     }
   }
-}.to_file('examples/trivial.xls')
+}.to_file('examples/trivial.xls', :format)

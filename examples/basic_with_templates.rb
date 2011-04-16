@@ -81,4 +81,4 @@ Osheet::Workbook.new {
       row :data, name, stats
     end
   }
-}.to_file('examples/basic_with_templates.xls')
+}.to_file('examples/basic_with_templates.xls', :format)

@@ -363,4 +363,4 @@ Osheet::Workbook.new {
 
 
 
-}.to_file('examples/formats.xls')
+}.to_file('examples/formats.xls', :format)

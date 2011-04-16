@@ -238,4 +238,4 @@ Osheet::Workbook.new {
 
 
 
-}.to_file('examples/styles.xls')
+}.to_file('examples/styles.xls', :format)
