@@ -1,0 +1,13 @@
+# TODO: make instance vars available
+
+title "rails three test"
+
+worksheet {
+  name 'from rails three'
+
+  row {
+    cell {
+      data 1
+    }
+  }
+}

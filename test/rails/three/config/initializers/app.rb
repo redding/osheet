@@ -1,0 +1,2 @@
+require 'osheet'
+Osheet.register

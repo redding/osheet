@@ -31,23 +31,27 @@ module Osheet
         case action
         when :start
           puts
-          puts "starting Rails #{version} app on port #{port}..."
+          # puts "starting Rails #{version} app on port #{port}..."
           @test_app_pid = Open4.popen4(case version
           when :two
             "ruby test/rails/two/script/server -p #{port}"
+          when :three
+            pwd = `pwd`.strip
+            cmd = "test/rails/three/script/rails server --pid=#{pwd}/test/rails/three/tmp/pids/test_server.pid --config=#{pwd}/test/rails/three/config.ru -p 3003"
+            cmd
           end)[0]
-          puts "waiting for rails app to start (#{@test_app_pid})"
-          sleep 2.2
+          puts "\nwaiting for rails #{version} app to start (#{@test_app_pid})"
+          sleep 3
           while !(g = Open4.popen4("</dev/tcp/#{host}/#{port}")[3].gets).nil?
-            puts "waiting for rails app to start (#{@test_app_pid}): #{g.inspect}"
+            puts "waiting for rails #{version} app to start (#{@test_app_pid}): #{g.inspect}"
             sleep 0.1
           end
         when :stop
           puts
-          puts "stopping Rails #{version} app on port #{port}..."
+          # puts "\nstopping Rails #{version} app on port #{port}..."
           Process.kill(9, @test_app_pid)
           while Open4.popen4("</dev/tcp/#{host}/#{port}")[3].gets.nil?
-            puts "waiting for rails app to stop (#{@test_app_pid})"
+            puts "\nwaiting for rails #{version} app to stop (#{@test_app_pid})"
             sleep 0.5
           end
         end

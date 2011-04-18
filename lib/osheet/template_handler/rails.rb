@@ -25,18 +25,20 @@ if Rails.version =~ /^3/
   require 'action_view/base'
   require 'action_view/template'
 
-  module Osheet
-    class ActionViewHandler < ::ActionView::Template::Handler
-      include ::ActionView::Template::Handlers::Compilable
+  module ActionView
+    module Template::Handlers
+      class OsheetHandler < Template::Handler
+        include Compilable
 
-      self.default_format = Osheet::MIME_TYPE
-      def compile(template)
-        # template.format => 'xls' (or xlsx or whatever they specify)
-        %{::Osheet::Workbook.new {\n#{template.source.inspect}\n }.to_data}
+        self.default_format = Osheet::MIME_TYPE
+        def compile(template)
+          # template.format => 'xls' (or xlsx or whatever they specify)
+          %{::Osheet::Workbook.new {\n#{template.source}\n }.to_data}
+        end
+
       end
-
     end
   end
 
-  ::ActionView::Template.register_template_handler :osheet, Osheet::ActionViewHandler
+  ::ActionView::Template.register_template_handler :osheet, ActionView::Template::Handlers::OsheetHandler
 end
