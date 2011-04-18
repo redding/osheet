@@ -9,5 +9,6 @@ require 'osheet/workbook_element'
 require 'osheet/worksheet_element'
 require 'osheet/styled_element'
 require 'osheet/meta_element'
+require 'osheet/mixin'
 
 require 'osheet/workbook'

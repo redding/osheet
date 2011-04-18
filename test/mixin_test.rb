@@ -1,6 +1,5 @@
 require "test/helper"
-require 'osheet/mixin'
-require 'test/mixins'
+require "test/mixins"
 
 module Osheet
 

@@ -1,5 +1,3 @@
-require 'osheet/mixin'
-
 class DefaultMixin
   include Osheet::Mixin
 
