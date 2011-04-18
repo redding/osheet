@@ -1,8 +1,6 @@
 module Osheet::WorksheetElement
-  class << self
-    def included(receiver)
-      receiver.send(:attr_reader, :worksheet)
-    end
+  def worksheet
+    get_ivar(:worksheet)
   end
 
   [:columns, :rows].each do |meth|

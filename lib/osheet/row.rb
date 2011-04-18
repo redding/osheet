@@ -2,6 +2,7 @@ require 'osheet/cell'
 
 module Osheet
   class Row
+    include Instance
     include Associations
     include WorkbookElement
     include WorksheetElement

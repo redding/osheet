@@ -14,11 +14,11 @@ module Osheet
       should_have_instance_methods :data, :format, :colspan, :rowspan, :href
 
       should "set it's defaults" do
-        assert_equal nil, subject.send(:instance_variable_get, "@data")
-        assert_kind_of Format::General, subject.send(:instance_variable_get, "@format")
-        assert_equal 1,   subject.send(:instance_variable_get, "@colspan")
-        assert_equal 1,   subject.send(:instance_variable_get, "@rowspan")
-        assert_equal nil,   subject.send(:instance_variable_get, "@href")
+        assert_equal nil, subject.send(:get_ivar, "data")
+        assert_kind_of Format::General, subject.send(:get_ivar, "format")
+        assert_equal 1,   subject.send(:get_ivar, "colspan")
+        assert_equal 1,   subject.send(:get_ivar, "rowspan")
+        assert_equal nil,   subject.send(:get_ivar, "href")
       end
 
       context "that has attributes" do
@@ -34,11 +34,11 @@ module Osheet
         end
 
         should "should set them correctly" do
-          assert_equal "Poo", subject.send(:instance_variable_get, "@data")
-          assert_kind_of Format::Number, subject.send(:instance_variable_get, "@format")
-          assert_equal 4,     subject.send(:instance_variable_get, "@colspan")
-          assert_equal 2,     subject.send(:instance_variable_get, "@rowspan")
-          assert_equal "http://www.google.com", subject.send(:instance_variable_get, "@href")
+          assert_equal "Poo", subject.send(:get_ivar, "data")
+          assert_kind_of Format::Number, subject.send(:get_ivar, "format")
+          assert_equal 4,     subject.send(:get_ivar, "colspan")
+          assert_equal 2,     subject.send(:get_ivar, "rowspan")
+          assert_equal "http://www.google.com", subject.send(:get_ivar, "href")
         end
 
         should "know it's attribute(s)" do
@@ -57,23 +57,23 @@ module Osheet
       should "type cast data strings/symbols" do
         ['a string', :symbol].each do |thing|
           cell = Cell.new{data thing}
-          assert_kind_of ::String, cell.send(:instance_variable_get, "@data")
+          assert_kind_of ::String, cell.send(:get_ivar, "data")
         end
       end
       should "type cast data dates" do
         cell = Cell.new{data Date.today}
-        assert_kind_of ::Date, cell.send(:instance_variable_get, "@data")
+        assert_kind_of ::Date, cell.send(:get_ivar, "data")
       end
       should "type cast data numerics" do
         [1, 1.0].each do |thing|
           cell = Cell.new{data thing}
-          assert_kind_of ::Numeric, cell.send(:instance_variable_get, "@data")
+          assert_kind_of ::Numeric, cell.send(:get_ivar, "data")
         end
       end
       should "type cast all other data to string" do
         [Osheet, [:a, 'Aye'], {:a => 'Aye'}].each do |thing|
           cell = Cell.new{data thing}
-          assert_kind_of ::String, cell.send(:instance_variable_get, "@data")
+          assert_kind_of ::String, cell.send(:get_ivar, "data")
         end
       end
 

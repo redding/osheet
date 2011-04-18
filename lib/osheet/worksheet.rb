@@ -3,6 +3,7 @@ require 'osheet/row'
 
 module Osheet
   class Worksheet
+    include Instance
     include Associations
     include WorkbookElement
     include MetaElement

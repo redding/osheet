@@ -1,5 +1,6 @@
 module Osheet
   class Column
+    include Instance
     include WorkbookElement
     include WorksheetElement
     include StyledElement

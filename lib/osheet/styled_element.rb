@@ -1,5 +1,5 @@
 module Osheet::StyledElement
-  def style_class(value); @style_class = verify_style_class(value); end
+  def style_class(value); set_ivar(:style_class, verify_style_class(value)); end
 
   private
 

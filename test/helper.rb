@@ -56,13 +56,13 @@ class Test::Unit::TestCase
       context "by default" do
         before { @default = klass.new }
         should "default an empty style class" do
-          assert_equal nil, @default.send(:instance_variable_get, "@style_class")
+          assert_equal nil, @default.send(:get_ivar, "style_class")
         end
       end
 
       should "default an empty style class" do
         styled = klass.new{ style_class "awesome thing" }
-        assert_equal "awesome thing", styled.send(:instance_variable_get, "@style_class")
+        assert_equal "awesome thing", styled.send(:get_ivar, "style_class")
       end
 
       should "verify the style class string" do
@@ -89,7 +89,7 @@ class Test::Unit::TestCase
           self.send(singular) {}
         end
 
-        items = thing.send(:instance_variable_get, "@#{collection}")
+        items = thing.send(:get_ivar, collection)
         assert_equal items, thing.send(collection)
         assert !items.empty?
         assert_equal 1, items.size
