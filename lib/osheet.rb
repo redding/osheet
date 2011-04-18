@@ -3,9 +3,11 @@ module Osheet
   MIME_TYPE = "application/vnd.ms-excel"
 
   class << self
-    # used to register an appropriate template engine
+    # used to register an appropriate template handler
+    # and register a mime type if necessary
     def register
-      require 'osheet/template_engine'
+      ::Mime::Type.register MIME_TYPE, :xls if defined? ::Mime::Type
+      require 'osheet/template_handler'
     end
   end
 

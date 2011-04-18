@@ -13,10 +13,14 @@ GEM
     kelredd-useful (0.4.1)
       json
     leftright (0.9.0)
+    mime-types (1.16)
     nokogiri (1.4.4)
+    open4 (1.0.1)
     rack (1.2.2)
     rack-test (0.5.7)
       rack (>= 1.0)
+    rest-client (1.6.1)
+      mime-types (>= 1.16)
     shoulda (2.11.3)
     sinatra (1.2.1)
       rack (~> 1.1)
@@ -40,8 +44,10 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.0)
   enumeration (~> 1.1.0)
+  open4
   osheet!
   rack-test (>= 0.5.3)
+  rest-client
   sinatra (>= 0.9.4)
   test-belt (= 0.2.1)
   webrat (>= 0.6.0)

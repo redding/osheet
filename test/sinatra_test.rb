@@ -8,6 +8,12 @@ class SinatraTest < Test::Unit::TestCase
     @app ||= SinatraApp
   end
 
-  should_respond_with_osheet_data "a Sinatra app"
+  context "Requesting xls from a Sinatra app" do
+    before { @response = visit "/index.xls" }
+
+    should "respond with osheet data" do
+      assert_osheet_response 'sinatra', @response
+    end
+  end
 
 end

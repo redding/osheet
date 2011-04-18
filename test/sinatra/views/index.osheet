@@ -1,6 +1,5 @@
 title "sinatra test"
 
-#puts data.inspect
 worksheet {
   name 'from sinatra'
 

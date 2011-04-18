@@ -10,7 +10,6 @@ class SinatraApp < Sinatra::Base
   end
 
   get '/index.xls' do
-    stuff = [1,2,3]
     osheet :index
   end
 end
