@@ -5,23 +5,28 @@ module Osheet
     #  each setting collects any arguments passed to it and
     #  it is up to the drivers to determine how to use the settings
 
+    include Instance
+
     BORDER_POSITIONS = [:top, :right, :bottom, :left]
     BORDERS = BORDER_POSITIONS.collect{|p| "border_#{p}".to_sym}
     SETTINGS = [:align, :font, :bg] + BORDERS
 
-    attr_reader :selectors
-
     def initialize(*selectors, &block)
-      @selectors = verify(selectors)
-      SETTINGS.each do |setting|
-        instance_variable_set("@#{setting}", [])
+      set_ivar(:selectors, verify(selectors))
+      SETTINGS.each {|setting| set_ivar(setting, [])}
+      if block_given?
+        set_binding_ivars(block.binding)
+        instance_eval(&block)
       end
-      instance_eval(&block) if block_given?
+    end
+
+    def selectors
+      get_ivar(:selectors)
     end
 
     SETTINGS.each do |setting|
       define_method(setting) do |*args|
-        instance_variable_set("@#{setting}", instance_variable_get("@#{setting}") + args)
+        set_ivar(setting, get_ivar(setting) + args)
       end
     end
 
@@ -33,7 +38,7 @@ module Osheet
 
     def attributes
       SETTINGS.inject({}) do |attrs, s|
-        attrs[s] = instance_variable_get("@#{s}")
+        attrs[s] = get_ivar(s)
         attrs
       end
     end

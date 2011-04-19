@@ -60,4 +60,23 @@ module Osheet
     end
 
   end
+
+  class StyleBindingTest < Test::Unit::TestCase
+    context "a template defined w/ a block" do
+      should "access instance vars from that block's binding" do
+        @test = 'test thing'
+        @workbook = Workbook.new {
+          template('worksheet', :thing) { name @test }
+          worksheet(:thing)
+        }
+
+        assert !@workbook.worksheets.first.send(:instance_variable_get, "@test").nil?
+        assert_equal @test, @workbook.worksheets.first.send(:instance_variable_get, "@test")
+        assert_equal @test.object_id, @workbook.worksheets.first.send(:instance_variable_get, "@test").object_id
+        assert_equal @test, @workbook.worksheets.first.attributes[:name]
+        assert_equal @test.object_id, @workbook.worksheets.first.attributes[:name].object_id
+      end
+    end
+  end
+
 end

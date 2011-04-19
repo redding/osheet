@@ -31,7 +31,7 @@ module Osheet
         [ :align, :font, :bg,
           :border_left, :border_top, :border_right, :border_bottom
         ].each do |a|
-          assert_equal [], subject.send(:instance_variable_get, "@#{a}")
+          assert_equal [], subject.send(:get_ivar, a)
         end
       end
 
@@ -51,7 +51,7 @@ module Osheet
         should "collect styles for #{a}" do
           args = [1, "#FF0000", "Verdana", :love, 1.2]
           subject.send(a, *args)
-          assert_equal args, subject.send(:instance_variable_get, "@#{a}")
+          assert_equal args, subject.send(:get_ivar, a)
         end
       end
 
@@ -59,7 +59,7 @@ module Osheet
         args = [:thick, '#FF00FF', :dot]
         subject.border *args
         [ :border_left, :border_top, :border_right, :border_bottom].each do |a|
-          assert_equal args, subject.send(:instance_variable_get, "@#{a}")
+          assert_equal args, subject.send(:get_ivar, a)
         end
       end
 
@@ -89,4 +89,20 @@ module Osheet
     end
 
   end
+
+  class StyleBindingTest < Test::Unit::TestCase
+    context "a style defined w/ a block" do
+      should "access instance vars from that block's binding" do
+        @test = 20
+        @style = Style.new('.test') { font @test }
+
+        assert !@style.send(:instance_variable_get, "@test").nil?
+        assert_equal @test, @style.send(:instance_variable_get, "@test")
+        assert_equal @test.object_id, @style.send(:instance_variable_get, "@test").object_id
+        assert_equal @test, @style.attributes[:font].first
+        assert_equal @test.object_id, @style.attributes[:font].first.object_id
+      end
+    end
+  end
+
 end
