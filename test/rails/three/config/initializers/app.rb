@@ -1,2 +1,0 @@
-require 'osheet'
-Osheet.register

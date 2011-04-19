@@ -1,2 +1,2 @@
 require 'osheet'
-Osheet.register
+::Osheet.register

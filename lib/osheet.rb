@@ -21,4 +21,8 @@ require 'osheet/meta_element'
 require 'osheet/instance'
 require 'osheet/mixin'
 
+if defined? Rails::Railtie
+  require 'osheet/railtie'
+end
+
 require 'osheet/workbook'
