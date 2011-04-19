@@ -7,28 +7,28 @@ module Osheet
     include MetaElement
 
     def initialize(workbook=nil, worksheet=nil, *args, &block)
-      @workbook = workbook
-      @worksheet = worksheet
-      @width = nil
-      @autofit = false
-      @hidden = false
+      set_ivar(:workbook, workbook)
+      set_ivar(:worksheet, worksheet)
+      set_ivar(:width, nil)
+      set_ivar(:autofit, false)
+      set_ivar(:hidden, false)
       instance_exec(*args, &block) if block_given?
     end
 
     def width(value=nil)
-      !value.nil? ? @width = value : @width
+      !value.nil? ? set_ivar(:width, value) : get_ivar(:width)
     end
-    def autofit(value); @autofit = !!value; end
-    def autofit?; @autofit; end
-    def hidden(value); @hidden = !!value; end
-    def hidden?; @hidden; end
+    def autofit(value); set_ivar(:autofit, !!value); end
+    def autofit?; get_ivar(:autofit); end
+    def hidden(value); set_ivar(:hidden, !!value); end
+    def hidden?; get_ivar(:hidden); end
 
     def attributes
       {
-        :style_class => @style_class,
-        :width => @width,
-        :autofit => @autofit,
-        :hidden => @hidden
+        :style_class => get_ivar(:style_class),
+        :width => get_ivar(:width),
+        :autofit => get_ivar(:autofit),
+        :hidden => get_ivar(:hidden)
       }
     end
 

@@ -13,7 +13,7 @@ module Osheet
       should_have_instance_method :meta
 
       should "set it's defaults" do
-        assert_equal nil, subject.send(:instance_variable_get, "@name")
+        assert_equal nil, subject.send(:get_ivar, "name")
         assert_equal [], subject.columns
         assert_equal [], subject.rows
 
@@ -43,7 +43,7 @@ module Osheet
         end
 
         should "set it's name and meta" do
-          assert_equal "Poo!", subject.send(:instance_variable_get, "@name")
+          assert_equal "Poo!", subject.send(:get_ivar, "name")
           assert_equal({}, subject.meta)
         end
 

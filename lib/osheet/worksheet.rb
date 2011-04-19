@@ -12,23 +12,23 @@ module Osheet
     hm :rows
 
     def initialize(workbook=nil, *args, &block)
-      @workbook = workbook
-      @name = nil
+      set_ivar(:workbook, workbook)
+      set_ivar(:name, nil)
       instance_exec(*args, &block) if block_given?
     end
 
     def name(value=nil)
-      !value.nil? ? @name = sanitized_name(value) : @name
+      !value.nil? ? set_ivar(:name, sanitized_name(value)) : get_ivar(:name)
     end
 
     def attributes
-      { :name => @name }
+      { :name => get_ivar(:name) }
     end
 
     private
 
     def sanitized_name(name_value)
-      if @workbook && @workbook.worksheets.collect{|ws| ws.name}.include?(name_value)
+      if get_ivar(:workbook) && get_ivar(:workbook).worksheets.collect{|ws| ws.name}.include?(name_value)
         raise ArgumentError, "the sheet name '#{name_value}' is already in use.  choose a sheet name that is not used by another sheet"
       end
       name_value

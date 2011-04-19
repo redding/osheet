@@ -14,7 +14,7 @@ module Osheet
       should_hm(Workbook, :worksheets, Worksheet)
 
       should "set it's defaults" do
-        assert_equal nil, subject.send(:instance_variable_get, "@title")
+        assert_equal nil, subject.send(:get_ivar, "title")
         assert_equal [], subject.worksheets
         assert_equal StyleSet.new, subject.styles
         assert_equal TemplateSet.new, subject.templates
@@ -41,7 +41,7 @@ module Osheet
         end
 
         should "set it's title" do
-          assert_equal "The Poo", subject.send(:instance_variable_get, "@title")
+          assert_equal "The Poo", subject.send(:get_ivar, "title")
         end
 
         should "know it's title" do
@@ -54,7 +54,7 @@ module Osheet
         end
 
         should "set it's worksheets" do
-          worksheets = subject.send(:instance_variable_get, "@worksheets")
+          worksheets = subject.send(:get_ivar, "worksheets")
           assert_equal 1, worksheets.size
           assert_kind_of Worksheet, worksheets.first
         end
@@ -138,6 +138,12 @@ module Osheet
     end
 
   end
+
+  # class WorkbookScopt < Test::Unit::TestCase
+  #   context "a workbook defined among instance variable" do
+  #     @title =
+  #   end
+  # end
 
   class WorkbookMixins < Test::Unit::TestCase
     context "a workbook w/ mixins" do
