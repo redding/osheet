@@ -17,7 +17,7 @@ class Test::Unit::TestCase
   end
 
   def assert_osheet_data(app, body)
-    correct_body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Workbook xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\" xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"><Styles/><Worksheet ss:Name=\"from #{app}\"><Table><Row><Cell><Data ss:Type=\"Number\">1</Data></Cell></Row></Table></Worksheet></Workbook>"
+    correct_body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Workbook xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\" xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"><Styles/><Worksheet ss:Name=\"from #{app}\"><Table><Row><Cell><Data ss:Type=\"Number\">1</Data></Cell><Cell><Data ss:Type=\"Number\">2</Data></Cell></Row></Table></Worksheet></Workbook>"
     assert_equal correct_body, body.strip, "incorrect osheet data"
   end
 

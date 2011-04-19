@@ -4,8 +4,10 @@ worksheet {
   name 'from sinatra'
 
   row {
-    cell {
-      data 1
-    }
+    1.upto(@times) do |n|
+      cell {
+        data n
+      }
+    end
   }
 }

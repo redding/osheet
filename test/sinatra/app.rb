@@ -10,6 +10,7 @@ class SinatraApp < Sinatra::Base
   end
 
   get '/index.xls' do
+    @times = 2
     osheet :index
   end
 end
