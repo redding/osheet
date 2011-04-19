@@ -17,10 +17,10 @@ module Osheet
       should_have_instance_method :meta
 
       should "set it's defaults" do
-        assert_equal nil, subject.send(:instance_variable_get, "@height")
-        assert_equal false, subject.send(:instance_variable_get, "@autofit")
+        assert_equal nil, subject.send(:get_ivar, "height")
+        assert_equal false, subject.send(:get_ivar, "autofit")
         assert !subject.autofit?
-        assert_equal false, subject.send(:instance_variable_get, "@hidden")
+        assert_equal false, subject.send(:get_ivar, "hidden")
         assert !subject.hidden?
 
         assert_equal [], subject.cells
@@ -41,10 +41,10 @@ module Osheet
         end
 
         should "should set them correctly" do
-          assert_equal 100, subject.send(:instance_variable_get, "@height")
-          assert_equal true, subject.send(:instance_variable_get, "@autofit")
+          assert_equal 100, subject.send(:get_ivar, "height")
+          assert_equal true, subject.send(:get_ivar, "autofit")
           assert subject.autofit?
-          assert_equal true, subject.send(:instance_variable_get, "@hidden")
+          assert_equal true, subject.send(:get_ivar, "hidden")
           assert subject.hidden?
           assert_equal({}, subject.meta)
         end
@@ -72,8 +72,8 @@ module Osheet
 
       should "cast autofit and hidden to bool" do
         rw = Row.new { autofit :true; hidden 'false'}
-        assert_kind_of ::TrueClass, rw.send(:instance_variable_get, "@autofit")
-        assert_kind_of ::TrueClass, rw.send(:instance_variable_get, "@hidden")
+        assert_kind_of ::TrueClass, rw.send(:get_ivar, "autofit")
+        assert_kind_of ::TrueClass, rw.send(:get_ivar, "hidden")
       end
 
       should_hm(Row, :cells, Cell)
