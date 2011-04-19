@@ -14,7 +14,10 @@ module Osheet
     def initialize(workbook=nil, *args, &block)
       set_ivar(:workbook, workbook)
       set_ivar(:name, nil)
-      instance_exec(*args, &block) if block_given?
+      if block_given?
+        set_binding_ivars(block.binding)
+        instance_exec(*args, &block)
+      end
     end
 
     def name(value=nil)

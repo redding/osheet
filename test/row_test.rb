@@ -81,4 +81,20 @@ module Osheet
     end
 
   end
+
+  class RowBindingTest < Test::Unit::TestCase
+    context "a row defined w/ a block" do
+      should "access instance vars from that block's binding" do
+        @test = 50
+        @row = Row.new { height @test }
+
+        assert !@row.send(:instance_variable_get, "@test").nil?
+        assert_equal @test, @row.send(:instance_variable_get, "@test")
+        assert_equal @test.object_id, @row.send(:instance_variable_get, "@test").object_id
+        assert_equal @test, @row.attributes[:height]
+        assert_equal @test.object_id, @row.attributes[:height].object_id
+      end
+    end
+  end
+
 end

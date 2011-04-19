@@ -12,7 +12,10 @@ module Osheet
       set_ivar(:width, nil)
       set_ivar(:autofit, false)
       set_ivar(:hidden, false)
-      instance_exec(*args, &block) if block_given?
+      if block_given?
+        set_binding_ivars(block.binding)
+        instance_exec(*args, &block)
+      end
     end
 
     def width(value=nil)

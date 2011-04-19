@@ -80,4 +80,20 @@ module Osheet
     end
 
   end
+
+  class CellBindingTest < Test::Unit::TestCase
+    context "a cell defined w/ a block" do
+      should "access instance vars from that block's binding" do
+        @test = 'test'
+        @cell = Cell.new { data @test}
+
+        assert !@cell.send(:instance_variable_get, "@test").nil?
+        assert_equal @test, @cell.send(:instance_variable_get, "@test")
+        assert_equal @test.object_id, @cell.send(:instance_variable_get, "@test").object_id
+        assert_equal @test, @cell.attributes[:data]
+        assert_equal @test.object_id, @cell.attributes[:data].object_id
+      end
+    end
+  end
+
 end

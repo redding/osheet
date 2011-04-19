@@ -13,15 +13,20 @@ module Osheet::Instance
   end
 
   def push_ivar(name, value)
-    # if name == :templates
-    #   puts "name: #{name.inspect}"
-    #   puts "givar: #{get_ivar(name).inspect}"
-    #   puts "value: #{value.inspect}"
-    # end
     get_ivar(name) << value
   end
 
   def ivar_name(name)
     "@#{OSHEET_IVAR_NS}#{name}"
+  end
+
+  def set_binding_ivars(binding)
+    binding.eval('instance_variables').
+    reject{|ivar| ivar =~ /^@#{OSHEET_IVAR_NS}/}.
+    each do |ivar|
+      # puts "binding #{ivar}: "+binding.eval(ivar).object_id.to_s
+      instance_variable_set(ivar, binding.eval(ivar))
+      # puts "inst #{ivar}: "+ instance_variable_get(ivar).object_id.to_s
+    end
   end
 end

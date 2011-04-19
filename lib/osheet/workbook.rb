@@ -15,7 +15,10 @@ module Osheet
       set_ivar(:title, nil)
       set_ivar(:styles, StyleSet.new)
       set_ivar(:templates, TemplateSet.new)
-      instance_eval(&block) if block_given?
+      if block_given?
+        set_binding_ivars(block.binding)
+        instance_eval(&block)
+      end
     end
 
     def title(value=nil)

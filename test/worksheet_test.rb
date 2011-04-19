@@ -81,4 +81,20 @@ module Osheet
     end
 
   end
+
+  class WorksheetBindingTest < Test::Unit::TestCase
+    context "a worksheet defined w/ a block" do
+      should "access instance vars from that block's binding" do
+        @test = 'test'
+        @worksheet = Worksheet.new { name @test }
+
+        assert !@worksheet.send(:instance_variable_get, "@test").nil?
+        assert_equal @test, @worksheet.send(:instance_variable_get, "@test")
+        assert_equal @test.object_id, @worksheet.send(:instance_variable_get, "@test").object_id
+        assert_equal @test, @worksheet.attributes[:name]
+        assert_equal @test.object_id, @worksheet.attributes[:name].object_id
+      end
+    end
+  end
+
 end

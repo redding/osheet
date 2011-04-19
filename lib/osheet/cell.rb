@@ -16,7 +16,10 @@ module Osheet
       set_ivar(:rowspan, 1)
       set_ivar(:colspan, 1)
       set_ivar(:href, nil)
-      instance_exec(*args, &block) if block_given?
+      if block_given?
+        set_binding_ivars(block.binding)
+        instance_exec(*args, &block)
+      end
     end
 
     def data(value)

@@ -139,11 +139,20 @@ module Osheet
 
   end
 
-  # class WorkbookScopt < Test::Unit::TestCase
-  #   context "a workbook defined among instance variable" do
-  #     @title =
-  #   end
-  # end
+  class WorksheetBindingTest < Test::Unit::TestCase
+    context "a workbook defined w/ a block" do
+      should "access instance vars from that block's binding" do
+        @test = 'test'
+        @workbook = Workbook.new { title @test }
+
+        assert !@workbook.send(:instance_variable_get, "@test").nil?
+        assert_equal @test, @workbook.send(:instance_variable_get, "@test")
+        assert_equal @test.object_id, @workbook.send(:instance_variable_get, "@test").object_id
+        assert_equal @test, @workbook.attributes[:title]
+        assert_equal @test.object_id, @workbook.attributes[:title].object_id
+      end
+    end
+  end
 
   class WorkbookMixins < Test::Unit::TestCase
     context "a workbook w/ mixins" do
