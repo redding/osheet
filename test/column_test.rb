@@ -2,8 +2,8 @@ require "test/helper"
 require "osheet/column"
 
 module Osheet
-  class ColumnTest < Test::Unit::TestCase
 
+  class ColumnTest < Test::Unit::TestCase
     context "Osheet::Column" do
       subject { Column.new }
 
@@ -26,47 +26,56 @@ module Osheet
         assert_equal nil, subject.meta
       end
 
-      context "that has attributes" do
-        subject do
-          Column.new do
-            style_class "more poo"
-            width  100
-            autofit true
-            hidden true
-            meta(
-              {}
-            )
-          end
-        end
+    end
+  end
 
-        should "should set them correctly" do
-          assert_equal 100, subject.send(:get_ivar, "width")
-          assert_equal true, subject.send(:get_ivar, "autofit")
-          assert subject.autofit?
-          assert_equal true, subject.send(:get_ivar, "hidden")
-          assert subject.hidden?
-          assert_equal({}, subject.meta)
+  class ColumnAttributesTest < Test::Unit::TestCase
+    context "that has attributes" do
+      subject do
+        Column.new do
+          style_class "more poo"
+          width  100
+          autofit true
+          hidden true
+          meta(
+            {}
+          )
         end
+      end
 
-        should "know it's width" do
-          subject.width(false)
-          assert_equal false, subject.width
-          subject.width(180)
-          assert_equal 180, subject.width
-          subject.width(nil)
-          assert_equal 180, subject.width
+      should "should set them correctly" do
+        assert_equal 100, subject.send(:get_ivar, "width")
+        assert_equal true, subject.send(:get_ivar, "autofit")
+        assert subject.autofit?
+        assert_equal true, subject.send(:get_ivar, "hidden")
+        assert subject.hidden?
+        assert_equal({}, subject.meta)
+      end
+
+      should "know it's attribute(s)" do
+        [:style_class, :width, :autofit, :hidden].each do |a|
+          assert subject.attributes.has_key?(a)
         end
+        assert_equal 'more poo', subject.attributes[:style_class]
+        assert_equal 100, subject.attributes[:width]
+        assert_equal true, subject.attributes[:autofit]
+        assert_equal true, subject.attributes[:hidden]
+      end
 
-        should "know it's attribute(s)" do
-          [:style_class, :width, :autofit, :hidden].each do |a|
-            assert subject.attributes.has_key?(a)
-          end
-          assert_equal 'more poo', subject.attributes[:style_class]
-          assert_equal 100, subject.attributes[:width]
-          assert_equal true, subject.attributes[:autofit]
-          assert_equal true, subject.attributes[:hidden]
-        end
+    end
+  end
 
+  class ColumnDataTest < Test::Unit::TestCase
+    context "A column" do
+      subject { Column.new }
+
+      should "set it's width" do
+        subject.width(false)
+        assert_equal false, subject.width
+        subject.width(180)
+        assert_equal 180, subject.width
+        subject.width(nil)
+        assert_equal 180, subject.width
       end
 
       should "cast autofit and hidden to bool" do
@@ -76,7 +85,29 @@ module Osheet
       end
 
     end
+  end
 
+  class ColumnPartialTest < Test::Unit::TestCase
+    context "A workbook that defines column partials" do
+      subject do
+        Workbook.new {
+          partial(:column_stuff) {
+            width 200
+            meta(:label => 'awesome')
+          }
+
+          worksheet { column {
+            add :column_stuff
+          } }
+        }
+      end
+
+      should "add it's partials to it's markup" do
+        assert_equal 200, subject.worksheets.first.columns.first.width
+        assert_equal({:label => 'awesome'}, subject.worksheets.first.columns.first.meta)
+      end
+
+    end
   end
 
   class ColumnBindingTest < Test::Unit::TestCase

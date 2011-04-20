@@ -1,21 +1,15 @@
+require 'osheet/partial_set'
 require 'osheet/template'
 
 module Osheet
-  class TemplateSet < ::Hash
+  class TemplateSet < PartialSet
 
-    # this class is a Hash that behaves kinda like a set.  I want to
-    #  push templates into the set using the '<<' operator, only allow
-    #  Osheet::Template objs to be pushed, and then be able to reference
-    #  a particular set of templates using a key
+    # this class is a PartialSet that keys off of the template element
+    #  and name.  Only Osheet::Template objs can be pushed, and you reference
+    #  a particular template using a key of
 
     def initialize
       super
-    end
-
-    def <<(template)
-      if (key = verify(template))
-        push(key, template)
-      end
     end
 
     # return the template set for the named element
@@ -51,7 +45,7 @@ module Osheet
     end
 
     def key(element, name)
-      [element, name]
+      [element.to_s, name.to_s]
     end
   end
 end

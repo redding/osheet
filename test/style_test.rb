@@ -2,8 +2,8 @@ require "test/helper"
 require "osheet/style"
 
 module Osheet
-  class StyleTest < Test::Unit::TestCase
 
+  class StyleTest < Test::Unit::TestCase
     context "Osheet::Style" do
       subject { Style.new('.test') }
 
@@ -11,19 +11,6 @@ module Osheet
       should_have_instance_methods :align, :font, :bg
       should_have_instance_methods :border, :border_left, :border_top, :border_right, :border_bottom
       should_have_instance_method :match?
-
-      should "verify the selector" do
-        ['poo', '#poo', 'poo poo', 'poo > poo', :poo, 123].each do |s|
-          assert_raises ArgumentError do
-            Style.new(s)
-          end
-        end
-        ['.poo', '.poo.poo', '.poo-poo', '.poo_poo'].each do |s|
-          assert_nothing_raised do
-            Style.new(s)
-          end
-        end
-      end
 
       should "set it's defaults" do
         assert_equal 1, subject.selectors.size
@@ -43,7 +30,35 @@ module Osheet
         end
       end
 
+    end
+  end
 
+  class StyleSelectorTest < Test::Unit::TestCase
+    context "A Style" do
+      subject { Style.new('.test') }
+
+      should "complain about bad selectors" do
+        ['poo', '#poo', 'poo poo', 'poo > poo', :poo, 123].each do |s|
+          assert_raises ArgumentError do
+            Style.new(s)
+          end
+        end
+      end
+
+      should "not complain about good selectors" do
+        ['.poo', '.poo.poo', '.poo-poo', '.poo_poo'].each do |s|
+          assert_nothing_raised do
+            Style.new(s)
+          end
+        end
+      end
+
+    end
+  end
+
+  class StyleCollectorTest < Test::Unit::TestCase
+    context "A Style" do
+      subject { Style.new }
 
       [ :align, :font, :bg,
         :border_left, :border_top, :border_right, :border_bottom
@@ -55,13 +70,20 @@ module Osheet
         end
       end
 
-      should "set all border positions to the same styles using 'border' macro" do
+      should "set all border positions to the same styles using 'border' macro collector" do
         args = [:thick, '#FF00FF', :dot]
         subject.border *args
         [ :border_left, :border_top, :border_right, :border_bottom].each do |a|
           assert_equal args, subject.send(:get_ivar, a)
         end
       end
+
+    end
+  end
+
+  class StyleMatcherTest < Test::Unit::TestCase
+    context "A Style" do
+      subject { Style.new }
 
       should "match on style class strings" do
         a = Style.new('.awesome') {}
@@ -87,7 +109,6 @@ module Osheet
       end
 
     end
-
   end
 
   class StyleBindingTest < Test::Unit::TestCase

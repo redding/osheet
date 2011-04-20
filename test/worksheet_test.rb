@@ -2,8 +2,8 @@ require "test/helper"
 require 'osheet/worksheet'
 
 module Osheet
-  class WorksheetTest < Test::Unit::TestCase
 
+  class WorksheetTest < Test::Unit::TestCase
     context "Osheet::Worksheet" do
       subject { Worksheet.new }
 
@@ -23,63 +23,93 @@ module Osheet
       should_hm(Worksheet, :columns, Column)
       should_hm(Worksheet, :rows, Row)
 
-      context "that has some columns and rows" do
-        subject do
-          Worksheet.new do
-            name "Poo!"
-            meta(
-              {}
-            )
-
-            column
-
-            row do
-              cell do
-                format  :number
-                data    1
-              end
-            end
-          end
+      should "know it's attribute(s)" do
+        subject.send(:name, "Poo!")
+        [:name].each do |a|
+          assert subject.attributes.has_key?(a)
         end
-
-        should "set it's name and meta" do
-          assert_equal "Poo!", subject.send(:get_ivar, "name")
-          assert_equal({}, subject.meta)
-        end
-
-        should "know it's name" do
-          subject.name(false)
-          assert_equal false, subject.name
-          subject.name('la')
-          assert_equal 'la', subject.name
-          subject.name(nil)
-          assert_equal 'la', subject.name
-        end
-
-        should "know it's attribute(s)" do
-          [:name].each do |a|
-            assert subject.attributes.has_key?(a)
-          end
-          assert_equal "Poo!", subject.attributes[:name]
-        end
-        should "set it's columns" do
-          columns = subject.columns
-          assert_equal 1, columns.size
-          assert_kind_of Column, columns.first
-          assert_equal subject.columns, columns.first.columns
-        end
-
-        should "set it's rows" do
-          rows = subject.rows
-          assert_equal 1, rows.size
-          assert_kind_of Row, rows.first
-          assert_equal subject.columns, rows.first.columns
-          assert_equal subject.columns, rows.first.cells.first.columns
-        end
+        assert_equal "Poo!", subject.attributes[:name]
       end
 
     end
+  end
 
+  class WorksheetNameMetaTest < Test::Unit::TestCase
+    context "A named worksheet with meta" do
+      subject do
+        Worksheet.new {
+          name "Poo!"
+          meta({})
+        }
+      end
+
+      should "know it's name and meta" do
+        assert_equal "Poo!", subject.send(:get_ivar, "name")
+        assert_equal({}, subject.meta)
+      end
+
+      should "set it's name" do
+        subject.name(false)
+        assert_equal false, subject.name
+        subject.name('la')
+        assert_equal 'la', subject.name
+        subject.name(nil)
+        assert_equal 'la', subject.name
+      end
+
+    end
+  end
+
+  class WorksheetColumnRowTest < Test::Unit::TestCase
+    context "A worksheet that has columns and rows" do
+      subject do
+        Worksheet.new {
+          column
+          row { cell {
+            format  :number
+            data    1
+          } }
+        }
+      end
+
+      should "set it's columns" do
+        columns = subject.columns
+        assert_equal 1, columns.size
+        assert_kind_of Column, columns.first
+        assert_equal subject.columns, columns.first.columns
+      end
+
+      should "set it's rows" do
+        rows = subject.rows
+        assert_equal 1, rows.size
+        assert_kind_of Row, rows.first
+        assert_equal subject.columns, rows.first.columns
+        assert_equal subject.columns, rows.first.cells.first.columns
+      end
+
+    end
+  end
+
+  class WorkbookPartialTest < Test::Unit::TestCase
+    context "A workbook that defines worksheet partials" do
+      subject do
+        Workbook.new {
+          partial(:worksheet_stuff) {
+            row {}
+            row {}
+          }
+
+          worksheet {
+            add :worksheet_stuff
+          }
+        }
+      end
+
+      should "add it's partials to it's markup" do
+        assert_equal 2, subject.worksheets.first.rows.size
+      end
+
+    end
   end
 
   class WorksheetBindingTest < Test::Unit::TestCase
@@ -94,6 +124,7 @@ module Osheet
         assert_equal @test, @worksheet.attributes[:name]
         assert_equal @test.object_id, @worksheet.attributes[:name].object_id
       end
+
     end
   end
 

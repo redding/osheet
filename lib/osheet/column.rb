@@ -5,6 +5,7 @@ module Osheet
     include WorksheetElement
     include StyledElement
     include MetaElement
+    include MarkupElement
 
     def initialize(workbook=nil, worksheet=nil, *args, &block)
       set_ivar(:workbook, workbook)

@@ -8,6 +8,7 @@ module Osheet
     include WorksheetElement
     include StyledElement
     include MetaElement
+    include MarkupElement
 
     hm :cells
 

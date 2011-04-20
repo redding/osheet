@@ -1,6 +1,9 @@
 require 'osheet/instance'
+require 'osheet/associations'
+require 'osheet/markup_element'
 require 'osheet/style_set'
 require 'osheet/template_set'
+require 'osheet/partial_set'
 require 'osheet/worksheet'
 require 'osheet/xmlss_writer'
 
@@ -8,6 +11,7 @@ module Osheet
   class Workbook
     include Instance
     include Associations
+    include MarkupElement
 
     hm :worksheets
 
@@ -15,6 +19,7 @@ module Osheet
       set_ivar(:title, nil)
       set_ivar(:styles, StyleSet.new)
       set_ivar(:templates, TemplateSet.new)
+      set_ivar(:partials, PartialSet.new)
       if block_given?
         set_binding_ivars(block.binding)
         instance_eval(&block)
@@ -32,6 +37,10 @@ module Osheet
     def template(element, name, &block); push_ivar(:templates, Template.new(element, name, &block)); end
     def templates
       get_ivar(:templates)
+    end
+    def partial(name, &block); push_ivar(:partials, Partial.new(name, &block)); end
+    def partials
+      get_ivar(:partials)
     end
 
     def attributes

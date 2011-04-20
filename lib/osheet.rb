@@ -13,13 +13,16 @@ module Osheet
 
 end
 
+require 'osheet/instance'
+require 'osheet/partial'
 require 'osheet/associations'
-require 'osheet/workbook_element'
-require 'osheet/worksheet_element'
+require 'osheet/mixin'
+
+require 'osheet/markup_element'
 require 'osheet/styled_element'
 require 'osheet/meta_element'
-require 'osheet/instance'
-require 'osheet/mixin'
+require 'osheet/workbook_element'
+require 'osheet/worksheet_element'
 
 if defined? Rails::Railtie
   require 'osheet/railtie'

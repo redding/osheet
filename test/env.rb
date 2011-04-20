@@ -6,4 +6,5 @@
   $LOAD_PATH.unshift(full_path) unless $LOAD_PATH.include?(full_path)
 end
 
+puts "osheet require"
 require 'osheet'

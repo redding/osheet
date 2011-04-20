@@ -7,6 +7,7 @@ module Osheet
     include Associations
     include WorkbookElement
     include MetaElement
+    include MarkupElement
 
     hm :columns
     hm :rows

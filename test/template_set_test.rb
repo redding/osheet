@@ -7,20 +7,11 @@ module Osheet
     context "Osheet::TemplateSet" do
       subject { TemplateSet.new }
 
-      should "be a Hash" do
-        assert_kind_of ::Hash, subject
+      should "be a PartialSet" do
+        assert_kind_of PartialSet, subject
       end
 
-      should_have_instance_method :<<
-      should_have_reader :get
-
-      should "key templates using their element and name" do
-        assert_equal [:row, :poo], subject.send(:key, :row, :poo)
-        assert_equal [:row, :row], subject.send(:key, :row, :row)
-        assert_equal ['row', 'poo'], subject.send(:template_key, Template.new(:row, :poo) {})
-      end
-
-      should "verify Template objs" do
+      should "verify set objs are templates" do
         assert_raises ArgumentError do
           subject.send(:verify, {})
         end
@@ -29,7 +20,22 @@ module Osheet
         end
       end
 
-      should "init the key when verify templates" do
+    end
+  end
+
+  class TemplateSetKeyTest < Test::Unit::TestCase
+    context "A template set" do
+      subject { TemplateSet.new }
+
+      should "key templates using an array of their element and name" do
+        assert_equal ['row','poo'], subject.send(:key, :row, :poo)
+      end
+
+      should "key on templates objs" do
+        assert_equal ['row', 'poo'], subject.send(:template_key, Template.new(:row, :poo) {})
+      end
+
+      should "init the key in the set when verifying" do
         key = subject.send(:verify, Template.new(:row, :poo) {})
         assert_equal ['row', 'poo'], key
         assert_equal({
@@ -37,6 +43,12 @@ module Osheet
         }, subject)
       end
 
+    end
+  end
+
+  class TemplateSetPushTest < Test::Unit::TestCase
+    context "A template set" do
+      subject { TemplateSet.new }
       should "push templates onto the set" do
         assert_nothing_raised do
           subject << Template.new(:row, :poo) {}
@@ -60,7 +72,14 @@ module Osheet
         assert_kind_of Template, subject["column"]["not_awesome"]
       end
 
-      should "be able to lookup a template by element, name" do
+    end
+  end
+
+  class TemplateSetLookupTest < Test::Unit::TestCase
+    context "A template set" do
+      subject { TemplateSet.new }
+
+      should "lookup a template by element, name" do
         t = Template.new(:row, :poo) {}
         subject << t
         assert_equal t, subject.get(:row, :poo)
@@ -71,6 +90,6 @@ module Osheet
       end
 
     end
-
   end
+
 end
