@@ -50,11 +50,20 @@ module Osheet
 
       should "set it's name" do
         subject.name(false)
-        assert_equal false, subject.name
+        assert_equal 'false', subject.name
         subject.name('la')
         assert_equal 'la', subject.name
         subject.name(nil)
         assert_equal 'la', subject.name
+      end
+
+      should "complain if name is longer than 31 chars" do
+        assert_raises ArgumentError do
+          subject.name('a'*32)
+        end
+        assert_nothing_raised do
+          subject.name('a'*31)
+        end
       end
 
     end
