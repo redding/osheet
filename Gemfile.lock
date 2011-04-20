@@ -43,7 +43,6 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0)
-  enumeration (~> 1.1.0)
   open4
   osheet!
   rack-test (>= 0.5.3)
@@ -51,4 +50,3 @@ DEPENDENCIES
   sinatra (>= 0.9.4)
   test-belt (= 0.2.1)
   webrat (>= 0.6.0)
-  xmlss (~> 0.2.0)
