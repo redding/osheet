@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    osheet (0.6.0)
+    osheet (0.7.0)
       enumeration (~> 1.1.0)
       xmlss (~> 0.2.0)
 
