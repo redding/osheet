@@ -7,12 +7,13 @@ module Osheet
     context "Osheet::Mixin thing" do
       subject { DefaultMixin }
 
-      should_have_readers :styles, :templates
-      should_have_instance_methods :style, :template
+      should_have_readers :styles, :templates, :partials
+      should_have_instance_methods :style, :template, :partial
 
       should "set it's defaults" do
         assert_equal [], subject.styles
         assert_equal [], subject.templates
+        assert_equal [], subject.partials
       end
     end
   end
@@ -39,6 +40,49 @@ module Osheet
         assert subject.templates
         assert_equal 3, subject.templates.size
         assert_kind_of Template, subject.templates.first
+      end
+    end
+  end
+
+  class MixinPartialTest < Test::Unit::TestCase
+    context "that defines partials" do
+      subject { PartialedMixin }
+
+      should "have it's partials defined" do
+        assert subject.partials
+        assert_equal 2, subject.partials.size
+        assert_kind_of Partial, subject.partials.first
+      end
+    end
+  end
+
+  class MixinUseTest < Test::Unit::TestCase
+    context "A workbook that uses mixins" do
+      setup do
+        @workbook = Osheet::Workbook.new do
+          use PartialedMixin
+          use TemplatedMixin
+          use StyledMixin
+        end
+      end
+      subject { @workbook }
+
+      should "have mixin partials" do
+        workbook_partials = @workbook.partials.values
+        PartialedMixin.partials.each do |partial|
+          assert workbook_partials.include?(partial)
+        end
+      end
+
+      should "have mixin templates" do
+        workbook_templates = @workbook.templates.values.collect{ |t| t.values.first }
+        TemplatedMixin.templates.each do |template|
+          assert workbook_templates.include?(template)
+        end
+      end
+
+      should "have mixin styles" do
+        assert_equal StyledMixin.styles, @workbook.styles
       end
     end
   end

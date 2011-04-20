@@ -50,6 +50,7 @@ module Osheet
     def use(mixin)
       (mixin.styles || []).each{ |s| push_ivar(:styles, s) }
       (mixin.templates || []).each{ |t| push_ivar(:templates, t) }
+      (mixin.partials || []).each{ |p| push_ivar(:partials, p) }
     end
 
     def writer
