@@ -29,3 +29,20 @@ class TemplatedMixin
   }
 
 end
+
+class PartialedMixin
+  include Osheet::Mixin
+
+  partial(:three_empty_rows) {
+    row { }
+    row { }
+    row { }
+  }
+
+  partial(:two_cells_in_a_row) {
+    row {
+      cell { data "one" }
+      cell { data "two" }
+    }
+  }
+end

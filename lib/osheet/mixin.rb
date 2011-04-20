@@ -25,6 +25,15 @@ module Osheet::Mixin
     def templates
       instance_variable_get("@t") || []
     end
+
+    def partial(name, &block)
+      instance_variable_set("@p",
+        (instance_variable_get("@p") || []) << ::Osheet::Partial.new(name, &block)
+      )
+    end
+    def partials
+      instance_variable_get("@p") || []
+    end
   end
 
 end
