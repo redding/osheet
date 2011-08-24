@@ -1,18 +1,18 @@
-require "test/helper"
+require "assert"
 require 'osheet/format/text'
 
 module Osheet::Format
 
-  class TextTest < Test::Unit::TestCase
-    context "Text format" do
-      subject { Text.new }
+  class TextTest < Assert::Context
+    desc "Text format"
+    before { @txt = Text.new }
+    subject { @txt }
 
-      should "generate a style strings and key" do
-        assert_equal "@", subject.style
-        assert_equal "text", subject.key
-      end
-
+    should "generate a style strings and key" do
+      assert_equal "@", subject.style
+      assert_equal "text", subject.key
     end
+
   end
 
 end
