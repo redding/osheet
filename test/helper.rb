@@ -1,11 +1,9 @@
-require 'rubygems'
-require 'bundler'
-Bundler.setup
+# this file is automatically required in when you require 'assert' in your tests
 
-require 'test_belt'
-require 'test/env'
+# add root dir to the load path
+$LOAD_PATH.unshift(File.expand_path("../..", __FILE__))
 
-class Test::Unit::TestCase
+class Assert::Context
   class << self
 
 

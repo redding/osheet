@@ -18,14 +18,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency("bundler", ["~> 1.0"])
-  s.add_development_dependency("test-belt", ["= 0.2.1"]) # locked to a specific version for test stability
-  s.add_development_dependency("sinatra", [">= 0.9.4"])
-  s.add_development_dependency("rack-test", [">= 0.5.3"])
-  s.add_development_dependency("webrat", [">= 0.6.0"])
-  s.add_development_dependency("open4")
-  s.add_development_dependency("rest-client")
-
-  s.add_dependency("enumeration", ["~>1.1.0"])
-  s.add_dependency("xmlss", "~>0.2.0")
+  s.add_development_dependency("assert", ["~> 0.3"])
+  s.add_dependency("enumeration", ["~> 1.2"])
+  s.add_dependency("xmlss", ["~> 0.2"])
 
 end
