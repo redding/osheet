@@ -1,16 +1,13 @@
-require "test/helper"
+require "assert"
 
-class OsheetTest < Test::Unit::TestCase
+class OsheetTest < Assert::Context
+  desc "Osheet"
+  subject {::Osheet}
 
-  context "Osheet" do
-    subject {::Osheet}
+  should have_instance_method :register
 
-    should_have_instance_method :register
-
-    should "use provide a default mime type" do
-      assert_equal "application/vnd.ms-excel", Osheet::MIME_TYPE
-    end
-
+  should "use provide a default mime type" do
+    assert_equal "application/vnd.ms-excel", Osheet::MIME_TYPE
   end
 
 end

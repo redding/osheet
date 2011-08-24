@@ -10,60 +10,52 @@ class Assert::Context
 
 
     def should_be_a_workbook_element(klass)
-      should_have_instance_methods :workbook, :styles, :templates
-      context "given a workbook with templates and styles" do
-        before do
-          @wkbk = Osheet::Workbook.new {
-            template(:column, :thing) {}
-            template(:row, :empty) {}
-            style('.title') {
-              font 14
-            }
-            style('.title', '.header') {
-              font :bold
-            }
-          }
-          @klass = klass.new(@wkbk)
-        end
+      should have_instance_methods :workbook, :styles, :templates
 
-        should "be able to read the workbook and it's styles/templates" do
-          assert_equal @wkbk, @klass.workbook
-          assert_equal @wkbk.styles, @klass.styles
-          assert_equal @wkbk.templates, @klass.templates
-        end
+      should "be able to read the workbook and it's styles/templates" do
+        wkbk = Osheet::Workbook.new {
+          template(:column, :thing) {}
+          template(:row, :empty) {}
+          style('.title') {
+            font 14
+          }
+          style('.title', '.header') {
+            font :bold
+          }
+        }
+        klass = klass.new(wkbk)
+
+        assert_equal wkbk, klass.workbook
+        assert_equal wkbk.styles, klass.styles
+        assert_equal wkbk.templates, klass.templates
       end
     end
 
     def should_be_a_worksheet_element(klass)
-      should_have_instance_methods :worksheet, :columns
-      context "given a worksheet with columns" do
-        before do
-          @wksht = Osheet::Worksheet.new {
-            column {}
-            column {}
-            column {}
-          }
-          @klass = klass.new(nil, @wksht)
-        end
+      should have_instance_methods :worksheet, :columns
 
-        should "be able to read the worksheet and it's columns" do
-          assert_equal @wksht, @klass.worksheet
-          assert_equal @wksht.columns, @klass.columns
-        end
+      should "be able to read the worksheet and it's columns" do
+        wksht = Osheet::Worksheet.new {
+          column {}
+          column {}
+          column {}
+        }
+        klass = klass.new(nil, wksht)
+
+        assert_equal wksht, klass.worksheet
+        assert_equal wksht.columns, klass.columns
       end
     end
 
     def should_be_a_styled_element(klass)
-      should_have_instance_methods :style_class
-
-      context "by default" do
-        before { @default = klass.new }
-        should "default an empty style class" do
-          assert_equal nil, @default.send(:get_ivar, "style_class")
-        end
-      end
+      should have_instance_methods :style_class
 
       should "default an empty style class" do
+        default = klass.new
+        assert_equal nil, default.send(:get_ivar, "style_class")
+      end
+
+      should "set a style class" do
         styled = klass.new{ style_class "awesome thing" }
         assert_equal "awesome thing", styled.send(:get_ivar, "style_class")
       end
@@ -83,8 +75,8 @@ class Assert::Context
     end
 
     def should_hm(klass, collection, item_klass)
-      should_have_reader collection
-      should_have_instance_method collection.to_s.sub(/s$/, '')
+      should have_reader collection
+      should have_instance_method collection.to_s.sub(/s$/, '')
 
       should "should initialize #{collection} and add them to it's collection" do
         singular = collection.to_s.sub(/s$/, '')
