@@ -115,11 +115,6 @@ module Osheet::Format
         :comma_separator => false,
         :symbol => :dollar
       }).style
-      assert_equal "[$€-2]\ 0", Currency.new({
-        :decimal_places => 0,
-        :comma_separator => false,
-        :symbol => :euro
-      }).style
     end
 
     should "generate complex style string" do
@@ -128,12 +123,6 @@ module Osheet::Format
         :decimal_places => 2,
         :negative_numbers => :black_parenth,
         :comma_separator => false
-      }).style)
-      assert_equal("[$€-2]\ #,##0.0000_);[Red]\([$€-2]\ #,##0.0000\)", Currency.new({
-        :symbol => :euro,
-        :decimal_places => 4,
-        :negative_numbers => :red_parenth,
-        :comma_separator => true
       }).style)
     end
 

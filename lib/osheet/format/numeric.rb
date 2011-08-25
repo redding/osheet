@@ -99,8 +99,6 @@ module Osheet::Format
       case @symbol
       when :dollar
         "\"$\"#{symbol_suffix}"
-      when :euro
-        "[$€-2]\ #{symbol_suffix}"
       when :none
         ''
       end
