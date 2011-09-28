@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/matmcph/xmlss.git
+  revision: 735785b0f6a59ffe3164db2bf299ea55e71b857d
+  branch: master
+  specs:
+    xmlss (0.2.2)
+      enumeration (~> 1.2)
+      nokogiri (~> 1.4.0)
+
 PATH
   remote: .
   specs:
@@ -14,9 +23,6 @@ GEM
     enumeration (1.2.1)
     nokogiri (1.4.7)
     rake (0.9.2)
-    xmlss (0.2.1)
-      enumeration (~> 1.2)
-      nokogiri (~> 1.4.0)
 
 PLATFORMS
   ruby
@@ -26,3 +32,4 @@ DEPENDENCIES
   bundler (~> 1.0)
   osheet!
   rake (~> 0.9.2)
+  xmlss!

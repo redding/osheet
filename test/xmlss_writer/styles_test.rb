@@ -111,6 +111,7 @@ module Osheet
         end
         style('.font.size') { font 14 }
         style('.font.color') { font '#FF0000' }
+        style('.font.name') { font 'Verdana' }
       }
     end
 
@@ -143,6 +144,10 @@ module Osheet
 
     should "build style objs for font color" do
       assert_equal '#FF0000', subject.send(:style, 'font color').font.color
+    end
+
+    should "build style objs for font name" do
+      assert_equal 'Verdana', subject.send(:style, 'font name').font.name
     end
 
   end

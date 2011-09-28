@@ -63,6 +63,8 @@ Osheet::Workbook.new {
   style('.font.sizeB') { font 14 }
   style('.font.colorA') { font '#FF0000' }
   style('.font.colorB') { font '#00FF00' }
+  style('.font.nameA') { font 'Courier' }
+  style('.font.nameB') { font 'Times New Roman' }
 
   worksheet {
     name "font"
@@ -107,6 +109,14 @@ Osheet::Workbook.new {
     }
     row {
       [:colorA, :colorB].each do |a|
+        cell {
+          data a.to_s
+          style_class "font #{a}"
+        }
+      end
+    }
+    row {
+      [:nameA, :nameB].each do |a|
         cell {
           data a.to_s
           style_class "font #{a}"
