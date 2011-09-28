@@ -97,6 +97,8 @@ module Osheet::XmlssWriter::Styles
         when ::String
           if font_cmd =~ /^#/
             [:color, font_cmd]
+          else
+            [:name, font_cmd]
           end
         when :bold, :italic, :shadow
           [font_cmd, true]
