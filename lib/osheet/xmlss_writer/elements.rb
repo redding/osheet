@@ -56,7 +56,8 @@ module Osheet::XmlssWriter::Elements
       :index => ocell.attributes[:index],
       :merge_across => cell_merge(ocell.attributes[:colspan]),
       :merge_down => cell_merge(ocell.attributes[:rowspan]),
-      :data => data(ocell.attributes[:data])
+      :data => data(ocell.attributes[:data]),
+      :formula => ocell.attributes[:formula]
     })
   end
   def cell_merge(span)

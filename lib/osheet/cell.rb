@@ -18,6 +18,7 @@ module Osheet
       set_ivar(:colspan, 1)
       set_ivar(:href, nil)
       set_ivar(:index, nil)
+      set_ivar(:formula, nil)
       if block_given?
         set_binding_ivars(block.binding)
         instance_exec(*args, &block)
@@ -43,6 +44,7 @@ module Osheet
     def colspan(value); set_ivar(:colspan, value); end
     def href(value); set_ivar(:href, value); end
     def index(value); set_ivar(:index, value); end
+    def formula(value); set_ivar(:formula, value); end
 
     def attributes
       {
@@ -52,7 +54,8 @@ module Osheet
         :colspan => get_ivar(:colspan),
         :rowspan => get_ivar(:rowspan),
         :href => get_ivar(:href),
-        :index => get_ivar(:index)
+        :index => get_ivar(:index),
+        :formula => get_ivar(:formula)
       }
     end
 
