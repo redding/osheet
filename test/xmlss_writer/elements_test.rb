@@ -132,6 +132,7 @@ module Osheet
         rowspan 2
         colspan 5
         index 3
+        formula "=R1C1"
       end
       subject.workbook = Workbook.new {
         style('.awesome') {
@@ -154,6 +155,7 @@ module Osheet
       assert_equal ::Xmlss::Data.type(:number), @xmlss_cell.data.type
       assert_equal 'http://example.com', @xmlss_cell.href
       assert_equal 3, @xmlss_cell.index
+      assert_equal "=R1C1", @xmlss_cell.formula
     end
 
     should "handle rowspan and colspan" do
