@@ -21,6 +21,7 @@ module Osheet
       assert_equal 1,   subject.send(:get_ivar, "rowspan")
       assert_equal nil,   subject.send(:get_ivar, "href")
       assert_equal nil,   subject.send(:get_ivar, "index")
+      assert_equal nil,   subject.send(:get_ivar, "formuala")
     end
 
     should "type cast data strings/symbols" do
@@ -61,6 +62,7 @@ module Osheet
         colspan 4
         rowspan 2
         index 3
+        formula "=R1C1"
         href "http://www.google.com"
       end
     end
@@ -68,9 +70,10 @@ module Osheet
     should "should set them correctly" do
       assert_equal "Poo", subject.send(:get_ivar, "data")
       assert_kind_of Format::Number, subject.send(:get_ivar, "format")
-      assert_equal 4,     subject.send(:get_ivar, "colspan")
-      assert_equal 2,     subject.send(:get_ivar, "rowspan")
-      assert_equal 3,     subject.send(:get_ivar, "index")
+      assert_equal 4,       subject.send(:get_ivar, "colspan")
+      assert_equal 2,       subject.send(:get_ivar, "rowspan")
+      assert_equal 3,       subject.send(:get_ivar, "index")
+      assert_equal "=R1C1", subject.send(:get_ivar, "formula")
       assert_equal "http://www.google.com", subject.send(:get_ivar, "href")
     end
 
@@ -85,6 +88,7 @@ module Osheet
       assert_equal 4, subject.attributes[:colspan]
       assert_equal 2, subject.attributes[:rowspan]
       assert_equal 3, subject.attributes[:index]
+      assert_equal "=R1C1", subject.attributes[:formula]
       assert_equal "http://www.google.com", subject.attributes[:href]
     end
 
