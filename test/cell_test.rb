@@ -21,7 +21,7 @@ module Osheet
       assert_equal 1,   subject.send(:get_ivar, "rowspan")
       assert_equal nil,   subject.send(:get_ivar, "href")
       assert_equal nil,   subject.send(:get_ivar, "index")
-      assert_equal nil,   subject.send(:get_ivar, "formuala")
+      assert_equal nil,   subject.send(:get_ivar, "formula")
     end
 
     should "type cast data strings/symbols" do
