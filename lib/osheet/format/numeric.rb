@@ -101,6 +101,15 @@ module Osheet::Format
         "\"$\"#{symbol_suffix}"
       when :none
         ''
+      else
+          error = "Unknown symbol, not :dollar nor :none #{@symbol}"
+          raise_errors = false
+          if raise_errors
+            raise error
+          else
+            puts error
+          end
+          ''
       end
     end
     def symbol_key
