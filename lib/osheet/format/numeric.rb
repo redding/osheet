@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'enumeration'
 
 module Osheet::Format
@@ -99,7 +101,9 @@ module Osheet::Format
       case @symbol
       when :dollar
         "\"$\"#{symbol_suffix}"
-      when :none
+      when :euro
+        "\"€\"#{symbol_suffix}"
+      else
         ''
       end
     end
