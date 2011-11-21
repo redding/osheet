@@ -1,3 +1,5 @@
+#encoding: UTF-8
+
 require 'enumeration'
 
 module Osheet::Format
@@ -99,8 +101,19 @@ module Osheet::Format
       case @symbol
       when :dollar
         "\"$\"#{symbol_suffix}"
+      when :euro
+        "\"€\"#{symbol_suffix}"
       when :none
         ''
+      else
+          error = "Unknown symbol, not :dollar, :euro nor :none #{@symbol}"
+          raise_errors = false
+          if raise_errors
+            raise error
+          else
+            puts error
+          end
+          ''
       end
     end
     def symbol_key
