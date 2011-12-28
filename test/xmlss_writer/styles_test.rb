@@ -1,4 +1,5 @@
-require "test/helper"
+require "assert"
+
 require 'osheet/xmlss_writer'
 
 module Osheet
@@ -6,6 +7,7 @@ module Osheet
   class XmlssWriter::StylesTest < Assert::Context
     before do
       @writer = XmlssWriter::Base.new
+      @xworkbook = ::Xmlss::Workbook.new
     end
     subject { @writer }
 
@@ -14,7 +16,7 @@ module Osheet
   class XmlssWriter::Style < XmlssWriter::StylesTest
     desc "Xmlss style writer"
     before do
-      subject.workbook = Workbook.new {
+      subject.oworkbook = Workbook.new {
         style('.font.size') { font 14 }
         style('.font.weight') { font :bold }
         style('.font.style') { font :italic }
@@ -31,29 +33,32 @@ module Osheet
     end
 
     should "not build a style obj when writing styles with no class str or format" do
-      assert_equal nil, subject.send(:style, '')
+      assert_equal nil, subject.send(:style, @xworkbook, '')
     end
 
     should "build a style obj and add it to the writers styles" do
-      xmlss_style = subject.send(:style, 'awesome')
+      xmlss_style = subject.send(:style, @xworkbook, 'awesome')
       assert_kind_of ::Xmlss::Style::Base, xmlss_style
       assert_equal '.awesome', xmlss_style.id
-      assert_equal 1, subject.styles.size
-      assert_equal xmlss_style, subject.styles.first
+      assert_equal 1, subject.used_xstyles.size
+      assert_equal xmlss_style, subject.used_xstyles.first
     end
 
-    should "build a style obj from many matching osheet styles" do
-      xmlss_style = subject.send(:style, 'font size weight style align center')
-      assert_equal 14, xmlss_style.font.size
-      assert_equal true, xmlss_style.font.bold?
-      assert_equal true, xmlss_style.font.italic?
+    should "writer style markup from many matching osheet styles" do
+      xmlss_style = subject.send(:style, @xworkbook, 'font size weight style align center')
+      assert_equal '.font.size.weight.style.align.center', xmlss_style.id
+
+      assert_equal(
+        "<Style ss:ID=\".font.size.weight.style.align.center\"><Alignment ss:Horizontal=\"Center\" /><Font ss:Bold=\"1\" ss:Italic=\"1\" ss:Size=\"14\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
     should "provide style ids" do
-      assert_equal '', subject.send(:style_id, '')
-      assert_equal '.awesome', subject.send(:style_id, 'awesome')
-      assert_equal '..number_none_0_nocomma_black', subject.send(:style_id, '', Osheet::Format.new(:number))
-      assert_equal 2, subject.styles.size
+      assert_equal '', subject.send(:style_id, @xworkbook, '')
+      assert_equal '.awesome', subject.send(:style_id, @xworkbook, 'awesome')
+      assert_equal '..number_none_0_nocomma_black', subject.send(:style_id, @xworkbook, '', Osheet::Format.new(:number))
+      assert_equal 2, subject.used_xstyles.size
     end
 
   end
@@ -61,9 +66,8 @@ module Osheet
   class XmlssWriter::Alignment <  XmlssWriter::StylesTest
     desc "Alignment style writer"
     before do
-      subject.workbook = Workbook.new {
-        [
-          :left, :center, :right,
+      subject.oworkbook = Workbook.new {
+        [ :left, :center, :right,
           :top, :middle, :bottom,
           :wrap
         ].each do |s|
@@ -73,28 +77,48 @@ module Osheet
       }
     end
 
-    should "build a style obj with empty alignment settings by default" do
-      assert_equal nil, subject.send(:style, 'align').alignment
+    should "write style markup with no alignment settings if no alignment style match" do
+      subject.send(:style, @xworkbook, 'align')
+      assert_equal(
+        "<Style ss:ID=\".align\"><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for horizontal alignment settings" do
-      assert_equal ::Xmlss::Style::Alignment.horizontal(:left), subject.send(:style, 'align left').alignment.horizontal
-      assert_equal ::Xmlss::Style::Alignment.horizontal(:center), subject.send(:style, 'align center').alignment.horizontal
-      assert_equal ::Xmlss::Style::Alignment.horizontal(:right), subject.send(:style, 'align right').alignment.horizontal
+    should "write style markup for horizontal alignment settings" do
+      subject.send(:style, @xworkbook, 'align left')
+      subject.send(:style, @xworkbook, 'align center')
+      subject.send(:style, @xworkbook, 'align right')
+      assert_equal(
+        "<Style ss:ID=\".align.left\"><Alignment ss:Horizontal=\"Left\" /><NumberFormat /></Style><Style ss:ID=\".align.center\"><Alignment ss:Horizontal=\"Center\" /><NumberFormat /></Style><Style ss:ID=\".align.right\"><Alignment ss:Horizontal=\"Right\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for vertical alignment settings" do
-      assert_equal ::Xmlss::Style::Alignment.vertical(:top), subject.send(:style, 'align top').alignment.vertical
-      assert_equal ::Xmlss::Style::Alignment.vertical(:center), subject.send(:style, 'align middle').alignment.vertical
-      assert_equal ::Xmlss::Style::Alignment.vertical(:bottom), subject.send(:style, 'align bottom').alignment.vertical
+    should "write style markup for vertical alignment settings" do
+      subject.send(:style, @xworkbook, 'align top')
+      subject.send(:style, @xworkbook, 'align middle')
+      subject.send(:style, @xworkbook, 'align bottom')
+      assert_equal(
+        "<Style ss:ID=\".align.top\"><Alignment ss:Vertical=\"Top\" /><NumberFormat /></Style><Style ss:ID=\".align.middle\"><Alignment ss:Vertical=\"Center\" /><NumberFormat /></Style><Style ss:ID=\".align.bottom\"><Alignment ss:Vertical=\"Bottom\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for text wrap settings" do
-      assert_equal true, subject.send(:style, 'align wrap').alignment.wrap_text?
+    should "write style markup for text wrap settings" do
+      subject.send(:style, @xworkbook, 'align wrap')
+      assert_equal(
+        "<Style ss:ID=\".align.wrap\"><Alignment ss:WrapText=\"1\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for text rotation settings" do
-      assert_equal 90, subject.send(:style, 'align rotate').alignment.rotate
+    should "write style markup for text rotation settings" do
+      subject.send(:style, @xworkbook, 'align rotate')
+      assert_equal(
+        "<Style ss:ID=\".align.rotate\"><Alignment ss:Rotate=\"90\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
   end
@@ -102,7 +126,7 @@ module Osheet
   class XmlssWriter::Font < XmlssWriter::StylesTest
     desc "Font style writer"
     before do
-      subject.workbook = Workbook.new {
+      subject.oworkbook = Workbook.new {
         [ :underline, :double_underline, :accounting_underline, :double_accounting_underline,
           :subscript, :superscript, :shadow, :strikethrough, :wrap,
           :bold, :italic
@@ -115,39 +139,68 @@ module Osheet
       }
     end
 
-    should "build a style obj with empty font settings by default" do
-      assert_equal nil, subject.send(:style, 'font').font
+    should "write style markup with empty font settings if no match" do
+      subject.send(:style, @xworkbook, 'font')
+      assert_equal(
+        "<Style ss:ID=\".font\"><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for font underline settings" do
-      assert_equal ::Xmlss::Style::Font.underline(:single), subject.send(:style, 'font underline').font.underline
-      assert_equal ::Xmlss::Style::Font.underline(:double), subject.send(:style, 'font double_underline').font.underline
-      assert_equal ::Xmlss::Style::Font.underline(:single_accounting), subject.send(:style, 'font accounting_underline').font.underline
-      assert_equal ::Xmlss::Style::Font.underline(:double_accounting), subject.send(:style, 'font double_accounting_underline').font.underline
+    should "write style markup for font underline settings" do
+      subject.send(:style, @xworkbook, 'font underline')
+      subject.send(:style, @xworkbook, 'font double_underline')
+      subject.send(:style, @xworkbook, 'font accounting_underline')
+      subject.send(:style, @xworkbook, 'font double_accounting_underline')
+      assert_equal(
+       "<Style ss:ID=\".font.underline\"><Font ss:Underline=\"Single\" /><NumberFormat /></Style><Style ss:ID=\".font.double_underline\"><Font ss:Underline=\"Double\" /><NumberFormat /></Style><Style ss:ID=\".font.accounting_underline\"><Font ss:Underline=\"SingleAccounting\" /><NumberFormat /></Style><Style ss:ID=\".font.double_accounting_underline\"><Font ss:Underline=\"DoubleAccounting\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
+
     end
 
-    should "build style objs for font alignment settings" do
-      assert_equal ::Xmlss::Style::Font.alignment(:subscript), subject.send(:style, 'font subscript').font.alignment
-      assert_equal ::Xmlss::Style::Font.alignment(:superscript), subject.send(:style, 'font superscript').font.alignment
+    should "write style markup for font alignment settings" do
+      subject.send(:style, @xworkbook, 'font subscript')
+      subject.send(:style, @xworkbook, 'font superscript')
+      assert_equal(
+        "<Style ss:ID=\".font.subscript\"><Font ss:VerticalAlign=\"Subscript\" /><NumberFormat /></Style><Style ss:ID=\".font.superscript\"><Font ss:VerticalAlign=\"Superscript\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for font style settings" do
-      assert_equal true, subject.send(:style, 'font bold').font.bold?
-      assert_equal true, subject.send(:style, 'font italic').font.italic?
-      assert_equal true, subject.send(:style, 'font strikethrough').font.strike_through?
-      assert_equal true, subject.send(:style, 'font shadow').font.shadow?
+    should "write style markup for font style settings" do
+      subject.send(:style, @xworkbook, 'font bold')
+      subject.send(:style, @xworkbook, 'font italic')
+      subject.send(:style, @xworkbook, 'font strikethrough')
+      subject.send(:style, @xworkbook, 'font shadow')
+      assert_equal(
+        "<Style ss:ID=\".font.bold\"><Font ss:Bold=\"1\" /><NumberFormat /></Style><Style ss:ID=\".font.italic\"><Font ss:Italic=\"1\" /><NumberFormat /></Style><Style ss:ID=\".font.strikethrough\"><Font ss:StrikeThrough=\"1\" /><NumberFormat /></Style><Style ss:ID=\".font.shadow\"><Font ss:Shadow=\"1\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for font size" do
-      assert_equal 14, subject.send(:style, 'font size').font.size
+    should "write style markup for font size" do
+      subject.send(:style, @xworkbook, 'font size')
+      assert_equal(
+        "<Style ss:ID=\".font.size\"><Font ss:Size=\"14\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for font color" do
-      assert_equal '#FF0000', subject.send(:style, 'font color').font.color
+    should "write style markup for font color" do
+      subject.send(:style, @xworkbook, 'font color')
+      assert_equal(
+        "<Style ss:ID=\".font.color\"><Font ss:Color=\"#FF0000\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for font name" do
-      assert_equal 'Verdana', subject.send(:style, 'font name').font.name
+    should "write style markup for font name" do
+      subject.send(:style, @xworkbook, 'font name')
+      assert_equal(
+        "<Style ss:ID=\".font.name\"><Font ss:FontName=\"Verdana\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
   end
@@ -155,7 +208,7 @@ module Osheet
   class XmlssWriter::Bg < XmlssWriter::StylesTest
     desc "Bg writer"
     before do
-      subject.workbook = Workbook.new {
+      subject.oworkbook = Workbook.new {
         style('.bg.color') { bg '#FF0000' }
         style('.bg.pattern-only') { bg :solid }
         style('.bg.pattern-color') { bg :horz_stripe => '#0000FF' }
@@ -164,31 +217,57 @@ module Osheet
       }
     end
 
-    should "build a style obj with empty bg settings by default" do
-      assert_equal nil, subject.send(:style, 'bg').interior
+    should "write style markup with empty bg settings when no match" do
+      subject.send(:style, @xworkbook, 'bg')
+      # assert_equal nil, .interior
+      assert_equal(
+        "<Style ss:ID=\".bg\"><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for bg color and auto set the pattern to solid" do
-      assert_equal '#FF0000', subject.send(:style, 'bg color').interior.color
+    should "write style markup for bg color and auto set the pattern to solid" do
+      subject.send(:style, @xworkbook, 'bg color')
+      # assert_equal '#FF0000', .interior.color
+      assert_equal(
+        "<Style ss:ID=\".bg.color\"><Interior ss:Color=\"#FF0000\" ss:Pattern=\"Solid\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for bg pattern settings" do
-      assert_equal ::Xmlss::Style::Interior.pattern(:solid), subject.send(:style, 'bg pattern-only').interior.pattern
-      assert_equal nil, subject.send(:style, 'bg pattern-only').interior.pattern_color
-      assert_equal ::Xmlss::Style::Interior.pattern(:horz_stripe), subject.send(:style, 'bg pattern-color').interior.pattern
-      assert_equal '#0000FF', subject.send(:style, 'bg pattern-color').interior.pattern_color
+    should "write style markup for bg pattern settings" do
+      subject.send(:style, @xworkbook, 'bg pattern-only')
+      subject.send(:style, @xworkbook, 'bg pattern-only')
+      subject.send(:style, @xworkbook, 'bg pattern-color')
+      subject.send(:style, @xworkbook, 'bg pattern-color')
+      assert_equal(
+        "<Style ss:ID=\".bg.pattern-only\"><Interior ss:Pattern=\"Solid\" /><NumberFormat /></Style><Style ss:ID=\".bg.pattern-color\"><Interior ss:Color=\"#FF0000\" ss:Pattern=\"HorzStripe\" ss:PatternColor=\"#0000FF\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "set pattern to solid when setting bg color" do
-      assert_equal ::Xmlss::Style::Interior.pattern(:solid), subject.send(:style, 'bg color').interior.pattern
+    should "write style markup setting pattern to solid when setting bg color" do
+      subject.send(:style, @xworkbook, 'bg color')
+      assert_equal(
+        "<Style ss:ID=\".bg.color\"><Interior ss:Color=\"#FF0000\" ss:Pattern=\"Solid\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "set pattern to pattern setting when first setting bg color then pattern" do
-      assert_equal ::Xmlss::Style::Interior.pattern(:horz_stripe), subject.send(:style, 'bg color-first').interior.pattern
+    should "write style markup setting pattern to pattern setting when first setting bg color then pattern" do
+      subject.send(:style, @xworkbook, 'bg color-first')
+      assert_equal(
+        "<Style ss:ID=\".bg.color-first\"><Interior ss:Color=\"#00FF00\" ss:Pattern=\"HorzStripe\" ss:PatternColor=\"#0000FF\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "set pattern to pattern setting when first setting bg pattern then color" do
-      assert_equal ::Xmlss::Style::Interior.pattern(:horz_stripe), subject.send(:style, 'bg pattern-first').interior.pattern
+    should "write style markup setting pattern to pattern setting when first setting bg pattern then color" do
+      subject.send(:style, @xworkbook, 'bg pattern-first')
+      assert_equal(
+        "<Style ss:ID=\".bg.pattern-first\"><Interior ss:Color=\"#00FF00\" ss:Pattern=\"HorzStripe\" ss:PatternColor=\"#0000FF\" /><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
   end
@@ -196,7 +275,7 @@ module Osheet
   class XmlssWriter::Border < XmlssWriter::StylesTest
     desc "Font border writer"
     before do
-      subject.workbook = Workbook.new {
+      subject.oworkbook = Workbook.new {
         ::Osheet::Style::BORDER_POSITIONS.each do |p|
           style(".border.#{p}") { send("border_#{p}", :thin) }
         end
@@ -211,50 +290,75 @@ module Osheet
       }
     end
 
-    should "build a style obj with empty border settings by default" do
-      style = subject.send(:style, 'border')
-      assert_kind_of ::Xmlss::ItemSet, style.borders
-      assert_equal [], style.borders
+    should "write style markup with empty border settings when no match" do
+      subject.send(:style, @xworkbook, 'border')
+      assert_equal(
+        "<Style ss:ID=\".border\"><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs with identical settings for all positions when using 'border'" do
-      style = subject.send(:style, 'border all')
-      assert_equal 4, style.borders.size
-      assert_equal 1, style.borders.collect{|p| p.weight}.uniq.size
-      assert_equal 1, style.borders.collect{|p| p.line_style}.uniq.size
-      assert_equal 1, style.borders.collect{|p| p.color}.uniq.size
+    should "write style markup with identical settings for all positions when using 'border'" do
+      subject.send(:style, @xworkbook, 'border all')
+      assert_equal(
+        "<Style ss:ID=\".border.all\"><Borders><Border ss:Color=\"#FF0000\" ss:LineStyle=\"Dash\" ss:Position=\"Top\" ss:Weight=\"3\" /><Border ss:Color=\"#FF0000\" ss:LineStyle=\"Dash\" ss:Position=\"Right\" ss:Weight=\"3\" /><Border ss:Color=\"#FF0000\" ss:LineStyle=\"Dash\" ss:Position=\"Bottom\" ss:Weight=\"3\" /><Border ss:Color=\"#FF0000\" ss:LineStyle=\"Dash\" ss:Position=\"Left\" ss:Weight=\"3\" /></Borders><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for border specific positions" do
+    should "write style markup for border specific positions" do
       ::Osheet::Style::BORDER_POSITIONS.each do |p|
-        assert_equal ::Xmlss::Style::Border.position(p), subject.send(:style, "border #{p}").borders.first.position
+        subject.send(:style, @xworkbook, "border #{p}")
       end
+      assert_equal(
+        "<Style ss:ID=\".border.top\"><Borders><Border ss:LineStyle=\"Continuous\" ss:Position=\"Top\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.right\"><Borders><Border ss:LineStyle=\"Continuous\" ss:Position=\"Right\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.bottom\"><Borders><Border ss:LineStyle=\"Continuous\" ss:Position=\"Bottom\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.left\"><Borders><Border ss:LineStyle=\"Continuous\" ss:Position=\"Left\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for border weight settings" do
+    should "write style markup for border weight settings" do
       [:hairline, :thin, :medium, :thick].each do |w|
-        assert_equal ::Xmlss::Style::Border.weight(w), subject.send(:style, "border #{w}").borders.first.weight
+        subject.send(:style, @xworkbook, "border #{w}")
       end
+      assert_equal(
+        "<Style ss:ID=\".border.hairline\"><Borders><Border ss:LineStyle=\"Continuous\" ss:Position=\"Top\" ss:Weight=\"0\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.thin\"><Borders><Border ss:LineStyle=\"Continuous\" ss:Position=\"Top\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.medium\"><Borders><Border ss:LineStyle=\"Continuous\" ss:Position=\"Top\" ss:Weight=\"2\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.thick\"><Borders><Border ss:LineStyle=\"Continuous\" ss:Position=\"Top\" ss:Weight=\"3\" /></Borders><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for border style settings" do
+    should "write style markup for border style settings" do
       [:none, :continuous, :dash, :dot, :dash_dot, :dash_dot_dot].each do |s|
-        assert_equal ::Xmlss::Style::Border.line_style(s), subject.send(:style, "border #{s}").borders.first.line_style
+        subject.send(:style, @xworkbook, "border #{s}")
       end
+      assert_equal(
+        "<Style ss:ID=\".border.none\"><Borders><Border ss:LineStyle=\"None\" ss:Position=\"Top\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.continuous\"><Borders><Border ss:LineStyle=\"Continuous\" ss:Position=\"Top\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.dash\"><Borders><Border ss:LineStyle=\"Dash\" ss:Position=\"Top\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.dot\"><Borders><Border ss:LineStyle=\"Dot\" ss:Position=\"Top\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.dash_dot\"><Borders><Border ss:LineStyle=\"DashDot\" ss:Position=\"Top\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style><Style ss:ID=\".border.dash_dot_dot\"><Borders><Border ss:LineStyle=\"DashDotDot\" ss:Position=\"Top\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
-    should "build style objs for border color" do
-      assert_equal '#FF0000', subject.send(:style, 'border color').borders.first.color
+    should "write style markup for border color" do
+      subject.send(:style, @xworkbook, 'border color')
+      assert_equal(
+        "<Style ss:ID=\".border.color\"><Borders><Border ss:Color=\"#FF0000\" ss:LineStyle=\"Continuous\" ss:Position=\"Top\" ss:Weight=\"1\" /></Borders><NumberFormat /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
   end
 
   class XmlssWriter::NumberFormat < XmlssWriter::StylesTest
     desc "Xmlss style number format writer"
+    before do
+      subject.oworkbook = Workbook.new {}
+    end
 
-    should "build a style obj with formatting" do
-      assert_equal '@', subject.send(:style, '', Osheet::Format.new(:text)).number_format.format
-      assert_equal 'mm/dd/yy', subject.send(:style, '', Osheet::Format.new(:datetime, 'mm/dd/yy')).number_format.format
+    should "write style markup with formatting" do
+      subject.send(:style, @xworkbook, '', Osheet::Format.new(:text))
+      subject.send(:style, @xworkbook, '', Osheet::Format.new(:datetime, 'mm/dd/yy'))
+      assert_equal(
+        "<Style ss:ID=\"..text\"><NumberFormat ss:Format=\"@\" /></Style><Style ss:ID=\"..datetime_mm/dd/yy\"><NumberFormat ss:Format=\"mm/dd/yy\" /></Style>",
+        xstyle_markup(@xworkbook)
+      )
     end
 
   end

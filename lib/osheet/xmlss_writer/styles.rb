@@ -3,39 +3,30 @@ module Osheet::XmlssWriter::Styles
 
   protected
 
-  def style_id(style_class, oformat=nil)
-    oformat ||= Osheet::Format.new(:general)
-    (xmlss_style = style(style_class, oformat)).nil? ? '' : xmlss_style.id
+  def style_id(xworkbook, style_class, oformat=nil)
+    xstyle = style(xworkbook, style_class, oformat)
+    xstyle.nil? ? '' : xstyle.id
   end
 
-  def style(style_class, oformat=nil)
+  def style(xworkbook, style_class, oformat=nil)
     oformat ||= Osheet::Format.new(:general)
+
+    # generate the style key for the given class/format
     key = style_key(style_class, oformat.key)
-    xmlss_style = @styles.find{|style| style.id == key}
-    if !key.empty? && xmlss_style.nil?
-      settings = style_settings(key)
-      @styles << (xmlss_style = ::Xmlss::Style::Base.new(key) {
-        if settings.has_key?(:align) && !settings[:align].empty?
-          alignment(settings[:align])
-        end
-        if settings.has_key?(:font) && !settings[:font].empty?
-          font(settings[:font])
-        end
-        if settings.has_key?(:bg) && !settings[:bg].empty?
-          interior(settings[:bg])
-        end
-        ::Osheet::Style::BORDERS.each do |bp|
-          if settings.has_key?(bp) && !settings[bp].empty?
-            border(settings[bp])
-          end
-        end
-        if oformat
-          number_format(:format => oformat.style)
-        end
-      })
+
+    # see if we have already created/used an xmlss style for the given key
+    xstyle = @used_xstyles.find{ |xs| xs.id == key }
+
+    # if not, create an xmlss style for the key and add it to the used cache
+    if !key.empty? && xstyle.nil?
+      xstyle = xmlss_style(xworkbook, key, oformat)
+      @used_xstyles << xstyle
     end
-    xmlss_style
+
+    xstyle
   end
+
+  private
 
   def style_key(style_class, format_key)
     (style_class || '').strip.split(/\s+/).collect do |c|
@@ -43,8 +34,48 @@ module Osheet::XmlssWriter::Styles
     end.join('') + (format_key.nil? || format_key.empty? ? '' : "..#{format_key}")
   end
 
+  def xmlss_style(xworkbook, key, oformat)
+    # take all the matching osheet styles for the given key,
+    # and build up xmlss style settings for them
+    settings = style_settings(key)
+
+    xworkbook.style(key) do
+
+      if settings.has_key?(:align) && !settings[:align].empty?
+        xworkbook.alignment(settings[:align])
+      end
+
+      if settings.has_key?(:font) && !settings[:font].empty?
+        xworkbook.font(settings[:font])
+      end
+
+      if settings.has_key?(:bg) && !settings[:bg].empty?
+        xworkbook.interior(settings[:bg])
+      end
+
+      border_set = ::Osheet::Style::BORDERS.inject([]) do |set, bp|
+        if settings.has_key?(bp) && !settings[bp].empty?
+          set << settings[bp]
+        end
+        set
+      end
+      if !border_set.empty?
+        xworkbook.borders {
+          border_set.each { |border_setting| xworkbook.border(border_setting) }
+        }
+      end
+
+      if oformat
+        xworkbook.number_format(oformat.style)
+      end
+
+    end
+  end
+
+  # TODO: would be nice to have a class handle all of the osheet-xmlss style translations...
+
   def style_settings(key)
-    @ostyles.for(key).inject({}) do |style_settings, ostyle|
+    @oworkbook.styles.for(key).inject({}) do |style_settings, ostyle|
       merged_settings(style_settings, ostyle_settings(ostyle))
     end
   end

@@ -6,6 +6,11 @@ $LOAD_PATH.unshift(File.expand_path("../..", __FILE__))
 require 'osheet'
 
 class Assert::Context
+
+  def xstyle_markup(xworkbook)
+    xworkbook.instance_variable_get("@__xmlss_undies_writer").flush.style_markup
+  end
+
   class << self
 
 
