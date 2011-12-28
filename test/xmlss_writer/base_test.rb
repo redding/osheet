@@ -8,13 +8,13 @@ module Osheet
     before { @writer = XmlssWriter::Base.new }
     subject { @writer }
 
-    should have_readers :workbook, :styles
-    should have_writer :workbook
+    should have_readers :used_xstyles
+    should have_writer :oworkbook
+    should have_instance_methods :xworkbook
 
   end
 
-  class XmlssWriter::WorkbookTest < XmlssWriter::BaseTest
-    desc "workbook"
+  class XmlssWriter::WorkbookTests < XmlssWriter::BaseTest
     before do
       @workbook = Workbook.new {
         title "xmlss"
@@ -24,10 +24,10 @@ module Osheet
 
     should "only allow writing an Osheet::Workbook" do
       assert_nothing_raised do
-        subject.workbook = @workbook
+        subject.oworkbook = @workbook
       end
       assert_raises ArgumentError do
-        subject.workbook = "poo"
+        subject.oworkbook = "poo"
       end
     end
 
@@ -42,16 +42,18 @@ module Osheet
     end
 
     should "create an Xmlss workbook" do
-      assert_nothing_raised do
-        subject.workbook = @workbook
-      end
-      assert_kind_of ::Xmlss::Workbook, subject.workbook
-      assert_equal @workbook.worksheets.size, subject.workbook.worksheets.size
+      subject.oworkbook = @workbook
+      assert_kind_of ::Xmlss::Workbook, subject.xworkbook
+
+      assert_equal(
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\" xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\"><Styles></Styles><Worksheet ss:Name=\"testsheet1\"><Table></Table></Worksheet></Workbook>",
+        subject.xworkbook.to_s
+      )
     end
 
   end
 
-  class XmlssWriter::ToDataTest < Assert::Context
+  class XmlssWriter::ToFileTests < Assert::Context
     desc "XmlssWriter::Base"
     before do
       @writer = XmlssWriter::Base.new({
