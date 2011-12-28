@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet">
+  <Styles>
+    <Style ss:ID=".align.rotA">
+      <Alignment ss:Rotate="90"/>
+      <Borders/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".align.rotB">
+      <Alignment ss:Rotate="-90"/>
+      <Borders/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".align.rotC">
+      <Alignment ss:Rotate="45"/>
+      <Borders/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".align.top">
+      <Alignment ss:Vertical="Top"/>
+      <Borders/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".align.middle">
+      <Alignment ss:Vertical="Center"/>
+      <Borders/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".align.bottom">
+      <Alignment ss:Vertical="Bottom"/>
+      <Borders/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".align.wrap">
+      <Alignment ss:WrapText="1"/>
+      <Borders/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".align.left">
+      <Alignment ss:Horizontal="Left"/>
+      <Borders/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".align.center">
+      <Alignment ss:Horizontal="Center"/>
+      <Borders/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".align.right">
+      <Alignment ss:Horizontal="Right"/>
+      <Borders/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.underline">
+      <Borders/>
+      <Font ss:Underline="Single"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.double_underline">
+      <Borders/>
+      <Font ss:Underline="Double"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.accounting_underline">
+      <Borders/>
+      <Font ss:Underline="SingleAccounting"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.double_accounting_underline">
+      <Borders/>
+      <Font ss:Underline="DoubleAccounting"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.subscript">
+      <Borders/>
+      <Font ss:VerticalAlign="Subscript"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.superscript">
+      <Borders/>
+      <Font ss:VerticalAlign="Superscript"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.strikethrough">
+      <Borders/>
+      <Font ss:StrikeThrough="1"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.shadow">
+      <Borders/>
+      <Font ss:Shadow="1"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.bold">
+      <Borders/>
+      <Font ss:Bold="1"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.italic">
+      <Borders/>
+      <Font ss:Italic="1"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.sizeA">
+      <Borders/>
+      <Font ss:Size="6"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.sizeB">
+      <Borders/>
+      <Font ss:Size="14"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.colorA">
+      <Borders/>
+      <Font ss:Color="#FF0000"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".font.colorB">
+      <Borders/>
+      <Font ss:Color="#00FF00"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".bg.color">
+      <Borders/>
+      <Font ss:Color="#FFFFFF"/>
+      <Interior ss:Color="#FF0000" ss:Pattern="Solid"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".bg.pattern">
+      <Borders/>
+      <Interior ss:Pattern="HorzStripe"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".bg.pattern.color">
+      <Borders/>
+      <Font ss:Color="#FFFFFF"/>
+      <Interior ss:Color="#FF0000" ss:Pattern="HorzStripe" ss:PatternColor="#000000"/>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".border.top.color.weight.style">
+      <Borders>
+        <Border ss:Color="#FF0000" ss:Weight="0" ss:LineStyle="Continuous" ss:Position="Top"/>
+      </Borders>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".border.right.color.weight.style">
+      <Borders>
+        <Border ss:Color="#00FF00" ss:Weight="1" ss:LineStyle="Dash" ss:Position="Right"/>
+      </Borders>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".border.bottom.color.weight.style">
+      <Borders>
+        <Border ss:Color="#0000FF" ss:Weight="2" ss:LineStyle="Dot" ss:Position="Bottom"/>
+      </Borders>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".border.left.color.weight.style">
+      <Borders>
+        <Border ss:Color="#FFFF00" ss:Weight="3" ss:LineStyle="DashDot" ss:Position="Left"/>
+      </Borders>
+      <NumberFormat/>
+    </Style>
+    <Style ss:ID=".border.all">
+      <Borders>
+        <Border ss:Color="#00FFFF" ss:Weight="3" ss:LineStyle="Continuous" ss:Position="Top"/>
+        <Border ss:Color="#00FFFF" ss:Weight="3" ss:LineStyle="Continuous" ss:Position="Right"/>
+        <Border ss:Color="#00FFFF" ss:Weight="3" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+        <Border ss:Color="#00FFFF" ss:Weight="3" ss:LineStyle="Continuous" ss:Position="Left"/>
+      </Borders>
+      <NumberFormat/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="align">
+    <Table>
+      <Column ss:Width="100"/>
+      <Column ss:Width="100"/>
+      <Column ss:Width="100"/>
+      <Column ss:Width="100"/>
+      <Row ss:Height="50">
+        <Cell ss:StyleID=".align.rotA">
+          <Data ss:Type="String">rotA</Data>
+        </Cell>
+        <Cell ss:StyleID=".align.rotB">
+          <Data ss:Type="String">rotB</Data>
+        </Cell>
+        <Cell ss:StyleID=".align.rotC">
+          <Data ss:Type="String">rotC</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="50">
+        <Cell ss:StyleID=".align.top">
+          <Data ss:Type="String">top</Data>
+        </Cell>
+        <Cell ss:StyleID=".align.middle">
+          <Data ss:Type="String">middle</Data>
+        </Cell>
+        <Cell ss:StyleID=".align.bottom">
+          <Data ss:Type="String">bottom</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="50">
+        <Cell ss:StyleID=".align.wrap">
+          <Data ss:Type="String">wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap wrap </Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="50">
+        <Cell ss:StyleID=".align.left">
+          <Data ss:Type="String">left</Data>
+        </Cell>
+        <Cell ss:StyleID=".align.center">
+          <Data ss:Type="String">center</Data>
+        </Cell>
+        <Cell ss:StyleID=".align.right">
+          <Data ss:Type="String">right</Data>
+        </Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+  <Worksheet ss:Name="font">
+    <Table>
+      <Column ss:Width="100"/>
+      <Column ss:Width="100"/>
+      <Column ss:Width="100"/>
+      <Column ss:Width="100"/>
+      <Column ss:Width="100"/>
+      <Column ss:Width="100"/>
+      <Row>
+        <Cell ss:StyleID=".font.underline">
+          <Data ss:Type="String">underline</Data>
+        </Cell>
+        <Cell ss:StyleID=".font.double_underline">
+          <Data ss:Type="String">double_underline</Data>
+        </Cell>
+        <Cell ss:StyleID=".font.accounting_underline">
+          <Data ss:Type="String">accounting_underline</Data>
+        </Cell>
+        <Cell ss:StyleID=".font.double_accounting_underline">
+          <Data ss:Type="String">double_accounting_underline</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID=".font.subscript">
+          <Data ss:Type="String">subscript</Data>
+        </Cell>
+        <Cell ss:StyleID=".font.superscript">
+          <Data ss:Type="String">superscript</Data>
+        </Cell>
+        <Cell ss:StyleID=".font.strikethrough">
+          <Data ss:Type="String">strikethrough</Data>
+        </Cell>
+        <Cell ss:StyleID=".font.shadow">
+          <Data ss:Type="String">shadow</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID=".font.bold">
+          <Data ss:Type="String">bold</Data>
+        </Cell>
+        <Cell ss:StyleID=".font.italic">
+          <Data ss:Type="String">italic</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID=".font.sizeA">
+          <Data ss:Type="String">sizeA</Data>
+        </Cell>
+        <Cell ss:StyleID=".font.sizeB">
+          <Data ss:Type="String">sizeB</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID=".font.colorA">
+          <Data ss:Type="String">colorA</Data>
+        </Cell>
+        <Cell ss:StyleID=".font.colorB">
+          <Data ss:Type="String">colorB</Data>
+        </Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+  <Worksheet ss:Name="bg">
+    <Table>
+      <Column ss:Width="100"/>
+      <Row ss:Height="50">
+        <Cell ss:StyleID=".bg.color">
+          <Data ss:Type="String">COLOR</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="50">
+        <Cell ss:StyleID=".bg.pattern">
+          <Data ss:Type="String">PATTERN</Data>
+        </Cell>
+      </Row>
+      <Row ss:Height="50">
+        <Cell ss:StyleID=".bg.pattern.color">
+          <Data ss:Type="String">PATTERN COLOR</Data>
+        </Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+  <Worksheet ss:Name="border">
+    <Table>
+      <Column ss:Width="20"/>
+      <Column ss:Width="200"/>
+      <Row/>
+      <Row ss:Height="50">
+        <Cell>
+          <Data ss:Type="String"></Data>
+        </Cell>
+        <Cell ss:StyleID=".border.top.color.weight.style">
+          <Data ss:Type="String">top red hairline continuous</Data>
+        </Cell>
+      </Row>
+      <Row/>
+      <Row ss:Height="50">
+        <Cell>
+          <Data ss:Type="String"></Data>
+        </Cell>
+        <Cell ss:StyleID=".border.right.color.weight.style">
+          <Data ss:Type="String">right green thin dash</Data>
+        </Cell>
+      </Row>
+      <Row/>
+      <Row ss:Height="50">
+        <Cell>
+          <Data ss:Type="String"></Data>
+        </Cell>
+        <Cell ss:StyleID=".border.bottom.color.weight.style">
+          <Data ss:Type="String">bottom blue medium dat</Data>
+        </Cell>
+      </Row>
+      <Row/>
+      <Row ss:Height="50">
+        <Cell>
+          <Data ss:Type="String"></Data>
+        </Cell>
+        <Cell ss:StyleID=".border.left.color.weight.style">
+          <Data ss:Type="String">left yellow thick dast_dot</Data>
+        </Cell>
+      </Row>
+      <Row/>
+      <Row ss:Height="50">
+        <Cell>
+          <Data ss:Type="String"></Data>
+        </Cell>
+        <Cell ss:StyleID=".border.all">
+          <Data ss:Type="String">all aqua</Data>
+        </Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+</Workbook>
