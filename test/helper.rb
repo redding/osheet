@@ -11,6 +11,10 @@ class Assert::Context
     xworkbook.instance_variable_get("@__xmlss_undies_writer").flush.style_markup
   end
 
+  def xelement_markup(xworkbook)
+    xworkbook.instance_variable_get("@__xmlss_undies_writer").flush.element_markup
+  end
+
   class << self
 
 

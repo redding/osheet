@@ -13,7 +13,7 @@ module Osheet
 
   end
 
-  class XmlssWriter::Style < XmlssWriter::StylesTest
+  class XmlssWriter::StyleTests < XmlssWriter::StylesTest
     desc "Xmlss style writer"
     before do
       subject.oworkbook = Workbook.new {
@@ -44,7 +44,7 @@ module Osheet
       assert_equal xmlss_style, subject.used_xstyles.first
     end
 
-    should "writer style markup from many matching osheet styles" do
+    should "write style markup from many matching osheet styles" do
       xmlss_style = subject.send(:style, @xworkbook, 'font size weight style align center')
       assert_equal '.font.size.weight.style.align.center', xmlss_style.id
 
@@ -63,7 +63,7 @@ module Osheet
 
   end
 
-  class XmlssWriter::Alignment <  XmlssWriter::StylesTest
+  class XmlssWriter::AlignmentTests <  XmlssWriter::StylesTest
     desc "Alignment style writer"
     before do
       subject.oworkbook = Workbook.new {
@@ -123,7 +123,7 @@ module Osheet
 
   end
 
-  class XmlssWriter::Font < XmlssWriter::StylesTest
+  class XmlssWriter::FontTests < XmlssWriter::StylesTest
     desc "Font style writer"
     before do
       subject.oworkbook = Workbook.new {
@@ -205,7 +205,7 @@ module Osheet
 
   end
 
-  class XmlssWriter::Bg < XmlssWriter::StylesTest
+  class XmlssWriter::BgTests < XmlssWriter::StylesTest
     desc "Bg writer"
     before do
       subject.oworkbook = Workbook.new {
@@ -272,7 +272,7 @@ module Osheet
 
   end
 
-  class XmlssWriter::Border < XmlssWriter::StylesTest
+  class XmlssWriter::BorderTests < XmlssWriter::StylesTest
     desc "Font border writer"
     before do
       subject.oworkbook = Workbook.new {
@@ -346,7 +346,7 @@ module Osheet
 
   end
 
-  class XmlssWriter::NumberFormat < XmlssWriter::StylesTest
+  class XmlssWriter::NumberFormatTests < XmlssWriter::StylesTest
     desc "Xmlss style number format writer"
     before do
       subject.oworkbook = Workbook.new {}
