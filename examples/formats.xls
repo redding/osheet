@@ -61,6 +61,12 @@
     <Style ss:ID="..scientific_none_8_comma_redparenth">
       <NumberFormat ss:Format="#,##0.00000000E+00_);[Red](#,##0.00000000E+00)" />
     </Style>
+    <Style ss:ID="..fraction_halves">
+      <NumberFormat ss:Format="# ?/2" />
+    </Style>
+    <Style ss:ID="..fraction_quarters">
+      <NumberFormat ss:Format="# ?/4" />
+    </Style>
     <Style ss:ID="..fraction_eighths">
       <NumberFormat ss:Format="# ?/8" />
     </Style>
@@ -82,14 +88,11 @@
     <Style ss:ID="..fraction_hundredths">
       <NumberFormat ss:Format="# ??/100" />
     </Style>
-    <Style ss:ID="..fraction_halves">
-      <NumberFormat ss:Format="# ?/2" />
-    </Style>
-    <Style ss:ID="..fraction_quarters">
-      <NumberFormat ss:Format="# ?/4" />
-    </Style>
     <Style ss:ID="..text">
       <NumberFormat ss:Format="@" />
+    </Style>
+    <Style ss:ID="..special_zipcode">
+      <NumberFormat ss:Format="00000" />
     </Style>
     <Style ss:ID="..special_zipcodeplus4">
       <NumberFormat ss:Format="00000-0000" />
@@ -99,9 +102,6 @@
     </Style>
     <Style ss:ID="..special_socialsecuritynumber">
       <NumberFormat ss:Format="000-00-0000" />
-    </Style>
-    <Style ss:ID="..special_zipcode">
-      <NumberFormat ss:Format="00000" />
     </Style>
     <Style ss:ID="..custom_@">
       <NumberFormat ss:Format="@" />
@@ -449,6 +449,22 @@
       </Row>
       <Row>
         <Cell>
+          <Data ss:Type="String">fraction_halves</Data>
+        </Cell>
+        <Cell ss:StyleID="..fraction_halves">
+          <Data ss:Type="Number">0.5</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">fraction_quarters</Data>
+        </Cell>
+        <Cell ss:StyleID="..fraction_quarters">
+          <Data ss:Type="Number">0.25</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
           <Data ss:Type="String">fraction_eighths</Data>
         </Cell>
         <Cell ss:StyleID="..fraction_eighths">
@@ -503,22 +519,6 @@
           <Data ss:Type="Number">0.01</Data>
         </Cell>
       </Row>
-      <Row>
-        <Cell>
-          <Data ss:Type="String">fraction_halves</Data>
-        </Cell>
-        <Cell ss:StyleID="..fraction_halves">
-          <Data ss:Type="Number">0.5</Data>
-        </Cell>
-      </Row>
-      <Row>
-        <Cell>
-          <Data ss:Type="String">fraction_quarters</Data>
-        </Cell>
-        <Cell ss:StyleID="..fraction_quarters">
-          <Data ss:Type="Number">0.25</Data>
-        </Cell>
-      </Row>
     </Table>
   </Worksheet>
   <Worksheet ss:Name="text, special, custom">
@@ -543,6 +543,14 @@
       </Row>
       <Row>
         <Cell>
+          <Data ss:Type="String">special_zipcode</Data>
+        </Cell>
+        <Cell ss:StyleID="..special_zipcode">
+          <Data ss:Type="Number">12345</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
           <Data ss:Type="String">special_zipcodeplus4</Data>
         </Cell>
         <Cell ss:StyleID="..special_zipcodeplus4">
@@ -563,14 +571,6 @@
         </Cell>
         <Cell ss:StyleID="..special_socialsecuritynumber">
           <Data ss:Type="Number">333224444</Data>
-        </Cell>
-      </Row>
-      <Row>
-        <Cell>
-          <Data ss:Type="String">special_zipcode</Data>
-        </Cell>
-        <Cell ss:StyleID="..special_zipcode">
-          <Data ss:Type="Number">12345</Data>
         </Cell>
       </Row>
       <Row>
