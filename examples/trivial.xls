@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet">
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
   <Styles>
     <Style ss:ID="..currency_dollar_2_comma_black">
-      <Borders/>
-      <NumberFormat ss:Format="&quot;$&quot;#,##0.00"/>
+      <NumberFormat ss:Format="&quot;$&quot;#,##0.00" />
     </Style>
   </Styles>
-  <Worksheet ss:Name="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+  <Worksheet ss:Name="one dollar">
     <Table>
-      <Column/>
+      <Column />
       <Row>
         <Cell ss:StyleID="..currency_dollar_2_comma_black">
           <Data ss:Type="Number">1</Data>

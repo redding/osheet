@@ -6,6 +6,8 @@
 require 'rubygems'
 require 'osheet'
 
+puts "building examples/trivial.rb ..."
+
 Osheet::Workbook.new {
   title "basic"
   worksheet {
@@ -18,4 +20,6 @@ Osheet::Workbook.new {
       }
     }
   }
-}.to_file('examples/trivial.xls', :format)
+}.to_file('examples/trivial.xls', :pp => 2)
+
+puts "open examples/trivial.xls"

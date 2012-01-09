@@ -9,6 +9,8 @@ require 'osheet'
 
 # this will dump the above data to a single-sheet workbook w/ no styles
 
+puts "building examples/formula.rb ..."
+
 Osheet::Workbook.new {
   title "formula example"
   worksheet {
@@ -27,13 +29,15 @@ Osheet::Workbook.new {
     row {
       cell { data 3 }
       cell { data 4 }
-      cell { 
+      cell {
         # you can still refer to cells in other sheets through the name of the sheet and !
         # this is also a relative reference, ie. =Formula!A1+B2
         formula "=Formula!RC[-2]+RC[-1]"
         # 6 will change into 5 when formula gets recalculated
         data 6
-      } 
+      }
     }
   }
-}.to_file('examples/formula.xls')
+}.to_file('examples/formula.xls', :pp => 2)
+
+puts "open examples/formula.xls"

@@ -6,6 +6,8 @@
 require 'rubygems'
 require 'osheet'
 
+puts "building examples/formats.rb ..."
+
 Osheet::Workbook.new {
   title "formats"
 
@@ -363,4 +365,6 @@ Osheet::Workbook.new {
 
 
 
-}.to_file('examples/formats.xls', :format)
+}.to_file('examples/formats.xls', :pp => 2)
+
+puts "open examples/formats.xls"

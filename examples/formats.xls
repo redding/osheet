@@ -1,224 +1,171 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns="urn:schemas-microsoft-com:office:spreadsheet">
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
   <Styles>
     <Style ss:ID="..number_none_0_nocomma_black">
-      <Borders/>
-      <NumberFormat ss:Format="0"/>
+      <NumberFormat ss:Format="0" />
     </Style>
     <Style ss:ID="..number_none_1_nocomma_red">
-      <Borders/>
-      <NumberFormat ss:Format="0.0;[Red]0.0"/>
+      <NumberFormat ss:Format="0.0;[Red]0.0" />
     </Style>
     <Style ss:ID="..number_none_2_comma_blackparenth">
-      <Borders/>
-      <NumberFormat ss:Format="#,##0.00_);(#,##0.00)"/>
+      <NumberFormat ss:Format="#,##0.00_);(#,##0.00)" />
     </Style>
     <Style ss:ID="..number_none_8_comma_redparenth">
-      <Borders/>
-      <NumberFormat ss:Format="#,##0.00000000_);[Red](#,##0.00000000)"/>
+      <NumberFormat ss:Format="#,##0.00000000_);[Red](#,##0.00000000)" />
     </Style>
     <Style ss:ID="..currency_dollar_2_comma_black">
-      <Borders/>
-      <NumberFormat ss:Format="&quot;$&quot;#,##0.00"/>
+      <NumberFormat ss:Format="&quot;$&quot;#,##0.00" />
     </Style>
     <Style ss:ID="..currency_euro_0_comma_red">
-      <Borders/>
-      <NumberFormat ss:Format="[$€-2] #,##0;[Red][$€-2] #,##0"/>
+      <NumberFormat ss:Format="&quot;€&quot;#,##0;[Red]&quot;€&quot;#,##0" />
     </Style>
     <Style ss:ID="..currency_dollar_1_nocomma_blackparenth">
-      <Borders/>
-      <NumberFormat ss:Format="&quot;$&quot;0.0_);(&quot;$&quot;0.0)"/>
+      <NumberFormat ss:Format="&quot;$&quot;0.0_);(&quot;$&quot;0.0)" />
     </Style>
     <Style ss:ID="..currency_dollar_8_comma_redparenth">
-      <Borders/>
-      <NumberFormat ss:Format="&quot;$&quot;#,##0.00000000_);[Red](&quot;$&quot;#,##0.00000000)"/>
+      <NumberFormat ss:Format="&quot;$&quot;#,##0.00000000_);[Red](&quot;$&quot;#,##0.00000000)" />
     </Style>
     <Style ss:ID="..accounting_dollar_2_comma_black">
-      <Borders/>
-      <NumberFormat ss:Format="&quot;$&quot;* #,##0.00"/>
+      <NumberFormat ss:Format="&quot;$&quot;* #,##0.00" />
     </Style>
     <Style ss:ID="..accounting_euro_0_comma_red">
-      <Borders/>
-      <NumberFormat ss:Format="[$€-2] * #,##0;[Red][$€-2] * #,##0"/>
+      <NumberFormat ss:Format="&quot;€&quot;* #,##0;[Red]&quot;€&quot;* #,##0" />
     </Style>
     <Style ss:ID="..accounting_dollar_1_nocomma_blackparenth">
-      <Borders/>
-      <NumberFormat ss:Format="&quot;$&quot;* 0.0_);(&quot;$&quot;* 0.0)"/>
+      <NumberFormat ss:Format="&quot;$&quot;* 0.0_);(&quot;$&quot;* 0.0)" />
     </Style>
     <Style ss:ID="..accounting_dollar_8_comma_redparenth">
-      <Borders/>
-      <NumberFormat ss:Format="&quot;$&quot;* #,##0.00000000_);[Red](&quot;$&quot;* #,##0.00000000)"/>
+      <NumberFormat ss:Format="&quot;$&quot;* #,##0.00000000_);[Red](&quot;$&quot;* #,##0.00000000)" />
     </Style>
     <Style ss:ID="..percentage_none_2_nocomma_black">
-      <Borders/>
-      <NumberFormat ss:Format="0.00%"/>
+      <NumberFormat ss:Format="0.00%" />
     </Style>
     <Style ss:ID="..percentage_none_0_nocomma_red">
-      <Borders/>
-      <NumberFormat ss:Format="0%;[Red]0%"/>
+      <NumberFormat ss:Format="0%;[Red]0%" />
     </Style>
     <Style ss:ID="..percentage_none_1_nocomma_blackparenth">
-      <Borders/>
-      <NumberFormat ss:Format="0.0%_);(0.0%)"/>
+      <NumberFormat ss:Format="0.0%_);(0.0%)" />
     </Style>
     <Style ss:ID="..percentage_none_8_comma_redparenth">
-      <Borders/>
-      <NumberFormat ss:Format="#,##0.00000000%_);[Red](#,##0.00000000%)"/>
+      <NumberFormat ss:Format="#,##0.00000000%_);[Red](#,##0.00000000%)" />
     </Style>
     <Style ss:ID="..scientific_none_2_nocomma_black">
-      <Borders/>
-      <NumberFormat ss:Format="0.00E+00"/>
+      <NumberFormat ss:Format="0.00E+00" />
     </Style>
     <Style ss:ID="..scientific_none_0_nocomma_red">
-      <Borders/>
-      <NumberFormat ss:Format="0E+00;[Red]0E+00"/>
+      <NumberFormat ss:Format="0E+00;[Red]0E+00" />
     </Style>
     <Style ss:ID="..scientific_none_1_nocomma_blackparenth">
-      <Borders/>
-      <NumberFormat ss:Format="0.0E+00_);(0.0E+00)"/>
+      <NumberFormat ss:Format="0.0E+00_);(0.0E+00)" />
     </Style>
     <Style ss:ID="..scientific_none_8_comma_redparenth">
-      <Borders/>
-      <NumberFormat ss:Format="#,##0.00000000E+00_);[Red](#,##0.00000000E+00)"/>
+      <NumberFormat ss:Format="#,##0.00000000E+00_);[Red](#,##0.00000000E+00)" />
     </Style>
     <Style ss:ID="..fraction_eighths">
-      <Borders/>
-      <NumberFormat ss:Format="# ?/8"/>
+      <NumberFormat ss:Format="# ?/8" />
     </Style>
     <Style ss:ID="..fraction_onedigit">
-      <Borders/>
-      <NumberFormat ss:Format="# ?/?"/>
+      <NumberFormat ss:Format="# ?/?" />
     </Style>
     <Style ss:ID="..fraction_sixteenths">
-      <Borders/>
-      <NumberFormat ss:Format="# ??/16"/>
+      <NumberFormat ss:Format="# ??/16" />
     </Style>
     <Style ss:ID="..fraction_twodigits">
-      <Borders/>
-      <NumberFormat ss:Format="# ??/??"/>
+      <NumberFormat ss:Format="# ??/??" />
     </Style>
     <Style ss:ID="..fraction_tenths">
-      <Borders/>
-      <NumberFormat ss:Format="# ?/10"/>
+      <NumberFormat ss:Format="# ?/10" />
     </Style>
     <Style ss:ID="..fraction_threedigits">
-      <Borders/>
-      <NumberFormat ss:Format="# ???/???"/>
+      <NumberFormat ss:Format="# ???/???" />
     </Style>
     <Style ss:ID="..fraction_hundredths">
-      <Borders/>
-      <NumberFormat ss:Format="# ??/100"/>
+      <NumberFormat ss:Format="# ??/100" />
     </Style>
     <Style ss:ID="..fraction_halves">
-      <Borders/>
-      <NumberFormat ss:Format="# ?/2"/>
+      <NumberFormat ss:Format="# ?/2" />
     </Style>
     <Style ss:ID="..fraction_quarters">
-      <Borders/>
-      <NumberFormat ss:Format="# ?/4"/>
+      <NumberFormat ss:Format="# ?/4" />
     </Style>
     <Style ss:ID="..text">
-      <Borders/>
-      <NumberFormat ss:Format="@"/>
-    </Style>
-    <Style ss:ID="..special_zipcode">
-      <Borders/>
-      <NumberFormat ss:Format="00000"/>
+      <NumberFormat ss:Format="@" />
     </Style>
     <Style ss:ID="..special_zipcodeplus4">
-      <Borders/>
-      <NumberFormat ss:Format="00000-0000"/>
+      <NumberFormat ss:Format="00000-0000" />
     </Style>
     <Style ss:ID="..special_phonenumber">
-      <Borders/>
-      <NumberFormat ss:Format="[&lt;=9999999]###-####;(###) ###-####"/>
+      <NumberFormat ss:Format="[&lt;=9999999]###-####;(###) ###-####" />
     </Style>
     <Style ss:ID="..special_socialsecuritynumber">
-      <Borders/>
-      <NumberFormat ss:Format="000-00-0000"/>
+      <NumberFormat ss:Format="000-00-0000" />
+    </Style>
+    <Style ss:ID="..special_zipcode">
+      <NumberFormat ss:Format="00000" />
     </Style>
     <Style ss:ID="..custom_@">
-      <Borders/>
-      <NumberFormat ss:Format="@"/>
+      <NumberFormat ss:Format="@" />
     </Style>
     <Style ss:ID="..datetime_m">
-      <Borders/>
-      <NumberFormat ss:Format="m"/>
+      <NumberFormat ss:Format="m" />
     </Style>
     <Style ss:ID="..datetime_d">
-      <Borders/>
-      <NumberFormat ss:Format="d"/>
+      <NumberFormat ss:Format="d" />
     </Style>
     <Style ss:ID="..datetime_y">
-      <Borders/>
-      <NumberFormat ss:Format="y"/>
+      <NumberFormat ss:Format="y" />
     </Style>
     <Style ss:ID="..datetime_mm">
-      <Borders/>
-      <NumberFormat ss:Format="mm"/>
+      <NumberFormat ss:Format="mm" />
     </Style>
     <Style ss:ID="..datetime_dd">
-      <Borders/>
-      <NumberFormat ss:Format="dd"/>
+      <NumberFormat ss:Format="dd" />
     </Style>
     <Style ss:ID="..datetime_yy">
-      <Borders/>
-      <NumberFormat ss:Format="yy"/>
+      <NumberFormat ss:Format="yy" />
     </Style>
     <Style ss:ID="..datetime_yyyy">
-      <Borders/>
-      <NumberFormat ss:Format="yyyy"/>
+      <NumberFormat ss:Format="yyyy" />
     </Style>
     <Style ss:ID="..datetime_mm/dd/yy">
-      <Borders/>
-      <NumberFormat ss:Format="mm/dd/yy"/>
+      <NumberFormat ss:Format="mm/dd/yy" />
     </Style>
     <Style ss:ID="..datetime_mm/dd/yyyy">
-      <Borders/>
-      <NumberFormat ss:Format="mm/dd/yyyy"/>
+      <NumberFormat ss:Format="mm/dd/yyyy" />
     </Style>
     <Style ss:ID="..datetime_mmmm">
-      <Borders/>
-      <NumberFormat ss:Format="mmmm"/>
+      <NumberFormat ss:Format="mmmm" />
     </Style>
     <Style ss:ID="..datetime_mmmmm">
-      <Borders/>
-      <NumberFormat ss:Format="mmmmm"/>
+      <NumberFormat ss:Format="mmmmm" />
     </Style>
     <Style ss:ID="..datetime_h">
-      <Borders/>
-      <NumberFormat ss:Format="h"/>
+      <NumberFormat ss:Format="h" />
     </Style>
     <Style ss:ID="..datetime_s">
-      <Borders/>
-      <NumberFormat ss:Format="s"/>
+      <NumberFormat ss:Format="s" />
     </Style>
     <Style ss:ID="..datetime_hh">
-      <Borders/>
-      <NumberFormat ss:Format="hh"/>
+      <NumberFormat ss:Format="hh" />
     </Style>
     <Style ss:ID="..datetime_ss">
-      <Borders/>
-      <NumberFormat ss:Format="ss"/>
+      <NumberFormat ss:Format="ss" />
     </Style>
     <Style ss:ID="..datetime_h:mm:ss">
-      <Borders/>
-      <NumberFormat ss:Format="h:mm:ss"/>
+      <NumberFormat ss:Format="h:mm:ss" />
     </Style>
     <Style ss:ID="..datetime_h:mm:ss.0">
-      <Borders/>
-      <NumberFormat ss:Format="h:mm:ss.0"/>
+      <NumberFormat ss:Format="h:mm:ss.0" />
     </Style>
     <Style ss:ID="..datetime_hh:mm:ss AM/PM">
-      <Borders/>
-      <NumberFormat ss:Format="hh:mm:ss AM/PM"/>
+      <NumberFormat ss:Format="hh:mm:ss AM/PM" />
     </Style>
   </Styles>
   <Worksheet ss:Name="number">
     <Table>
-      <Column ss:Width="250"/>
-      <Column ss:Width="125"/>
-      <Column ss:Width="125"/>
+      <Column ss:Width="250" />
+      <Column ss:Width="125" />
+      <Column ss:Width="125" />
       <Row>
         <Cell>
           <Data ss:Type="String">Format</Data>
@@ -278,9 +225,9 @@
   </Worksheet>
   <Worksheet ss:Name="currency, accounting">
     <Table>
-      <Column ss:Width="250"/>
-      <Column ss:Width="125"/>
-      <Column ss:Width="125"/>
+      <Column ss:Width="250" />
+      <Column ss:Width="125" />
+      <Column ss:Width="125" />
       <Row>
         <Cell>
           <Data ss:Type="String">Format</Data>
@@ -384,9 +331,9 @@
   </Worksheet>
   <Worksheet ss:Name="percentage, scientific">
     <Table>
-      <Column ss:Width="250"/>
-      <Column ss:Width="125"/>
-      <Column ss:Width="125"/>
+      <Column ss:Width="250" />
+      <Column ss:Width="125" />
+      <Column ss:Width="125" />
       <Row>
         <Cell>
           <Data ss:Type="String">Format</Data>
@@ -490,8 +437,8 @@
   </Worksheet>
   <Worksheet ss:Name="fractions">
     <Table>
-      <Column ss:Width="250"/>
-      <Column ss:Width="125"/>
+      <Column ss:Width="250" />
+      <Column ss:Width="125" />
       <Row>
         <Cell>
           <Data ss:Type="String">Format</Data>
@@ -576,8 +523,8 @@
   </Worksheet>
   <Worksheet ss:Name="text, special, custom">
     <Table>
-      <Column ss:Width="250"/>
-      <Column ss:Width="125"/>
+      <Column ss:Width="250" />
+      <Column ss:Width="125" />
       <Row>
         <Cell>
           <Data ss:Type="String">Format</Data>
@@ -592,14 +539,6 @@
         </Cell>
         <Cell ss:StyleID="..text">
           <Data ss:Type="String">001122 blah blah</Data>
-        </Cell>
-      </Row>
-      <Row>
-        <Cell>
-          <Data ss:Type="String">special_zipcode</Data>
-        </Cell>
-        <Cell ss:StyleID="..special_zipcode">
-          <Data ss:Type="Number">12345</Data>
         </Cell>
       </Row>
       <Row>
@@ -628,6 +567,14 @@
       </Row>
       <Row>
         <Cell>
+          <Data ss:Type="String">special_zipcode</Data>
+        </Cell>
+        <Cell ss:StyleID="..special_zipcode">
+          <Data ss:Type="Number">12345</Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell>
           <Data ss:Type="String">custom_@</Data>
         </Cell>
         <Cell ss:StyleID="..custom_@">
@@ -638,8 +585,8 @@
   </Worksheet>
   <Worksheet ss:Name="date, time">
     <Table>
-      <Column ss:Width="250"/>
-      <Column ss:Width="125"/>
+      <Column ss:Width="250" />
+      <Column ss:Width="125" />
       <Row>
         <Cell>
           <Data ss:Type="String">Format</Data>
@@ -653,7 +600,7 @@
           <Data ss:Type="String">datetime_m</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_m">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -661,7 +608,7 @@
           <Data ss:Type="String">datetime_d</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_d">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -669,7 +616,7 @@
           <Data ss:Type="String">datetime_y</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_y">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -677,7 +624,7 @@
           <Data ss:Type="String">datetime_mm</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_mm">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -685,7 +632,7 @@
           <Data ss:Type="String">datetime_dd</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_dd">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -693,7 +640,7 @@
           <Data ss:Type="String">datetime_yy</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_yy">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -701,7 +648,7 @@
           <Data ss:Type="String">datetime_yyyy</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_yyyy">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -709,7 +656,7 @@
           <Data ss:Type="String">datetime_mm/dd/yy</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_mm/dd/yy">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -717,7 +664,7 @@
           <Data ss:Type="String">datetime_mm/dd/yyyy</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_mm/dd/yyyy">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -725,7 +672,7 @@
           <Data ss:Type="String">datetime_mmmm</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_mmmm">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -733,7 +680,7 @@
           <Data ss:Type="String">datetime_mmmmm</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_mmmmm">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -741,7 +688,7 @@
           <Data ss:Type="String">datetime_mmmmm</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_mmmmm">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -749,7 +696,7 @@
           <Data ss:Type="String">datetime_h</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_h">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -757,7 +704,7 @@
           <Data ss:Type="String">datetime_m</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_m">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -765,7 +712,7 @@
           <Data ss:Type="String">datetime_s</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_s">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -773,7 +720,7 @@
           <Data ss:Type="String">datetime_hh</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_hh">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -781,7 +728,7 @@
           <Data ss:Type="String">datetime_mm</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_mm">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -789,7 +736,7 @@
           <Data ss:Type="String">datetime_ss</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_ss">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -797,7 +744,7 @@
           <Data ss:Type="String">datetime_h:mm:ss</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_h:mm:ss">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -805,7 +752,7 @@
           <Data ss:Type="String">datetime_h:mm:ss.0</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_h:mm:ss.0">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
       <Row>
@@ -813,7 +760,7 @@
           <Data ss:Type="String">datetime_hh:mm:ss AM/PM</Data>
         </Cell>
         <Cell ss:StyleID="..datetime_hh:mm:ss AM/PM">
-          <Data ss:Type="DateTime">2011-04-19T00:00:00</Data>
+          <Data ss:Type="DateTime">2012-01-09T00:00:00</Data>
         </Cell>
       </Row>
     </Table>

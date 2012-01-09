@@ -6,6 +6,8 @@
 require 'rubygems'
 require 'osheet'
 
+puts "building examples/styles.rb ..."
+
 Osheet::Workbook.new {
   title "styles"
   template(:cell, :styled) { |style, attribute|
@@ -248,4 +250,6 @@ Osheet::Workbook.new {
 
 
 
-}.to_file('examples/styles.xls', :format)
+}.to_file('examples/styles.xls', :pp => 2)
+
+puts "open examples/styles.xls"

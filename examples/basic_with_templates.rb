@@ -15,6 +15,7 @@ data = {
 
 # this will dump the above data to a single-sheet workbook w/ no styles
 
+puts "building examples/basic_with_templats.rb ..."
 
 Osheet::Workbook.new {
   title "basic"
@@ -81,4 +82,6 @@ Osheet::Workbook.new {
       row :data, name, stats
     end
   }
-}.to_file('examples/basic_with_templates.xls', :format)
+}.to_file('examples/basic_with_templates.xls', :pp => 2)
+
+puts "open examples/basic_with_templates.xls"
