@@ -21,7 +21,6 @@ module Osheet::XmlssWriter
     end
 
     def to_data(xmlss_output_opts={})
-      warn "[DEPRECATION] `to_data` is deprecated and will be removed in v1.0.0.  Please use `to_file` directly instead."
       self.xworkbook(xmlss_output_opts).to_s
     end
 
