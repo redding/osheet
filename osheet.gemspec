@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.version     = Osheet::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Kelly Redding"]
-  s.email       = ["kelly@kelredd.com"]
-  s.homepage    = "http://github.com/kelredd/osheet"
+  s.email       = ["kelly@kellyredding.com"]
+  s.homepage    = "http://github.com/kellyredding/osheet"
   s.summary     = %q{A DSL for specifying and generating spreadsheets using Ruby}
   s.description = %q{A DSL for specifying and generating spreadsheets using Ruby}
 
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency("bundler", ["~> 1.0"])
   s.add_development_dependency("assert", ["~> 0.3"])
-  s.add_dependency("enumeration", ["~> 1.2"])
-  s.add_dependency("xmlss", ["~> 0.2"])
+  s.add_dependency("enumeration", ["~> 1.3"])
+  s.add_dependency("xmlss", ["~> 0.4"])
 
 end
