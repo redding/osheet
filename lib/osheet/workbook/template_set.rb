@@ -1,12 +1,15 @@
-require 'osheet/partial_set'
 require 'osheet/template'
+require 'osheet/workbook/partial_set'
+
+module Osheet; end
+class Osheet::Workbook; end
 
 module Osheet
-  class TemplateSet < PartialSet
+  class Workbook::TemplateSet < Workbook::PartialSet
 
     # this class is a PartialSet that keys off of the template element
-    #  and name.  Only Osheet::Template objs can be pushed, and you reference
-    #  a particular template using a key of
+    # and name.  Only Osheet::Template objs can be pushed, and you reference
+    # a particular template by its element and name
 
     def initialize
       super

@@ -1,3 +1,5 @@
+module Osheet; end
+
 module Osheet::Instance
 
   private
@@ -20,11 +22,11 @@ module Osheet::Instance
     "@#{OSHEET_IVAR_NS}#{name}"
   end
 
-  def set_binding_ivars(binding)
-    binding.eval('instance_variables').
-    reject{|ivar| ivar =~ /^@#{OSHEET_IVAR_NS}/}.
-    each do |ivar|
-      instance_variable_set(ivar, binding.eval(ivar.to_s))
-    end
-  end
+  # def set_binding_ivars(binding)
+  #   binding.eval('instance_variables').
+  #   reject{|ivar| ivar =~ /^@#{OSHEET_IVAR_NS}/}.
+  #   each do |ivar|
+  #     instance_variable_set(ivar, binding.eval(ivar.to_s))
+  #   end
+  # end
 end

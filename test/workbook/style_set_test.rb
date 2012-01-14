@@ -1,10 +1,11 @@
 require "assert"
-require "osheet/style_set"
+
+require "osheet/workbook/style_set"
 
 module Osheet
   class StyleSetTest < Assert::Context
-    desc "Osheet::StyleSet"
-    before { @set = StyleSet.new }
+    desc "a StyleSet"
+    before { @set = Workbook::StyleSet.new }
     subject { @set }
 
     should "be an Array" do
@@ -13,7 +14,7 @@ module Osheet
 
     should have_reader :for
 
-    should "verify Template objs" do
+    should "verify Style objs" do
       assert_raises ArgumentError do
         subject.send(:verify, {})
       end

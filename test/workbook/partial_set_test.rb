@@ -1,11 +1,12 @@
 require "assert"
-require "osheet/partial_set"
+
+require "osheet/workbook/partial_set"
 
 module Osheet
 
   class PartialSetTest < Assert::Context
-    desc "Osheet::PartialSet"
-    before { @ps = PartialSet.new }
+    desc "a PartialSet"
+    before { @ps = Workbook::PartialSet.new }
     subject { @ps }
 
     should "be a Hash" do

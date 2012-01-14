@@ -1,65 +1,84 @@
 require 'osheet/instance'
-require 'osheet/associations'
-require 'osheet/markup_element'
-require 'osheet/style_set'
-require 'osheet/template_set'
-require 'osheet/partial_set'
-require 'osheet/worksheet'
-require 'osheet/xmlss_writer'
+require 'osheet/meta'
+require 'osheet/mixin'
+
+require 'osheet/workbook/style_set'
+require 'osheet/workbook/template_set'
+require 'osheet/workbook/partial_set'
+require 'osheet/workbook/worksheet_set'
+require 'osheet/workbook/styles'
+require 'osheet/workbook/elements'
+
+# require 'osheet/xmlss_writer'
 
 module Osheet
   class Workbook
     include Instance
-    include Associations
-    include MarkupElement
+    include Meta
+    include Workbook::Styles
+    include Workbook::Elements
 
-    hm :worksheets
+    def initialize(writer=nil, data={}, &build)
+      # setup reference collections
+      set_ivar(:templates,  TemplateSet.new)
+      set_ivar(:partials,   PartialSet.new)
+      set_ivar(:styles,     StyleSet.new)
+      set_ivar(:worksheets, WorksheetSet.new)
 
-    def initialize(&block)
-      set_ivar(:title, nil)
-      set_ivar(:styles, StyleSet.new)
-      set_ivar(:templates, TemplateSet.new)
-      set_ivar(:partials, PartialSet.new)
-      if block_given?
-        set_binding_ivars(block.binding)
-        instance_eval(&block)
+      # apply :data options to workbook scope
+      data ||= {}
+      if (data.keys.map(&:to_s) & self.public_methods.map(&:to_s)).size > 0
+        raise ArgumentError, "data conflicts with workbook public methods."
+      end
+      metaclass = class << self; self; end
+      data.each {|key, value| metaclass.class_eval { define_method(key){value} }}
+
+      # setup writer
+      set_ivar(:writer, writer)
+
+      # run any instance workbook build given
+      instance_eval(&build) if build
+    end
+
+    def template(*args, &block)
+      push_ivar(:templates, Template.new(*args, &block))
+    end
+    def templates; get_ivar(:templates); end
+
+    def partial(*args, &block)
+      push_ivar(:partials, Partial.new(*args, &block))
+    end
+    def partials; get_ivar(:partials); end
+
+    def use(mixin)
+      (mixin.templates || []).each{ |t| push_ivar(:templates, t) }
+      (mixin.partials  || []).each{ |p| push_ivar(:partials,  p) }
+      (mixin.styles    || []).each{ |s| push_ivar(:styles,    s) }
+    end
+
+    def add(partial_name, *args)
+      self.partials.get(partial_name).tap do |p|
+        instance_exec(*args, &p) if p
       end
     end
 
-    def title(value=nil)
-      !value.nil? ? set_ivar(:title, value) : get_ivar(:title)
-    end
-
-    def style(*selectors, &block); push_ivar(:styles, Style.new(*selectors, &block)); end
-    def styles
-      get_ivar(:styles)
-    end
-    def template(element, name, &block); push_ivar(:templates, Template.new(element, name, &block)); end
-    def templates
-      get_ivar(:templates)
-    end
-    def partial(name, &block); push_ivar(:partials, Partial.new(name, &block)); end
-    def partials
-      get_ivar(:partials)
-    end
-
-    def attributes
-      { :title => get_ivar(:title) }
-    end
-
-    def use(mixin)
-      (mixin.styles || []).each{ |s| push_ivar(:styles, s) }
-      (mixin.templates || []).each{ |t| push_ivar(:templates, t) }
-      (mixin.partials || []).each{ |p| push_ivar(:partials, p) }
-    end
-
     def writer
-      XmlssWriter::Base.new(:workbook => self)
+      get_ivar(:writer)
     end
 
-    [:to_data, :to_file].each do |meth|
-      define_method(meth) {|*args| writer.send(meth, *args) }
-    end
+    # TODO: still needed??
+    # def attributes
+    #   { :title => get_ivar(:title) }
+    # end
+
+    # TODO: writer should handle all this
+    # def writer
+    #   XmlssWriter::Base.new(:workbook => self)
+    # end
+
+    # [:to_data, :to_file].each do |meth|
+    #   define_method(meth) {|*args| writer.send(meth, *args) }
+    # end
 
   end
 end

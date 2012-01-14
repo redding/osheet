@@ -1,5 +1,6 @@
 require "assert"
-require "test/mixins"
+require "test/fixtures/mixins"
+require 'osheet/workbook'
 
 module Osheet
 

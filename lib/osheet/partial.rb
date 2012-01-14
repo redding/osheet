@@ -1,3 +1,5 @@
+require 'osheet/instance'
+
 module Osheet
   class Partial < ::Proc
 
@@ -22,3 +24,4 @@ module Osheet
 
   end
 end
+

@@ -39,26 +39,4 @@ module Osheet
 
   end
 
-  class PartialBindingTest < Assert::Context
-    desc "a partial defined w/ a block"
-
-    should "access instance vars from that block's binding" do
-      @test = 'test thing'
-      @workbook = Workbook.new {
-        partial(:stuff) {
-          worksheet(:thing) { name @test }
-        }
-
-        add(:stuff)
-      }
-
-      assert !@workbook.worksheets.first.send(:instance_variable_get, "@test").nil?
-      assert_equal @test, @workbook.worksheets.first.send(:instance_variable_get, "@test")
-      assert_equal @test.object_id, @workbook.worksheets.first.send(:instance_variable_get, "@test").object_id
-      assert_equal @test, @workbook.worksheets.first.attributes[:name]
-      assert_equal @test.object_id, @workbook.worksheets.first.attributes[:name].object_id
-    end
-
-  end
-
 end

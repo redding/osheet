@@ -1,14 +1,16 @@
 require "assert"
-require "osheet/template_set"
+
+require "osheet/workbook/template_set"
 
 module Osheet
+
   class TemplateSetTest < Assert::Context
-    desc "Osheet::TemplateSet"
-    before { @set = TemplateSet.new }
+    desc "a TemplateSet"
+    before { @set = Workbook::TemplateSet.new }
     subject { @set }
 
     should "be a PartialSet" do
-      assert_kind_of PartialSet, subject
+      assert_kind_of Workbook::PartialSet, subject
     end
 
     should "verify set objs are templates" do

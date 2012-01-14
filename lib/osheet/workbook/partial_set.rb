@@ -1,12 +1,15 @@
 require 'osheet/partial'
 
+module Osheet; end
+class Osheet::Workbook; end
+
 module Osheet
-  class PartialSet < ::Hash
+  class Workbook::PartialSet < ::Hash
 
     # this class is a Hash that behaves kinda like a set.  I want to
-    #  push partials into the set using the '<<' operator, only allow
-    #  Osheet::Partial objs to be pushed, and then be able to reference
-    #  a particular partial using a key
+    # push partials into the set using the '<<' operator, only allow
+    # Osheet::Partial objs to be pushed, and then be able to reference
+    # a particular partial using its name
 
     def initialize
       super

@@ -1,12 +1,15 @@
 require 'osheet/style'
 
-module Osheet
-  class StyleSet < ::Array
+module Osheet; end
+class Osheet::Workbook; end
 
-    # this class is an Array has some helper methods.  I want to
-    #  push styles into the set using the '<<' operator, only allow
-    #  Osheet::Style objs to be pushed, and then be able to reference
-    #  a particular set of styles using a style class.
+module Osheet
+  class Workbook::StyleSet < ::Array
+
+    # this class is an Array with some helper methods.  I want to
+    # push styles into the set using the '<<' operator, only allow
+    # Osheet::Style objs to be pushed, and then be able to reference
+    # a particular set of styles using a style class.
 
     def initialize
       super
@@ -22,9 +25,6 @@ module Osheet
     end
 
     private
-
-    def styles(class_str)
-    end
 
     # verify the style, otherwise ArgumentError it up
     def verify(style)
