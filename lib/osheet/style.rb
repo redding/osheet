@@ -2,45 +2,30 @@ module Osheet
   class Style
 
     # this class is essentially a set of collectors for style settings
-    #  each setting collects any arguments passed to it and
-    #  it is up to the drivers to determine how to use the settings
-
-    include Instance
+    # each setting collects any arguments passed to it and
+    # it is up to the writer to determine how to use the settings
 
     BORDER_POSITIONS = [:top, :right, :bottom, :left]
     BORDERS = BORDER_POSITIONS.collect{|p| "border_#{p}".to_sym}
     SETTINGS = [:align, :font, :bg] + BORDERS
 
-    def initialize(*selectors, &block)
-      set_ivar(:selectors, verify(selectors))
-      SETTINGS.each {|setting| set_ivar(setting, [])}
-      if block_given?
-        set_binding_ivars(block.binding)
-        instance_eval(&block)
-      end
-    end
+    attr_reader :selectors
 
-    def selectors
-      get_ivar(:selectors)
+    def initialize(*selectors)
+      @selectors = verify(selectors)
+      SETTINGS.each { |s| instance_variable_set("@#{s}", []) }
     end
 
     SETTINGS.each do |setting|
       define_method(setting) do |*args|
-        set_ivar(setting, get_ivar(setting) + args)
+        instance_variable_get("@#{setting}").tap do |value|
+          instance_variable_set("@#{setting}", value + args) if !args.empty?
+        end
       end
     end
 
     def border(*args)
-      BORDERS.each do |border|
-        send(border, *args)
-      end
-    end
-
-    def attributes
-      SETTINGS.inject({}) do |attrs, s|
-        attrs[s] = get_ivar(s)
-        attrs
-      end
+      BORDERS.each { |border| send(border, *args) }
     end
 
     def match?(style_class)

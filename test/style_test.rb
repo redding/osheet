@@ -1,16 +1,18 @@
 require "assert"
+
 require "osheet/style"
 
 module Osheet
 
   class StyleTest < Assert::Context
-    desc "Osheet::Style"
+    desc "a Style"
     before { @st = Style.new('.test') }
     subject { @st }
 
     should have_reader :selectors
-    should have_instance_methods :align, :font, :bg
-    should have_instance_methods :border, :border_left, :border_top, :border_right, :border_bottom
+    should have_instance_methods :align, :font, :bg, :border
+    should have_instance_methods :border_left, :border_top
+    should have_instance_methods :border_right, :border_bottom
     should have_instance_method :match?
 
     should "set it's defaults" do
@@ -19,15 +21,7 @@ module Osheet
       [ :align, :font, :bg,
         :border_left, :border_top, :border_right, :border_bottom
       ].each do |a|
-        assert_equal [], subject.send(:get_ivar, a)
-      end
-    end
-
-    should "know it's attribute(s)" do
-      [ :align, :font, :bg,
-        :border_left, :border_top, :border_right, :border_bottom
-      ].each do |a|
-        assert subject.attributes.has_key?(a)
+        assert_equal [], subject.send(a)
       end
     end
 
@@ -53,7 +47,7 @@ module Osheet
       should "collect styles for #{a}" do
         args = [1, "#FF0000", "Verdana", :love, 1.2]
         subject.send(a, *args)
-        assert_equal args, subject.send(:get_ivar, a)
+        assert_equal args, subject.send(a)
       end
     end
 
@@ -61,7 +55,7 @@ module Osheet
       args = [:thick, '#FF00FF', :dot]
       subject.border *args
       [ :border_left, :border_top, :border_right, :border_bottom].each do |a|
-        assert_equal args, subject.send(:get_ivar, a)
+        assert_equal args, subject.send(a)
       end
     end
 
@@ -86,17 +80,6 @@ module Osheet
         end
       end
       assert_equal false, a.match?('stupid')
-    end
-
-    should "access instance vars from that block's binding" do
-      @test = 20
-      @style = Style.new('.test') { font @test }
-
-      assert !@style.send(:instance_variable_get, "@test").nil?
-      assert_equal @test, @style.send(:instance_variable_get, "@test")
-      assert_equal @test.object_id, @style.send(:instance_variable_get, "@test").object_id
-      assert_equal @test, @style.attributes[:font].first
-      assert_equal @test.object_id, @style.attributes[:font].first.object_id
     end
 
   end

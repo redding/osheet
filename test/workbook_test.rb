@@ -1,13 +1,17 @@
 require "assert"
 require 'test/fixtures/mixins'
+require 'test/fixtures/test_writer'
 
 require 'osheet/workbook'
 
 module Osheet
 
-  class WorkbookTest < Assert::Context
+  class WorkbookTests < Assert::Context
     desc "Osheet::Workbook"
-    before {  @wkbk = Workbook.new }
+    before do
+      @wkbk = Workbook.new
+      @test_writer = TestWriter.new
+    end
     subject { @wkbk }
 
     should have_instance_methods :meta, :use, :add
@@ -16,6 +20,9 @@ module Osheet
     should have_instance_method  :writer
 
     should have_instance_methods :styles, :style
+    should have_instance_methods :align, :font, :bg, :border
+    should have_instance_methods :border_left, :border_top
+    should have_instance_methods :border_right, :border_bottom
 
     should have_instance_method  :workbook
     should have_instance_methods :worksheets, :worksheet
@@ -27,25 +34,26 @@ module Osheet
       assert_equal Workbook::WorksheetSet.new, subject.worksheets
     end
 
-    # TODO: still needed?
-    # should "know it's attribute(s)" do
-    #   subject.send(:title, "The Poo")
-    #   [:title].each do |a|
-    #     assert subject.attributes.has_key?(a)
-    #   end
-    #   assert_equal "The Poo", subject.attributes[:title]
-    # end
-
   end
 
-  class WorkbookStyleTest < WorkbookTest
+  class WorkbookStyleTests < WorkbookTests
     desc "A workbook that defines styles"
     before do
-      skip
-      @wkbk = Workbook.new {
+      @wkbk = Workbook.new(@test_writer) {
         style('.test')
         style('.test.awesome')
       }
+    end
+
+    should "return the style obj created" do
+      style = subject.style(".a.test.style")
+
+      assert_kind_of Style, style
+      assert_equal '.a.test.style', style.selectors.first
+    end
+
+    should "return the last style added if called with no args" do
+      assert_equal subject.styles.last, subject.style
     end
 
     should "add them to it's styles" do
@@ -56,9 +64,13 @@ module Osheet
       assert_equal '.test.awesome', subject.styles.last.selectors.first
     end
 
+    should "call the writer with the created style obj" do
+      assert_equal subject.styles.last, subject.writer.styles.last
+    end
+
   end
 
-  class WorkbookWorksheetsTest < WorkbookTest
+  class WorkbookWorksheetsTests < WorkbookTests
     desc "A workbook with worksheets"
     before do
       skip
@@ -98,7 +110,7 @@ module Osheet
 
   end
 
-  class WorkbookPartialTest < WorkbookTest
+  class WorkbookPartialTests < WorkbookTests
     desc "A workbook that defines partials"
     before do
       skip
@@ -127,7 +139,7 @@ module Osheet
 
   end
 
-  class WorkbookTemplateTest < WorkbookTest
+  class WorkbookTemplateTests < WorkbookTests
     desc "A workbook that defines templates"
     before do
       skip
@@ -164,22 +176,7 @@ module Osheet
 
   end
 
-  # class WorkbookBindingTest < WorkbookTest
-  #   desc "a workbook defined w/ a block"
-  #   should "access instance vars from that block's binding" do
-  #     @test = 'test'
-  #     @workbook = Workbook.new { title @test }
-
-  #     assert !@workbook.send(:instance_variable_get, "@test").nil?
-  #     assert_equal @test, @workbook.send(:instance_variable_get, "@test")
-  #     assert_equal @test.object_id, @workbook.send(:instance_variable_get, "@test").object_id
-  #     assert_equal @test, @workbook.attributes[:title]
-  #     assert_equal @test.object_id, @workbook.attributes[:title].object_id
-  #   end
-
-  # end
-
-  class WorkbookMixins < WorkbookTest
+  class WorkbookMixinTests < WorkbookTests
     desc "a workbook w/ mixins"
     before do
       skip
@@ -213,7 +210,7 @@ module Osheet
 
   end
 
-  class WorkbookWriter < WorkbookTest
+  class WorkbookWriterTests < WorkbookTests
     desc "a workbook"
     before do
       skip
