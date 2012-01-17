@@ -1,20 +1,19 @@
 require "assert"
+
 require "osheet/partial"
 
 module Osheet
   class PartialTest < Assert::Context
-    desc "Osheet::Partial"
+    desc "a Partial"
     before { @p = Partial.new(:thing) {} }
     subject { @p }
-
-    should have_accessor :name
 
     should "be a Proc" do
       assert_kind_of ::Proc, subject
     end
 
     should "convert the name arg to a string and store off" do
-      assert_equal 'thing', subject.name
+      assert_equal 'thing', subject.instance_variable_get("@name")
     end
 
   end
