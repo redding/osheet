@@ -9,10 +9,11 @@ module Osheet
     BORDERS = BORDER_POSITIONS.collect{|p| "border_#{p}".to_sym}
     SETTINGS = [:align, :font, :bg] + BORDERS
 
-    attr_reader :selectors
+    attr_reader :selectors, :build
 
-    def initialize(*selectors)
+    def initialize(*selectors, &build)
       @selectors = verify(selectors)
+      @build = build || Proc.new {}
       SETTINGS.each { |s| instance_variable_set("@#{s}", []) }
     end
 

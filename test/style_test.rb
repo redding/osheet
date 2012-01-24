@@ -9,7 +9,7 @@ module Osheet
     before { @st = Style.new('.test') }
     subject { @st }
 
-    should have_reader :selectors
+    should have_reader :selectors, :build
     should have_instance_methods :align, :font, :bg, :border
     should have_instance_methods :border_left, :border_top
     should have_instance_methods :border_right, :border_bottom

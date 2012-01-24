@@ -48,6 +48,10 @@ module Osheet
       @worksheets << worksheet
     end
 
+    def styles(*args)
+      @styles.for(*args)
+    end
+
     def ==(other)
       title == other.title &&
       templates == other.templates &&
@@ -182,8 +186,8 @@ module Osheet
     end
 
     # return the style set for the style class
-    def for(style_class)
-      self.select{|s| s.match?(style_class)}
+    def for(style_class=nil)
+      style_class.nil? ? self : self.select{|s| s.match?(style_class)}
     end
 
     private

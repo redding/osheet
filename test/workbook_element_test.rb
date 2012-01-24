@@ -199,6 +199,10 @@ module Osheet
       end
     end
 
+    should "return itself if calling for w/ no args" do
+      assert_equal subject, subject.for
+    end
+
   end
 
 

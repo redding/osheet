@@ -1,7 +1,5 @@
-require 'osheet/workbook/styles'
-require 'osheet/workbook/elements'
-
 require 'osheet/workbook_element'
+require 'osheet/workbook_api'
 
 module Osheet
 
@@ -14,8 +12,7 @@ module Osheet
 
     class ElementStack < ::Array; end
 
-    include Workbook::Styles
-    include Workbook::Elements
+    include WorkbookApi
 
     def initialize(writer=nil, data={}, &build)
       # apply :data options to workbook scope
@@ -46,27 +43,38 @@ module Osheet
       get_ivar(:element_stack)
     end
 
-    # reference API
-
     def workbook_element
       get_ivar(:workbook_element)
     end
     alias_method :workbook, :workbook_element
 
-    def worksheets
-      workbook.worksheets
+    # use a mixin to define its markup handlers (templates, partials, and styles)
+    # in your workbook scope
+    # all blocks in mixins will be instance eval'd in the workbook scope
+    # and should be written as such
+    def use(mixin)
+      # templates and partials are just blocks themselves so they just need to
+      # be added to the workbook element
+      # they will be instance eval'd when they get used
+      (mixin.templates || []).each { |mt| template(*mt.args, &mt.build) }
+      (mixin.partials  || []).each { |mp| partial(*mp.args, &mp.build)  }
+
+      # styles not only need to be added to the workbook element, but
+      # any build passed to the style needs to be instance eval'd
+      (mixin.styles || []).each do |ms|
+        StyleBuild.new(self, *ms.args, &ms.build).add do |build|
+          instance_eval(&build)
+        end
+      end
     end
 
-    def columns
-      worksheets.last.columns
-    end
-
-    def rows
-      worksheets.last.rows
-    end
-
-    def cells
-      rows.last.cells
+    # add partials to dynamically add markup to your workbook
+    # note: you can also define element templates to add element specific
+    # markup to your workbook
+    def add(partial_name, *args)
+      workbook.partials.get(partial_name).tap do |p|
+        instance_exec(*args, &p) if p
+      end
     end
 
     private

@@ -1,18 +1,25 @@
-require 'osheet/style'
-require 'osheet/template'
-require 'osheet/partial'
-
 module Osheet::Mixin
 
   def self.included(receiver)
     receiver.send(:extend, ClassMethods)
   end
 
+  class Args
+
+    attr_reader :args, :build
+
+    def initialize(*args, &build)
+      @args = args
+      @build = build || Proc.new {}
+    end
+
+  end
+
   module ClassMethods
 
-    def style(*selectors, &block)
+    def style(*selectors, &build)
       instance_variable_set("@s",
-        (instance_variable_get("@s") || []) << ::Osheet::Style.new(*selectors, &block)
+        (instance_variable_get("@s") || []) << Args.new(*selectors, &build)
       )
     end
 
@@ -20,9 +27,9 @@ module Osheet::Mixin
       instance_variable_get("@s") || []
     end
 
-    def template(element, name, &block)
+    def template(element, name, &build)
       instance_variable_set("@t",
-        (instance_variable_get("@t") || []) << ::Osheet::Template.new(element, name, &block)
+        (instance_variable_get("@t") || []) << Args.new(element, name, &build)
       )
     end
 
@@ -30,9 +37,9 @@ module Osheet::Mixin
       instance_variable_get("@t") || []
     end
 
-    def partial(name, &block)
+    def partial(name, &build)
       instance_variable_set("@p",
-        (instance_variable_get("@p") || []) << ::Osheet::Partial.new(name, &block)
+        (instance_variable_get("@p") || []) << Args.new(name, &build)
       )
     end
 
