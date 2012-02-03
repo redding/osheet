@@ -7,6 +7,7 @@ class OsheetProfilerRunner
 
   def initialize(n)
 
+    RubyProf.measure_mode = RubyProf::MEMORY
     @result = RubyProf.profile do
       Osheet::Workbook.new {
         title "basic"
