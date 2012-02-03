@@ -13,7 +13,7 @@ require 'osheet/format/custom'
 module Osheet::Format
 
   VALUES = [
-    :general,:number, :currency, :accounting,
+    :general, :number, :currency, :accounting,
     :datetime, :percentage, :fraction, :scientific,
     :text, :special, :custom
   ]

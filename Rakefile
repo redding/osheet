@@ -24,6 +24,13 @@ task :run_profiler do
   runner.print_flat(STDOUT, :min_percent => 3)
 end
 
+desc "Run the bench script."
+task :run_bench do
+  require 'bench/bench_runner'
+
+  OsheetBenchRunner.new
+end
+
 desc "Run all the tests, then the example builds, then the profiler."
 task :run_all do
   Rake::Task['test'].invoke
