@@ -19,6 +19,9 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency("bundler", ["~> 1.0"])
   s.add_development_dependency("assert", ["~> 0.3"])
+  s.add_development_dependency("whysoslow", ["~> 0.0"])
+  s.add_development_dependency("ruby-prof")
+
   s.add_dependency("enumeration", ["~> 1.3"])
   s.add_dependency("xmlss", ["~> 0.4"])
 
