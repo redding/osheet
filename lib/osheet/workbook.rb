@@ -1,3 +1,5 @@
+require 'osheet/partial'
+require 'osheet/template'
 require 'osheet/workbook_element'
 require 'osheet/workbook_api'
 

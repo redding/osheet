@@ -35,4 +35,28 @@ class TestWriter
     block.call if !block.nil?
   end
 
+  [ :title,       # workbook_element
+    :name,        # worksheet
+    :meta,        # worksheet, column, row, cell
+    :style_class, # column, row, cell
+    :width,       # column
+    :height,      # row
+    :autofit,     # column, row
+    :autofit?,    # column, row
+    :hidden,      # column, row
+    :hidden?,     # column, row
+    :data,        # cell
+    :format,      # cell
+    :href,        # cell
+    :formula,     # cell
+    :index,       # cell
+    :rowspan,     # cell
+    :colspan,     # cell
+  ].each do |meth|
+    define_method(meth) do |*args|
+      # cool story bro (don't do anything, just allow)
+      return *args
+    end
+  end
+
 end

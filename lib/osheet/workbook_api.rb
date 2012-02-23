@@ -172,7 +172,10 @@ module Osheet::WorkbookApi
     :colspan,     # cell
   ].each do |meth|
     define_method(meth) do |*args|
-      element_stack.current.send(meth, *args)
+      element_stack.current.send(meth, *args)  # for self referencing
+      if self.writer                           # for writing
+        self.writer.send(meth, *args)
+      end
     end
   end
 

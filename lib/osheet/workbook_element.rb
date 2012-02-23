@@ -1,5 +1,3 @@
-require 'osheet/partial'
-require 'osheet/template'
 require 'osheet/style'
 require 'osheet/worksheet'
 
