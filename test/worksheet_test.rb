@@ -84,15 +84,6 @@ module Osheet
       assert_equal "more fun", Worksheet.new("more fun").name
     end
 
-    should "complain if given a name longer than 31 chars" do
-      assert_raises ArgumentError do
-        subject.name('a'*32)
-      end
-      assert_nothing_raised do
-        subject.name('a'*31)
-      end
-    end
-
   end
 
 end

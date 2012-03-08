@@ -19,11 +19,11 @@ module Osheet::Format
   ]
 
   class << self
-    def new(type, opts={})
+    def new(type, *args)
       unless VALUES.include?(type)
         raise ArgumentError, "'#{type.inspect}' is not a valid format type"
       end
-      self.const_get(type.to_s.capitalize).new(opts)
+      self.const_get(type.to_s.capitalize).new(*args)
     end
   end
 

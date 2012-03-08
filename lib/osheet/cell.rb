@@ -10,13 +10,13 @@ module Osheet
     include MetaElement
     include StyledElement
 
-    def initialize(data=nil)
-      @data = data
-      @format = Format.new(:general)
+    def initialize(data_value=nil)
+      @data    = cast_data_value(data_value)
+      @format  = Format.new(:general)
       @rowspan = 1
       @colspan = 1
-      @index = nil
-      @href = nil
+      @index   = nil
+      @href    = nil
       @formula = nil
     end
 
@@ -52,7 +52,7 @@ module Osheet
 
     def cast_data_value(value)
       case value
-      when ::String, ::Numeric, ::Date, ::Time, ::DateTime
+      when ::String, ::Numeric, ::Date, ::Time, ::DateTime, ::NilClass
         value
       when ::Symbol
         value.to_s

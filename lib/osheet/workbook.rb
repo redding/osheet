@@ -26,6 +26,7 @@ module Osheet
       data.each {|key, value| metaclass.class_eval { define_method(key){value} }}
 
       # setup the writer, element stack, and workbook_element
+      writer.bind(self) if writer
       set_ivar(:writer, writer)
       set_ivar(:element_stack, Workbook::ElementStack.new)
       set_ivar(:workbook_element, WorkbookElement.new)
@@ -79,6 +80,18 @@ module Osheet
       end
     end
 
+    # overriding to make less noisy
+    def to_str(*args)
+      "#<Osheet::Workbook:#{self.object_id} @title=#{workbook.title.inspect}, " +
+      "worksheet_count=#{workbook.worksheets.size.inspect}, " +
+      "style_count=#{workbook.styles.size.inspect}>"
+    end
+    alias_method :inspect, :to_str
+
+    # [:to_data, :to_file].each do |meth|
+    #   define_method(meth) {|*args| writer.send(meth, *args) }
+    # end
+
     private
 
     OSHEET_IVAR_NS = "_osheet_"
@@ -98,21 +111,6 @@ module Osheet
     def ivar_name(name)
       "@#{OSHEET_IVAR_NS}#{name}"
     end
-
-
-    # TODO: still needed??
-    # def attributes
-    #   { :title => get_ivar(:title) }
-    # end
-
-    # TODO: writer should handle all this
-    # def writer
-    #   XmlssWriter::Base.new(:workbook => self)
-    # end
-
-    # [:to_data, :to_file].each do |meth|
-    #   define_method(meth) {|*args| writer.send(meth, *args) }
-    # end
 
   end
 

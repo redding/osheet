@@ -16,12 +16,12 @@ module Osheet
 
     should "set it's defaults" do
       assert_equal nil, subject.data
-      assert_kind_of Format::General, subject.format
       assert_equal 1,   subject.colspan
       assert_equal 1,   subject.rowspan
       assert_equal nil, subject.href
       assert_equal nil, subject.index
       assert_equal nil, subject.formula
+      assert_kind_of Format::General, subject.format
     end
 
     should "set its data from an init arg" do
@@ -32,18 +32,21 @@ module Osheet
       ['a string', :symbol].each do |thing|
         subject.data thing
         assert_kind_of ::String, subject.data
+        assert_kind_of ::String, Cell.new(thing).data
       end
     end
 
     should "type cast data dates" do
       subject.data Date.today
       assert_kind_of ::Date, subject.data
+      assert_kind_of ::Date, Cell.new(Date.today).data
     end
 
     should "type cast data numerics" do
       [1, 1.0].each do |thing|
         subject.data thing
         assert_kind_of ::Numeric, subject.data
+        assert_kind_of ::Numeric, Cell.new(thing).data
       end
     end
 
@@ -51,6 +54,7 @@ module Osheet
       [Osheet, [:a, 'Aye'], {:a => 'Aye'}].each do |thing|
         subject.data thing
         assert_kind_of ::String, subject.data
+        assert_kind_of ::String, Cell.new(thing).data
       end
     end
 

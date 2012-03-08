@@ -10,6 +10,10 @@ class TestWriter
     @cells = []
   end
 
+  def bind(workbook)
+    workbook
+  end
+
   def style(obj, &block)
     @styles << obj
     block.call if !block.nil?
@@ -35,10 +39,13 @@ class TestWriter
     block.call if !block.nil?
   end
 
+  def style(*args)
+    return *args
+  end
+
   [ :title,       # workbook_element
     :name,        # worksheet
     :meta,        # worksheet, column, row, cell
-    :style_class, # column, row, cell
     :width,       # column
     :height,      # row
     :autofit,     # column, row
@@ -46,7 +53,6 @@ class TestWriter
     :hidden,      # column, row
     :hidden?,     # column, row
     :data,        # cell
-    :format,      # cell
     :href,        # cell
     :formula,     # cell
     :index,       # cell

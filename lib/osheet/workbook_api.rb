@@ -153,10 +153,37 @@ module Osheet::WorkbookApi
 
   # element attribute API
 
-  [ :title,       # workbook_element
-    :name,        # worksheet
-    :meta,        # worksheet, column, row, cell
-    :style_class, # column, row, cell
+  def meta(*args)
+    element_stack.current.meta(*args)
+  end
+
+  # on both style_class and format attribute updates
+  # call the writer's style hook, passing it the current element's
+  # style_class and format values.  Both are needed to write
+  # an elements style data and style_id.
+
+  # used by: column, row, cell
+  def style_class(value)
+    current_class  = element_stack.current.style_class(value)  # for self referencing
+    if self.writer                                             # for writing
+      self.writer.style(current_class, element_stack.current.format)
+    end
+  end
+
+  # used by: cell
+  def format(*args)
+    current_format = element_stack.current.format(*args)  # for self referencing
+    if self.writer                                        # for writing
+      self.writer.style(element_stack.current.style_class, current_format)
+    end
+  end
+
+  # used by: workbook_element
+  def title(*args)
+    element_stack.current.title(*args)
+  end
+
+  [ :name,        # worksheet
     :width,       # column
     :height,      # row
     :autofit,     # column, row
@@ -164,7 +191,6 @@ module Osheet::WorkbookApi
     :hidden,      # column, row
     :hidden?,     # column, row
     :data,        # cell
-    :format,      # cell
     :href,        # cell
     :formula,     # cell
     :index,       # cell

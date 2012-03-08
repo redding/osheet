@@ -12,6 +12,7 @@ module Osheet
     should be_a_styled_element
     should be_a_meta_element
 
+    should have_reader :format
     should have_instance_methods :width
     should have_instance_methods :autofit, :autofit?
     should have_instance_methods :hidden, :hidden?
@@ -22,6 +23,7 @@ module Osheet
       assert !subject.autofit?
       assert_equal false, subject.hidden
       assert !subject.hidden?
+      assert_kind_of Format::General, subject.format
     end
 
     should "set it's width" do

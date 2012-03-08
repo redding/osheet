@@ -26,16 +26,17 @@ module Osheet
     should have_instance_methods :rows, :row
     should have_instance_methods :cells, :cell
 
-    should have_instance_methods :use, :add,:template, :partial
+    should have_instance_methods :use, :add, :template, :partial
 
     should have_instance_methods :align, :font, :bg, :border
     should have_instance_methods :border_left, :border_top
     should have_instance_methods :border_right, :border_bottom
 
-    should have_instance_methods :title, :meta, :style_class, :name
+    should have_instance_methods :style_class, :format
+    should have_instance_methods :title, :meta, :name
     should have_instance_methods :width, :height
     should have_instance_methods :autofit, :autofit?, :hidden, :hidden?
-    should have_instance_methods :data, :format, :href, :formula
+    should have_instance_methods :data, :href, :formula
     should have_instance_methods :index, :rowspan, :colspan
 
     should "set it's defaults" do
@@ -182,22 +183,6 @@ module Osheet
     should "call the writer with the created worksheet obj" do
       assert_equal subject.worksheets.last, subject.writer.worksheets.last
     end
-
-    # TODO: the writer should validate this
-    # should "not allow multiple worksheets with the same name" do
-    #   assert_raises ArgumentError do
-    #     Workbook.new {
-    #       worksheet { name "awesome" }
-    #       worksheet { name "awesome" }
-    #     }
-    #   end
-    #   assert_nothing_raised do
-    #     Workbook.new {
-    #       worksheet { name "awesome" }
-    #       worksheet { name "awesome1" }
-    #     }
-    #   end
-    # end
 
   end
 

@@ -7,10 +7,13 @@ module Osheet
     include MetaElement
     include StyledElement
 
+    attr_reader :format
+
     def initialize(width=nil)
       @width = width
       @autofit = false
       @hidden = false
+      @format  = Format.new(:general)
     end
 
     def width(value=nil)

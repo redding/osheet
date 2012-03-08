@@ -9,13 +9,14 @@ module Osheet
     include MetaElement
     include StyledElement
 
-    attr_reader :cells
+    attr_reader :cells, :format
 
     def initialize(height=nil)
-      @height = height
+      @height  = height
       @autofit = false
-      @hidden = false
-      @cells = []
+      @hidden  = false
+      @cells   = []
+      @format  = Format.new(:general)
     end
 
     def height(value=nil)

@@ -5,15 +5,15 @@ $LOAD_PATH.unshift(File.expand_path("../..", __FILE__))
 
 class Assert::Context
 
-  # TODO: deprecated
-
-  def xstyle_markup(xworkbook)
-    xworkbook.instance_variable_get("@__xmlss_undies_writer").flush.style_markup
+  def xmlss_style_markup(writer)
+    Xmlss::Workbook.writer(writer.xmlss_workbook).styles_markup.flush.to_s
   end
 
-  def xelement_markup(xworkbook)
-    xworkbook.instance_variable_get("@__xmlss_undies_writer").flush.element_markup
+  def xmlss_element_markup(writer)
+    Xmlss::Workbook.writer(writer.xmlss_workbook).worksheets_markup.flush.to_s
   end
+
+  # Macros
 
   def self.be_a_meta_element(*args)
     called_from = caller.first
