@@ -35,14 +35,5 @@ module Osheet
       @rows << row_obj
     end
 
-    private
-
-    # TODO: move this check to the writer
-    # def sanitized_name(name_value)
-    #   # if get_ivar(:workbook) && get_ivar(:workbook).worksheets.collect{|ws| ws.name}.include?(name_value)
-    #   #   raise ArgumentError, "the sheet name '#{name_value}' is already in use.  choose a sheet name that is not used by another sheet"
-    #   # end
-    # end
-
   end
 end

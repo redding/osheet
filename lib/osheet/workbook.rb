@@ -88,9 +88,11 @@ module Osheet
     end
     alias_method :inspect, :to_str
 
-    # [:to_data, :to_file].each do |meth|
-    #   define_method(meth) {|*args| writer.send(meth, *args) }
-    # end
+    # writers are responsible for defining what each of these methods do
+    # and what they return
+    [:to_s, :to_data, :to_file].each do |meth|
+      define_method(meth) {|*args| writer.send(meth, *args) }
+    end
 
     private
 

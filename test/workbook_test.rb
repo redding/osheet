@@ -16,6 +16,7 @@ module Osheet
 
     should have_instance_methods :writer, :element_stack
     should have_instance_methods :use, :add
+    should have_instance_methods :to_s, :to_data, :to_file
 
     should have_instance_methods :workbook_element, :workbook
     should have_instance_methods :templates, :template

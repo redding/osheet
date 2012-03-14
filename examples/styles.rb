@@ -8,7 +8,7 @@ require 'osheet'
 
 puts "building examples/styles.rb ..."
 
-Osheet::Workbook.new {
+Osheet::Workbook.new(Osheet::XmlssWriter.new(:pp => 2)) {
   title "styles"
   template(:cell, :styled) { |style, attribute|
     data attribute == :wrap ? (attribute.to_s+' ')*20 : attribute.to_s
@@ -250,6 +250,6 @@ Osheet::Workbook.new {
 
 
 
-}.to_file('examples/styles.xls', :pp => 2)
+}.to_file('examples/styles.xls')
 
 puts "open examples/styles.xls"

@@ -30,6 +30,11 @@ module Osheet
     def to_s
       @xmlss_workbook.to_s
     end
+    alias_method :to_data, :to_s
+
+    def to_file(file_path)
+      @xmlss_workbook.to_file(file_path)
+    end
 
     # Element writers
 
@@ -94,10 +99,23 @@ module Osheet
       end
     end
 
+    def colspan(count)
+      @xmlss_workbook.merge_across(cell_merge(count))
+    end
+
+    def rowspan(count)
+      @xmlss_workbook.merge_down(cell_merge(count))
+    end
+
+    def name(value)
+      @osheet_worksheet_names.pop
+      @osheet_worksheet_names << value
+      @xmlss_workbook.name(value)
+    end
+
     # Element attribute writers
 
-    [ :name,        # worksheet
-      :width,       # column
+    [ :width,       # column
       :height,      # row
       :autofit,     # column, row
       :autofit?,    # column, row
@@ -107,9 +125,7 @@ module Osheet
       :format,      # cell
       :href,        # cell
       :formula,     # cell
-      :index,       # cell
-      :rowspan,     # cell
-      :colspan,     # cell
+      :index        # cell
     ].each do |meth|
       define_method(meth) do |*args, &block|
         @xmlss_workbook.send(meth, *args, &block)

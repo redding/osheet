@@ -8,7 +8,7 @@ require 'osheet'
 
 puts "building examples/trivial.rb ..."
 
-Osheet::Workbook.new {
+Osheet::Workbook.new(Osheet::XmlssWriter.new(:pp => 2)) {
   title "basic"
   worksheet {
     name "one dollar"
@@ -20,6 +20,6 @@ Osheet::Workbook.new {
       }
     }
   }
-}.to_file('examples/trivial.xls', :pp => 2)
+}.to_file('examples/trivial.xls')
 
 puts "open examples/trivial.xls"

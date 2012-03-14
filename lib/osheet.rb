@@ -1,5 +1,5 @@
 module Osheet; end
 
 require 'osheet/workbook'
-require 'osheet/mixin'
+require 'osheet/xmlss_writer'
 
