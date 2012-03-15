@@ -25,7 +25,10 @@ class OsheetBenchResults
       }
 
       outstream = StringIO.new(out = "")
-      outstream << Osheet::Workbook.new {
+      outstream << Osheet::Workbook.new(Osheet::XmlssWriter.new(:pp => 2), {
+        :bench_row_count => @row_count,
+        :runner => @runner
+      }) {
         title "bench"
 
         template(:row, :header) {
@@ -58,13 +61,13 @@ class OsheetBenchResults
           row :header
 
           10.times do |i|
-            (@row_count / 10).times do
+            (bench_row_count / 10).times do
               row :data, data_values
             end
-            @runner.snapshot("#{((i+1)*10).to_s.rjust(3)}%")
+            runner.snapshot("#{((i+1)*10).to_s.rjust(3)}%")
           end
         }
-      }.to_data(:pp => 2)
+      }.to_data
     end
   end
 

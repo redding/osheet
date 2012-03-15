@@ -293,7 +293,7 @@
     <Table>
       <Column ss:Width="20" />
       <Column ss:Width="200" />
-      <Row></Row>
+      <Row />
       <Row ss:Height="50">
         <Cell>
           <Data ss:Type="String"></Data>
@@ -302,7 +302,7 @@
           <Data ss:Type="String">top red hairline continuous</Data>
         </Cell>
       </Row>
-      <Row></Row>
+      <Row />
       <Row ss:Height="50">
         <Cell>
           <Data ss:Type="String"></Data>
@@ -311,7 +311,7 @@
           <Data ss:Type="String">right green thin dash</Data>
         </Cell>
       </Row>
-      <Row></Row>
+      <Row />
       <Row ss:Height="50">
         <Cell>
           <Data ss:Type="String"></Data>
@@ -320,7 +320,7 @@
           <Data ss:Type="String">bottom blue medium dat</Data>
         </Cell>
       </Row>
-      <Row></Row>
+      <Row />
       <Row ss:Height="50">
         <Cell>
           <Data ss:Type="String"></Data>
@@ -329,7 +329,7 @@
           <Data ss:Type="String">left yellow thick dast_dot</Data>
         </Cell>
       </Row>
-      <Row></Row>
+      <Row />
       <Row ss:Height="50">
         <Cell>
           <Data ss:Type="String"></Data>

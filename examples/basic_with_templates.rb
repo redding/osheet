@@ -17,7 +17,7 @@ data = {
 
 puts "building examples/basic_with_templats.rb ..."
 
-Osheet::Workbook.new {
+Osheet::Workbook.new(Osheet::XmlssWriter.new(:pp => 2)) {
   title "basic"
 
   template(:column, :data) { |field, index|
@@ -82,6 +82,6 @@ Osheet::Workbook.new {
       row :data, name, stats
     end
   }
-}.to_file('examples/basic_with_templates.xls', :pp => 2)
+}.to_file('examples/basic_with_templates.xls')
 
 puts "open examples/basic_with_templates.xls"

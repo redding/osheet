@@ -9,7 +9,9 @@ class StyledMixin
   include Osheet::Mixin
 
   style('.test')
-  style('.test.awesome')
+  style('.test.awesome') {
+    align :left
+  }
 
 end
 
@@ -39,10 +41,10 @@ class PartialedMixin
     row { }
   }
 
-  partial(:two_cells_in_a_row) {
+  partial(:two_cells_in_a_row) { |data_one, data_two|
     row {
-      cell { data "one" }
-      cell { data "two" }
+      cell { data data_one.to_s }
+      cell { data data_two.to_s }
     }
   }
 end
