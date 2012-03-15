@@ -11,7 +11,7 @@ require 'osheet'
 
 puts "building examples/formula.rb ..."
 
-Osheet::Workbook.new {
+Osheet::Workbook.new(Osheet::XmlssWriter.new(:pp => 2)) {
   title "formula example"
   worksheet {
     name "Formula"
@@ -38,6 +38,6 @@ Osheet::Workbook.new {
       }
     }
   }
-}.to_file('examples/formula.xls', :pp => 2)
+}.to_file('examples/formula.xls')
 
 puts "open examples/formula.xls"

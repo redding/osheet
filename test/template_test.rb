@@ -1,10 +1,11 @@
 require "assert"
+
 require "osheet/template"
 
 module Osheet
 
-  class TemplateTest < Assert::Context
-    desc "Osheet::Template"
+  class TemplateTests < Assert::Context
+    desc "a Template"
     before do
       @tmpl = Template.new('column', :thing) {}
     end
@@ -14,19 +15,17 @@ module Osheet
       assert_equal ['worksheet', 'column', 'row', 'cell'], Template::ELEMENTS
     end
 
-    should have_accessor :element
-
     should "be a Partial" do
       assert_kind_of Partial, subject
     end
 
     should "convert the element ars to string and store off" do
-      assert_equal 'column', subject.element
+      assert_equal 'column', subject.instance_variable_get("@element")
     end
 
   end
 
-  class TemplateElementTest < TemplateTest
+  class TemplateElementTest < TemplateTests
     desc "a template"
 
     should "verify the element argument" do

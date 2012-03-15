@@ -8,7 +8,7 @@ require 'osheet'
 
 puts "building examples/formats.rb ..."
 
-Osheet::Workbook.new {
+Osheet::Workbook.new(Osheet::XmlssWriter.new(:pp => 2)) {
   title "formats"
 
 
@@ -365,6 +365,6 @@ Osheet::Workbook.new {
 
 
 
-}.to_file('examples/formats.xls', :pp => 2)
+}.to_file('examples/formats.xls')
 
 puts "open examples/formats.xls"
