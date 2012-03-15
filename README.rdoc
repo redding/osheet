@@ -20,8 +20,9 @@ A DSL for specifying and generating spreadsheets using Ruby.
     }
 
     # this will dump the above data to a single-sheet workbook w/ no styles
+    # - this example is using the Xmlss writer (https://github.com/kellyredding/xmlss)
 
-    Osheet::Workbook.new {
+    Osheet::Workbook.new(Osheet::XmlssWriter.new) {
       title "basic"
 
       template(:column, :data) { |field, index|
