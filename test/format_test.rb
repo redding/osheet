@@ -3,8 +3,8 @@ require 'osheet/format'
 
 module Osheet
 
-  class FormatTest < Assert::Context
-    desc "Osheet::Format"
+  class FormatTests < Assert::Context
+    desc "a Format"
     before do
       @f = Format.new(:number, {
         :decimal_places => 4,

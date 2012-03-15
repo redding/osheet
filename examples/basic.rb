@@ -17,7 +17,7 @@ data = {
 
 puts "building examples/basic.rb ..."
 
-Osheet::Workbook.new {
+Osheet::Workbook.new(Osheet::XmlssWriter.new) {
   title "basic"
   worksheet {
     name "Stats: #{fields.join(', ')}"
