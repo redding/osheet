@@ -12,7 +12,7 @@ module Osheet::Format
       assert_equal nil, subject.style
     end
 
-    should "always provide and empty format key" do
+    should "provide a format key" do
       assert_equal '', subject.key
     end
 

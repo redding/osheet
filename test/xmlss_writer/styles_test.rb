@@ -18,6 +18,12 @@ module Osheet
       assert_not_nil writer.style_cache
     end
 
+    should "return no style if no class or format given" do
+      assert_nil subject.style(nil)
+      assert_nil subject.style('')
+      assert_not_nil subject.style('awesome')
+    end
+
   end
 
   class XmlssWriterStyleTests < XmlssWriterStylesTest

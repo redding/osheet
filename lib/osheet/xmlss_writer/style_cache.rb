@@ -29,14 +29,14 @@ class Osheet::XmlssWriter
       build_and_cache(key, @osheet_workbook.styles.for(style_class), format)
     end
 
-    protected
-
     # build a unique key for styling based off the style and format keys
     def key(class_value, format_key)
       (class_value || '').strip.split(/\s+/).collect do |c|
         ".#{c}"
       end.join('') + (format_key.nil? || format_key.empty? ? '' : "..#{format_key}")
     end
+
+    protected
 
     # build and cache an xmlss style
     def build_and_cache(key, styles, format)
