@@ -10,7 +10,9 @@ A DSL for specifying and generating spreadsheets using Ruby.
 
 == Basic Example
 
-    require 'osheet'
+This example uses the Xmlss writer provided by Osheet::Xmlss (https://github.com/kellyredding/osheet-xmlss).
+
+    require 'osheet/xmlss'
 
     fields = ['Sex', 'Age', 'Height', 'Weight']
     data = {
