@@ -54,7 +54,7 @@ module Osheet
     end
 
     should "build styles with ids matching the cache key" do
-      key = subject.send(:key, 'font', Osheet::Format.new(:currency).key)
+      key = subject.key('font', Osheet::Format.new(:currency).key)
       assert_equal key, subject.get('font', Osheet::Format.new(:currency)).id
     end
 

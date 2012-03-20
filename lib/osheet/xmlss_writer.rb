@@ -95,7 +95,7 @@ module Osheet
         style_class,
         format || Osheet::Format.new(:general)
       ).tap do |xmlss_style|
-        @xmlss_workbook.style_id(xmlss_style.id)
+        @xmlss_workbook.style_id(xmlss_style.id) if xmlss_style
       end
     end
 
