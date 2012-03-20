@@ -5,14 +5,6 @@ $LOAD_PATH.unshift(File.expand_path("../..", __FILE__))
 
 class Assert::Context
 
-  def xmlss_style_markup(writer)
-    Xmlss::Workbook.writer(writer.xmlss_workbook).styles_markup.flush.to_s
-  end
-
-  def xmlss_element_markup(writer)
-    Xmlss::Workbook.writer(writer.xmlss_workbook).worksheets_markup.flush.to_s
-  end
-
   # Macros
 
   def self.be_a_meta_element(*args)
