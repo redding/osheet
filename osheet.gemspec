@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency("assert", ["~> 0.3"])
-
   s.add_dependency("enumeration", ["~> 1.3"])
 
 end
