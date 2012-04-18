@@ -27,9 +27,9 @@ module Osheet
 
       # setup the writer, element stack, and workbook_element
       writer.bind(self) if writer
-      set_ivar(:writer, writer)
-      set_ivar(:element_stack, Workbook::ElementStack.new)
-      set_ivar(:workbook_element, WorkbookElement.new)
+      @_osheet_writer = writer
+      @_osheet_element_stack = Workbook::ElementStack.new
+      @_osheet_workbook_element = WorkbookElement.new
 
       # push the workbook element onto the element stack
       element_stack.push(workbook)
@@ -39,15 +39,15 @@ module Osheet
     end
 
     def writer
-      get_ivar(:writer)
+      @_osheet_writer
     end
 
     def element_stack
-      get_ivar(:element_stack)
+      @_osheet_element_stack
     end
 
     def workbook_element
-      get_ivar(:workbook_element)
+      @_osheet_workbook_element
     end
     alias_method :workbook, :workbook_element
 
@@ -92,26 +92,6 @@ module Osheet
     # and what they return
     [:to_s, :to_data, :to_file].each do |meth|
       define_method(meth) {|*args| writer.send(meth, *args) }
-    end
-
-    private
-
-    OSHEET_IVAR_NS = "_osheet_"
-
-    def get_ivar(name)
-      instance_variable_get(ivar_name(name))
-    end
-
-    def set_ivar(name, value)
-      instance_variable_set(ivar_name(name), value)
-    end
-
-    def push_ivar(name, value)
-      get_ivar(name) << value
-    end
-
-    def ivar_name(name)
-      "@#{OSHEET_IVAR_NS}#{name}"
     end
 
   end

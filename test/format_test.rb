@@ -18,7 +18,7 @@ module Osheet
       assert_kind_of Format::Number, subject
       assert_equal 4, subject.decimal_places
       assert_equal true, subject.comma_separator
-      assert_equal :black_parenth, subject.negative_numbers
+      assert_equal 'black_parenth', subject.negative_numbers
     end
 
     should "error for invalid format types" do

@@ -17,13 +17,14 @@ module Osheet
       SETTINGS.each { |s| instance_variable_set("@#{s}", []) }
     end
 
-    SETTINGS.each do |setting|
-      define_method(setting) do |*args|
-        instance_variable_get("@#{setting}").tap do |value|
-          instance_variable_set("@#{setting}", value + args) if !args.empty?
-        end
-      end
-    end
+    def align(*args); @align += args; end
+    def font(*args);  @font  += args; end
+    def bg(*args);    @bg    += args; end
+
+    def border_top(*args);    @border_top    += args; end
+    def border_right(*args);  @border_right  += args; end
+    def border_bottom(*args); @border_bottom += args; end
+    def border_left(*args);   @border_left   += args; end
 
     def border(*args)
       BORDERS.each { |border| send(border, *args) }
