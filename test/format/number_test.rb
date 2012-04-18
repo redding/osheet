@@ -20,7 +20,7 @@ module Osheet::Format
     should "set default values" do
       assert_equal 0, subject.decimal_places
       assert_equal false, subject.comma_separator
-      assert_equal :black, subject.negative_numbers
+      assert_equal 'black', subject.negative_numbers
     end
 
     should "only allow Fixnum decimal places between 0 and 30" do
