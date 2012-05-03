@@ -163,19 +163,21 @@ module Osheet::WorkbookApi
   # an elements style data and style_id.
 
   # used by: column, row, cell
-  def style_class(value)
+  def style_class(value=nil)
     current_class  = element_stack.current.style_class(value)  # for self referencing
-    if self.writer                                             # for writing
+    if value && self.writer                                    # for writing
       self.writer.style(current_class, element_stack.current.format)
     end
+    current_class
   end
 
   # used by: cell
   def format(*args)
-    current_format = element_stack.current.format(*args)  # for self referencing
-    if self.writer                                        # for writing
+    current_format = element_stack.current.format(*args)   # for self referencing
+    if !args.empty? && self.writer                         # for writing
       self.writer.style(element_stack.current.style_class, current_format)
     end
+    current_format
   end
 
   # used by: workbook_element
@@ -198,10 +200,10 @@ module Osheet::WorkbookApi
     :colspan,     # cell
   ].each do |meth|
     define_method(meth) do |*args|
-      element_stack.current.send(meth, *args)  # for self referencing
-      if self.writer                           # for writing
+      if !args.empty? && self.writer             # for writing
         self.writer.send(meth, *args)
       end
+      element_stack.current.send(meth, *args)    # for self referencing
     end
   end
 
