@@ -61,7 +61,7 @@ class TestWriter
   ].each do |meth|
     define_method(meth) do |*args|
       # cool story bro (don't do anything, just allow)
-      return *args
+      return args
     end
   end
 
