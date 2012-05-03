@@ -161,7 +161,7 @@ module Osheet
         }
         worksheet {
           name "two"
-          meta :some_meta
+          meta :val => 'some meta', :wksht_name => self.name
         }
       }
     end
@@ -174,7 +174,7 @@ module Osheet
       assert_equal 2, subject.worksheets.size
       assert_equal "one", subject.worksheets.first.name
       assert_equal "two", subject.worksheets.last.name
-      assert_equal :some_meta, subject.worksheets.last.meta
+      assert_equal({:val => 'some meta', :wksht_name => 'two'}, subject.worksheets.last.meta)
     end
 
     should "return the last worksheet added if called with no args" do
@@ -202,11 +202,13 @@ module Osheet
           }
           row(120) {
             cell {
-              data 12234
+              style_class 'too awesome'
+              data self.style_class.to_s
               format :currency
             }
             cell(Time.now) {
               format :datetime, 'mm/dd/yyyy'
+              data self.format.key
             }
 
           }
@@ -232,10 +234,11 @@ module Osheet
 
     should "access the cells of its last row" do
       assert_equal 2, subject.cells.size
-      assert_equal 12234, subject.cells.first.data
+      assert_equal 'too awesome', subject.cells.first.data
+      assert_equal 'datetime_mm/dd/yyyy', subject.cells.last.data
 
-      assert_equal 4, subject.writer.cells.size
       assert_equal subject.cells.last, subject.writer.rows.last.cells.last
+      assert_equal 4, subject.writer.cells.size
     end
 
   end
