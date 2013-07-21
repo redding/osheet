@@ -3,13 +3,23 @@
 require 'enumeration'
 
 module Osheet::Format
-
   class Numeric
     include Enumeration
 
     attr_accessor :decimal_places, :comma_separator
-    enum :symbol, [:none, :dollar, :euro]
-    enum :negative_numbers, [:black, :black_parenth, :red, :red_parenth]
+
+    enum :symbol, {
+      :none => "none",
+      :dollar => "dollar",
+      :euro => "euro"
+    }
+
+    enum :negative_numbers, {
+      :black => "black",
+      :black_parenth => "black_parenth",
+      :red => "red",
+      :red_parenth => "red_parenth"
+    }
 
     def initialize(opts={})
       self.symbol = opts[:symbol] || :none
@@ -66,13 +76,13 @@ module Osheet::Format
 
     def negative_numbers_style
       case @negative_numbers
-      when :black
+      when 'black'
         numeric_style
-      when :red
+      when 'red'
         "#{numeric_style};[Red]#{numeric_style}"
-      when :black_parenth
+      when 'black_parenth'
         "#{numeric_style}_);\(#{numeric_style}\)"
-      when :red_parenth
+      when 'red_parenth'
         "#{numeric_style}_);[Red]\(#{numeric_style}\)"
       end
     end
@@ -99,9 +109,9 @@ module Osheet::Format
 
     def symbol_style
       case @symbol
-      when :dollar
+      when 'dollar'
         "\"$\"#{symbol_suffix}"
-      when :euro
+      when 'euro'
         "\"€\"#{symbol_suffix}"
       else
         ''

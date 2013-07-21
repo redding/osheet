@@ -1,44 +1,39 @@
+require 'osheet/meta_element'
+require 'osheet/styled_element'
 require 'osheet/cell'
 
 module Osheet
   class Row
-    include Instance
-    include Associations
-    include WorkbookElement
-    include WorksheetElement
-    include StyledElement
+
     include MetaElement
-    include MarkupElement
+    include StyledElement
 
-    hm :cells
+    attr_reader :cells, :format
 
-    def initialize(workbook=nil, worksheet=nil, *args, &block)
-      set_ivar(:workbook, workbook)
-      set_ivar(:worksheet, worksheet)
-      set_ivar(:height, nil)
-      set_ivar(:autofit, false)
-      set_ivar(:hidden, false)
-      if block_given?
-        set_binding_ivars(block.binding)
-        instance_exec(*args, &block)
-      end
+    def initialize(height=nil)
+      @height  = height
+      @autofit = false
+      @hidden  = false
+      @cells   = []
+      @format  = Format.new(:general)
     end
 
     def height(value=nil)
-      !value.nil? ? set_ivar(:height, value) : get_ivar(:height)
+      value.nil? ? @height : @height = value
     end
-    def autofit(value); set_ivar(:autofit, !!value); end
-    def autofit?; get_ivar(:autofit); end
-    def hidden(value); set_ivar(:hidden, !!value); end
-    def hidden?; get_ivar(:hidden); end
 
-    def attributes
-      {
-        :style_class => get_ivar(:style_class),
-        :height => get_ivar(:height),
-        :autofit => get_ivar(:autofit),
-        :hidden => get_ivar(:hidden)
-      }
+    def autofit(value=nil)
+      value.nil? ? @autofit : @autofit = !!value
+    end
+    def autofit?; @autofit; end
+
+    def hidden(value=nil)
+      value.nil? ? @hidden : @hidden = !!value
+    end
+    def hidden?; @hidden; end
+
+    def cell(cell_obj)
+      @cells << cell_obj
     end
 
   end
