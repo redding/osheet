@@ -110,7 +110,7 @@ I've added a few examples to ./examples.  Please refer first to the API then to 
 
 Add this line to your application's Gemfile:
 
-    gem 'whysoslow'
+    gem 'osheet'
 
 And then execute:
 
@@ -118,7 +118,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install whysoslow
+    $ gem install osheet
 
 ## Contributing
 
