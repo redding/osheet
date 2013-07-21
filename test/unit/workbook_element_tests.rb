@@ -1,16 +1,19 @@
 require "assert"
-
 require 'osheet/workbook_element'
 
-module Osheet
+require 'osheet/partial'
+require 'osheet/template'
+require 'osheet/style'
+require 'osheet/worksheet'
 
+class Osheet::WorkbookElement
 
-  class WorkbookElementTests < Assert::Context
-    desc "a WorkbookElement object"
+  class UnitTests < Assert::Context
+    desc "Osheet::WorkbookElement"
     before do
-      @wd = WorkbookElement.new
+      @wd = Osheet::WorkbookElement.new
     end
-    subject { @wd }
+    subject{ @wd }
 
     should have_reader :title
     should have_readers :templates, :partials, :styles, :worksheets
@@ -18,19 +21,17 @@ module Osheet
 
     should "set it's defaults" do
       assert_nil subject.title
-      assert_equal WorkbookElement::TemplateSet.new,  subject.templates
-      assert_equal WorkbookElement::PartialSet.new,   subject.partials
-      assert_equal WorkbookElement::StyleSet.new,     subject.styles
-      assert_equal WorkbookElement::WorksheetSet.new, subject.worksheets
+      assert_equal Osheet::WorkbookElement::TemplateSet.new,  subject.templates
+      assert_equal Osheet::WorkbookElement::PartialSet.new,   subject.partials
+      assert_equal Osheet::WorkbookElement::StyleSet.new,     subject.styles
+      assert_equal Osheet::WorkbookElement::WorksheetSet.new, subject.worksheets
     end
 
   end
 
-
-
   class PartialSetTests < Assert::Context
     desc "a PartialSet"
-    before { @ps = WorkbookElement::PartialSet.new }
+    before { @ps = Osheet::WorkbookElement::PartialSet.new }
     subject { @ps }
 
     should "be a Hash" do
@@ -45,7 +46,7 @@ module Osheet
         subject.send(:verify, {})
       end
       assert_nothing_raised do
-        subject.send(:verify, Partial.new(:poo) {})
+        subject.send(:verify, Osheet::Partial.new(:poo) {})
       end
     end
 
@@ -54,30 +55,30 @@ module Osheet
     end
 
     should "key on partial objs" do
-      assert_equal 'poo', subject.send(:partial_key, Partial.new(:poo) {})
+      assert_equal 'poo', subject.send(:partial_key, Osheet::Partial.new(:poo) {})
     end
 
     should "init the key in the set when verifying" do
-      key = subject.send(:verify, Partial.new(:thing) {})
+      key = subject.send(:verify, Osheet::Partial.new(:thing) {})
       assert_equal 'thing', key
       assert_equal({'thing' => nil}, subject)
     end
 
     should "push partials onto the set" do
       assert_nothing_raised do
-        subject << Partial.new(:poo) {}
-        subject << Partial.new(:not_poo) {}
-        subject << Partial.new(:awesome) {}
-        subject << Partial.new(:poo) {}
+        subject << Osheet::Partial.new(:poo) {}
+        subject << Osheet::Partial.new(:not_poo) {}
+        subject << Osheet::Partial.new(:awesome) {}
+        subject << Osheet::Partial.new(:poo) {}
       end
 
       assert_equal 3, subject.keys.size
       assert subject["poo"]
-      assert_kind_of Partial, subject["poo"]
+      assert_kind_of Osheet::Partial, subject["poo"]
     end
 
     should "lookup a partial by name" do
-      p = Partial.new(:poo) {}
+      p = Osheet::Partial.new(:poo) {}
       subject << p
       assert_equal p, subject.get(:poo)
       assert_equal p, subject.get('poo')
@@ -86,15 +87,13 @@ module Osheet
 
   end
 
-
-
   class TemplateSetTests < Assert::Context
     desc "a TemplateSet"
-    before { @set = WorkbookElement::TemplateSet.new }
+    before { @set = Osheet::WorkbookElement::TemplateSet.new }
     subject { @set }
 
     should "be a PartialSet" do
-      assert_kind_of WorkbookElement::PartialSet, subject
+      assert_kind_of Osheet::WorkbookElement::PartialSet, subject
     end
 
     should "verify set objs are templates" do
@@ -102,7 +101,7 @@ module Osheet
         subject.send(:verify, {})
       end
       assert_nothing_raised do
-        subject.send(:verify, Template.new(:row, :poo) {})
+        subject.send(:verify, Osheet::Template.new(:row, :poo) {})
       end
     end
 
@@ -111,11 +110,11 @@ module Osheet
     end
 
     should "key on templates objs" do
-      assert_equal ['row', 'poo'], subject.send(:template_key, Template.new(:row, :poo) {})
+      assert_equal ['row', 'poo'], subject.send(:template_key, Osheet::Template.new(:row, :poo) {})
     end
 
     should "init the key in the set when verifying" do
-      key = subject.send(:verify, Template.new(:row, :poo) {})
+      key = subject.send(:verify, Osheet::Template.new(:row, :poo) {})
       assert_equal ['row', 'poo'], key
       assert_equal({
         key.first => { key.last => nil }
@@ -124,29 +123,29 @@ module Osheet
 
     should "push templates onto the set" do
       assert_nothing_raised do
-        subject << Template.new(:row, :poo) {}
-        subject << Template.new(:row, :not_poo) {}
-        subject << Template.new(:column, :awesome) {}
-        subject << Template.new(:column, :not_awesome) {}
+        subject << Osheet::Template.new(:row, :poo) {}
+        subject << Osheet::Template.new(:row, :not_poo) {}
+        subject << Osheet::Template.new(:column, :awesome) {}
+        subject << Osheet::Template.new(:column, :not_awesome) {}
       end
 
       assert_equal 2, subject.keys.size
       assert subject["row"]
       assert_equal 2, subject["row"].keys.size
       assert subject["row"]["poo"]
-      assert_kind_of Template, subject["row"]["poo"]
+      assert_kind_of Osheet::Template, subject["row"]["poo"]
       assert subject["row"]["not_poo"]
-      assert_kind_of Template, subject["row"]["not_poo"]
+      assert_kind_of Osheet::Template, subject["row"]["not_poo"]
       assert subject["column"]
       assert_equal 2, subject["column"].keys.size
       assert subject["column"]["awesome"]
-      assert_kind_of Template, subject["column"]["awesome"]
+      assert_kind_of Osheet::Template, subject["column"]["awesome"]
       assert subject["column"]["not_awesome"]
-      assert_kind_of Template, subject["column"]["not_awesome"]
+      assert_kind_of Osheet::Template, subject["column"]["not_awesome"]
     end
 
     should "lookup a template by element, name" do
-      t = Template.new(:row, :poo) {}
+      t = Osheet::Template.new(:row, :poo) {}
       subject << t
       assert_equal t, subject.get(:row, :poo)
       assert_equal t, subject.get('row', 'poo')
@@ -157,11 +156,9 @@ module Osheet
 
   end
 
-
-
   class StyleSetTests < Assert::Context
     desc "a StyleSet"
-    before { @set = WorkbookElement::StyleSet.new }
+    before { @set = Osheet::WorkbookElement::StyleSet.new }
     subject { @set }
 
     should "be an Array" do
@@ -175,18 +172,18 @@ module Osheet
         subject.send(:verify, {})
       end
       assert_nothing_raised do
-        subject.send(:verify, Style.new('.awesome') {})
+        subject.send(:verify, Osheet::Style.new('.awesome') {})
       end
     end
 
     should "be able to lookup styles by class" do
-      subject << (a = Style.new('.awesome') {})
-      subject << (at = Style.new('.awesome.thing') {})
-      subject << (b = Style.new('.boring') {})
-      subject << (bt = Style.new('.boring.thing') {})
-      subject << (a_b = Style.new('.awesome', '.boring') {})
-      subject << (t = Style.new('.thing') {})
-      subject << (s = Style.new('.stupid') {})
+      subject << (a   = Osheet::Style.new('.awesome') {})
+      subject << (at  = Osheet::Style.new('.awesome.thing') {})
+      subject << (b   = Osheet::Style.new('.boring') {})
+      subject << (bt  = Osheet::Style.new('.boring.thing') {})
+      subject << (a_b = Osheet::Style.new('.awesome', '.boring') {})
+      subject << (t   = Osheet::Style.new('.thing') {})
+      subject << (s   = Osheet::Style.new('.stupid') {})
 
       { 'awesome' => [a, a_b],
         'boring' => [b, a_b],
@@ -205,11 +202,9 @@ module Osheet
 
   end
 
-
-
   class WorksheetSetTests < Assert::Context
     desc "a WorksheetSet"
-    before { @set = WorkbookElement::WorksheetSet.new }
+    before { @set = Osheet::WorkbookElement::WorksheetSet.new }
     subject { @set }
 
     should "be an Array" do
@@ -221,11 +216,10 @@ module Osheet
         subject.send(:verify, {})
       end
       assert_nothing_raised do
-        subject.send(:verify, Worksheet.new {})
+        subject.send(:verify, Osheet::Worksheet.new {})
       end
     end
 
   end
-
 
 end

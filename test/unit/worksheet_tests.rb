@@ -1,14 +1,14 @@
 require "assert"
+require 'osheet/worksheet'
 
 require 'osheet/column'
 require 'osheet/row'
-require 'osheet/worksheet'
 
-module Osheet
+class Osheet::Worksheet
 
-  class WorksheetTests < Assert::Context
-    desc "a Worksheet"
-    before { @wksht = Worksheet.new }
+  class UnitTests < Assert::Context
+    desc "Osheet::Worksheet"
+    before { @wksht = Osheet::Worksheet.new }
     subject { @wksht }
 
     should be_a_meta_element
@@ -25,10 +25,10 @@ module Osheet
 
   end
 
-  class WorksheetColumnTests < WorksheetTests
+  class WorksheetColumnTests < UnitTests
     desc "with columns"
     before {
-      @col = Column.new
+      @col = Osheet::Column.new
       @wksht.column(@col)
     }
 
@@ -39,10 +39,10 @@ module Osheet
 
   end
 
-  class WorksheetRowTests < WorksheetTests
+  class WorksheetRowTests < UnitTests
     desc "with rows"
     before {
-      @row = Row.new
+      @row = Osheet::Row.new
       @wksht.row(@row)
     }
 
@@ -52,7 +52,7 @@ module Osheet
     end
 
     should "only keep the latest row" do
-      new_row = Row.new(120)
+      new_row = Osheet::Row.new(120)
       subject.row(new_row)
 
       assert_equal 1, subject.rows.size
@@ -61,10 +61,10 @@ module Osheet
 
   end
 
-  class WorksheetNameTests < WorksheetTests
+  class WorksheetNameTests < UnitTests
     desc "with a name"
     before do
-      @wksht = Worksheet.new("fun")
+      @wksht = Osheet::Worksheet.new("fun")
     end
 
     should "know it's name" do
@@ -81,7 +81,7 @@ module Osheet
     end
 
     should "set it's name with an init parameter" do
-      assert_equal "more fun", Worksheet.new("more fun").name
+      assert_equal "more fun", Osheet::Worksheet.new("more fun").name
     end
 
   end

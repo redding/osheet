@@ -1,10 +1,11 @@
 require "assert"
-require "test/fixtures/mixins"
-require 'osheet/workbook'
+require 'osheet/mixin'
 
-module Osheet
+require "test/support/mixins"
 
-  class MixinTests < Assert::Context
+module Osheet::Mixin
+
+  class UnitTests < Assert::Context
     desc "a mixin"
     subject { DefaultMixin }
 
@@ -18,11 +19,11 @@ module Osheet
     end
   end
 
-  class MixinArgsTests < MixinTests
+  class MixinArgsTests < UnitTests
     desc "args class"
     before do
       @build_block = Proc.new {}
-      @ma = Mixin::Args.new('some', 'args', 'here', &@build_block)
+      @ma = Osheet::Mixin::Args.new('some', 'args', 'here', &@build_block)
     end
     subject { @ma }
 
@@ -37,7 +38,7 @@ module Osheet
     end
 
     should "default with empty args and an empty Proc build" do
-      default = Mixin::Args.new
+      default = Osheet::Mixin::Args.new
 
       assert_empty default.args
       assert_kind_of Proc, default.build
@@ -51,7 +52,7 @@ module Osheet
 
     should "have it's styles defined" do
       assert_equal 2, subject.styles.size
-      assert_kind_of Mixin::Args, subject.styles.first
+      assert_kind_of Osheet::Mixin::Args, subject.styles.first
     end
   end
 
@@ -62,7 +63,7 @@ module Osheet
     should "have it's templates defined" do
       assert subject.templates
       assert_equal 3, subject.templates.size
-      assert_kind_of Mixin::Args, subject.templates.first
+      assert_kind_of Osheet::Mixin::Args, subject.templates.first
     end
   end
 
@@ -73,7 +74,7 @@ module Osheet
     should "have it's partials defined" do
       assert subject.partials
       assert_equal 2, subject.partials.size
-      assert_kind_of Mixin::Args, subject.partials.first
+      assert_kind_of Osheet::Mixin::Args, subject.partials.first
     end
   end
 

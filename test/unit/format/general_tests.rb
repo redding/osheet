@@ -1,12 +1,12 @@
 require "assert"
 require 'osheet/format/general'
 
-module Osheet::Format
+class Osheet::Format::General
 
-  class GeneralTest < Assert::Context
-    desc "General format"
-    before { @f = General.new }
-    subject { @f }
+  class UnitTests < Assert::Context
+    desc "Osheet::Format::General format"
+    before{ @f = Osheet::Format::General.new }
+    subject{ @f }
 
     should "always provide a nil style string" do
       assert_equal nil, subject.style

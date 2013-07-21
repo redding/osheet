@@ -1,12 +1,15 @@
 require "assert"
 require 'osheet/cell'
 
-module Osheet
+require 'osheet/format/general'
+require 'osheet/format/datetime'
 
-  class CellTests < Assert::Context
-    desc "a Cell"
-    before { @c = Cell.new }
-    subject { @c }
+class Osheet::Cell
+
+  class UnitTests < Assert::Context
+    desc "Osheet::Cell"
+    before{ @c = Osheet::Cell.new }
+    subject{ @c }
 
     should be_a_styled_element
     should be_a_meta_element
@@ -21,32 +24,32 @@ module Osheet
       assert_equal nil, subject.href
       assert_equal nil, subject.index
       assert_equal nil, subject.formula
-      assert_kind_of Format::General, subject.format
+      assert_kind_of Osheet::Format::General, subject.format
     end
 
     should "set its data from an init arg" do
-      assert_equal "something", Cell.new("something").data
+      assert_equal "something", Osheet::Cell.new("something").data
     end
 
     should "type cast data strings/symbols" do
       ['a string', :symbol].each do |thing|
         subject.data thing
         assert_kind_of ::String, subject.data
-        assert_kind_of ::String, Cell.new(thing).data
+        assert_kind_of ::String, Osheet::Cell.new(thing).data
       end
     end
 
     should "type cast data dates" do
       subject.data Date.today
       assert_kind_of ::Date, subject.data
-      assert_kind_of ::Date, Cell.new(Date.today).data
+      assert_kind_of ::Date, Osheet::Cell.new(Date.today).data
     end
 
     should "type cast data numerics" do
       [1, 1.0].each do |thing|
         subject.data thing
         assert_kind_of ::Numeric, subject.data
-        assert_kind_of ::Numeric, Cell.new(thing).data
+        assert_kind_of ::Numeric, Osheet::Cell.new(thing).data
       end
     end
 
@@ -54,7 +57,7 @@ module Osheet
       [Osheet, [:a, 'Aye'], {:a => 'Aye'}].each do |thing|
         subject.data thing
         assert_kind_of ::String, subject.data
-        assert_kind_of ::String, Cell.new(thing).data
+        assert_kind_of ::String, Osheet::Cell.new(thing).data
       end
     end
 
@@ -62,7 +65,7 @@ module Osheet
       subject.data Time.now
       subject.format :datetime, 'mm/dd/yyyy'
 
-      assert_kind_of Format::Datetime, subject.format
+      assert_kind_of Osheet::Format::Datetime, subject.format
     end
 
   end
