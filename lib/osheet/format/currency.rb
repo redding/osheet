@@ -2,11 +2,11 @@ require 'enumeration'
 require 'osheet/format/numeric'
 
 module Osheet::Format
-
   class Currency < Osheet::Format::Numeric
+
     def initialize(opts={})
       super({
-        :symbol => :dollar,
+        :symbol => 'dollar',
         :decimal_places => 2,
         :comma_separator => true
       }.merge(opts))

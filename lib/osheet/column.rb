@@ -1,40 +1,35 @@
+require 'osheet/meta_element'
+require 'osheet/styled_element'
+require 'osheet/format'
+
 module Osheet
   class Column
-    include Instance
-    include WorkbookElement
-    include WorksheetElement
-    include StyledElement
-    include MetaElement
-    include MarkupElement
 
-    def initialize(workbook=nil, worksheet=nil, *args, &block)
-      set_ivar(:workbook, workbook)
-      set_ivar(:worksheet, worksheet)
-      set_ivar(:width, nil)
-      set_ivar(:autofit, false)
-      set_ivar(:hidden, false)
-      if block_given?
-        set_binding_ivars(block.binding)
-        instance_exec(*args, &block)
-      end
+    include MetaElement
+    include StyledElement
+
+    attr_reader :format
+
+    def initialize(width=nil)
+      @width   = width
+      @autofit = false
+      @hidden  = false
+      @format  = Format.new(:general)
     end
 
     def width(value=nil)
-      !value.nil? ? set_ivar(:width, value) : get_ivar(:width)
+      value.nil? ? @width : @width = value
     end
-    def autofit(value); set_ivar(:autofit, !!value); end
-    def autofit?; get_ivar(:autofit); end
-    def hidden(value); set_ivar(:hidden, !!value); end
-    def hidden?; get_ivar(:hidden); end
 
-    def attributes
-      {
-        :style_class => get_ivar(:style_class),
-        :width => get_ivar(:width),
-        :autofit => get_ivar(:autofit),
-        :hidden => get_ivar(:hidden)
-      }
+    def autofit(value=nil)
+      value.nil? ? @autofit : @autofit = !!value
     end
+    def autofit?; @autofit; end
+
+    def hidden(value=nil)
+      value.nil? ? @hidden : @hidden = !!value
+    end
+    def hidden?; @hidden; end
 
   end
 end

@@ -2,45 +2,32 @@ module Osheet
   class Style
 
     # this class is essentially a set of collectors for style settings
-    #  each setting collects any arguments passed to it and
-    #  it is up to the drivers to determine how to use the settings
-
-    include Instance
+    # each setting collects any arguments passed to it and
+    # it is up to the writer to determine how to use the settings
 
     BORDER_POSITIONS = [:top, :right, :bottom, :left]
     BORDERS = BORDER_POSITIONS.collect{|p| "border_#{p}".to_sym}
     SETTINGS = [:align, :font, :bg] + BORDERS
 
-    def initialize(*selectors, &block)
-      set_ivar(:selectors, verify(selectors))
-      SETTINGS.each {|setting| set_ivar(setting, [])}
-      if block_given?
-        set_binding_ivars(block.binding)
-        instance_eval(&block)
-      end
+    attr_reader :selectors, :build
+
+    def initialize(*selectors, &build)
+      @selectors = verify(selectors)
+      @build = build || Proc.new {}
+      SETTINGS.each { |s| instance_variable_set("@#{s}", []) }
     end
 
-    def selectors
-      get_ivar(:selectors)
-    end
+    def align(*args); @align += args; end
+    def font(*args);  @font  += args; end
+    def bg(*args);    @bg    += args; end
 
-    SETTINGS.each do |setting|
-      define_method(setting) do |*args|
-        set_ivar(setting, get_ivar(setting) + args)
-      end
-    end
+    def border_top(*args);    @border_top    += args; end
+    def border_right(*args);  @border_right  += args; end
+    def border_bottom(*args); @border_bottom += args; end
+    def border_left(*args);   @border_left   += args; end
 
     def border(*args)
-      BORDERS.each do |border|
-        send(border, *args)
-      end
-    end
-
-    def attributes
-      SETTINGS.inject({}) do |attrs, s|
-        attrs[s] = get_ivar(s)
-        attrs
-      end
+      BORDERS.each { |border| send(border, *args) }
     end
 
     def match?(style_class)
@@ -66,5 +53,6 @@ module Osheet
       selector =~ /^[^.]/ ||
       selector =~ />+/
     end
+
   end
 end

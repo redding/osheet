@@ -1,7 +1,6 @@
 require 'enumeration'
 
 module Osheet::Format
-
   class Fraction
     include Enumeration
 

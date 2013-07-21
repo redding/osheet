@@ -1,62 +1,63 @@
 require 'date'
 require 'osheet/format'
+require 'osheet/meta_element'
+require 'osheet/styled_element'
 
 module Osheet
   class Cell
-    include Instance
-    include WorkbookElement
-    include WorksheetElement
-    include StyledElement
-    include MarkupElement
 
-    def initialize(workbook=nil, worksheet=nil, *args, &block)
-      set_ivar(:workbook, workbook)
-      set_ivar(:worksheet, worksheet)
-      set_ivar(:data, nil)
-      set_ivar(:format, Format.new(:general))
-      set_ivar(:rowspan, 1)
-      set_ivar(:colspan, 1)
-      set_ivar(:href, nil)
-      set_ivar(:index, nil)
-      set_ivar(:formula, nil)
-      if block_given?
-        set_binding_ivars(block.binding)
-        instance_exec(*args, &block)
-      end
+    include MetaElement
+    include StyledElement
+
+    def initialize(data_value=nil)
+      @data    = cast_data_value(data_value)
+      @format  = Format.new(:general)
+      @rowspan = 1
+      @colspan = 1
+      @index   = nil
+      @href    = nil
+      @formula = nil
     end
 
-    def data(value)
-      set_ivar(:data, case value
-      when ::String, ::Numeric, ::Date, ::Time, ::DateTime
+    def data(value=nil)
+      value.nil? ? @data : @data = cast_data_value(value)
+    end
+
+    def format(value=nil, opts={})
+      value.nil? ? @format : @format = Format.new(value, opts)
+    end
+
+    def rowspan(value=nil)
+      value.nil? ? @rowspan : @rowspan = value
+    end
+
+    def colspan(value=nil)
+      value.nil? ? @colspan : @colspan = value
+    end
+
+    def index(value=nil)
+      value.nil? ? @index : @index = value
+    end
+
+    def href(value=nil)
+      value.nil? ? @href : @href = value
+    end
+
+    def formula(value=nil)
+      value.nil? ? @formula : @formula = value
+    end
+
+    private
+
+    def cast_data_value(value)
+      case value
+      when ::String, ::Numeric, ::Date, ::Time, ::DateTime, ::NilClass
         value
       when ::Symbol
         value.to_s
       else
         value.inspect.to_s
-      end)
-    end
-
-    def format(type, opts={})
-      set_ivar(:format, Format.new(type, opts))
-    end
-
-    def rowspan(value); set_ivar(:rowspan, value); end
-    def colspan(value); set_ivar(:colspan, value); end
-    def href(value); set_ivar(:href, value); end
-    def index(value); set_ivar(:index, value); end
-    def formula(value); set_ivar(:formula, value); end
-
-    def attributes
-      {
-        :style_class => get_ivar(:style_class),
-        :data => get_ivar(:data),
-        :format => get_ivar(:format),
-        :colspan => get_ivar(:colspan),
-        :rowspan => get_ivar(:rowspan),
-        :href => get_ivar(:href),
-        :index => get_ivar(:index),
-        :formula => get_ivar(:formula)
-      }
+      end
     end
 
   end
