@@ -53,5 +53,6 @@ module Osheet
       selector =~ /^[^.]/ ||
       selector =~ />+/
     end
+
   end
 end

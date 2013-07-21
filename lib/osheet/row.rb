@@ -1,6 +1,5 @@
 require 'osheet/meta_element'
 require 'osheet/styled_element'
-
 require 'osheet/cell'
 
 module Osheet

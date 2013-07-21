@@ -1,12 +1,12 @@
 require "assert"
 require 'osheet/format/text'
 
-module Osheet::Format
+class Osheet::Format::Text
 
-  class TextTest < Assert::Context
+  class UnitTests < Assert::Context
     desc "Text format"
-    before { @txt = Text.new }
-    subject { @txt }
+    before{ @txt = Osheet::Format::Text.new }
+    subject{ @txt }
 
     should "generate a style strings and key" do
       assert_equal "@", subject.style

@@ -3,7 +3,6 @@ require 'osheet/worksheet'
 
 module Osheet
 
-
   class WorkbookElement
 
     # This 'WorkbookElement' class handles all workbook state.  It is setup
@@ -60,8 +59,6 @@ module Osheet
 
   end
 
-
-
   class WorkbookElement::PartialSet
 
     # this class is a Hash that behaves kinda like a set.  I want to
@@ -116,8 +113,6 @@ module Osheet
 
   end
 
-
-
   class WorkbookElement::TemplateSet < WorkbookElement::PartialSet
 
     # this class is a PartialSet that keys off of the template element
@@ -166,8 +161,6 @@ module Osheet
 
   end
 
-
-
   class WorkbookElement::StyleSet < ::Array
 
     # this class is an Array with some helper methods.  I want to
@@ -201,8 +194,6 @@ module Osheet
 
   end
 
-
-
   class WorkbookElement::WorksheetSet < ::Array
 
     # this class is just a wrapper to Array.  I want to push worksheets
@@ -229,6 +220,5 @@ module Osheet
     end
 
   end
-
 
 end

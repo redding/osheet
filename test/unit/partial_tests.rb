@@ -1,12 +1,12 @@
 require "assert"
-
 require "osheet/partial"
 
-module Osheet
-  class PartialTest < Assert::Context
-    desc "a Partial"
-    before { @p = Partial.new(:thing) {} }
-    subject { @p }
+class Osheet::Partial
+
+  class UnitTests < Assert::Context
+    desc "Osheet::Partial"
+    before{ @p = Osheet::Partial.new(:thing) {} }
+    subject{ @p }
 
     should "be a Proc" do
       assert_kind_of ::Proc, subject
@@ -23,16 +23,19 @@ module Osheet
 
     should "verify the name argument" do
       assert_raises ArgumentError do
-        Partial.new([]) {}
+        Osheet::Partial.new([]) {}
       end
+
       assert_raises ArgumentError do
-        Partial.new(1) {}
+        Osheet::Partial.new(1) {}
       end
+
       assert_nothing_raised do
-        Partial.new(:poo) {}
+        Osheet::Partial.new(:poo) {}
       end
+
       assert_nothing_raised do
-        Partial.new('poo') {}
+        Osheet::Partial.new('poo') {}
       end
     end
 
