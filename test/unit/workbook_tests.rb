@@ -1,15 +1,19 @@
 require "assert"
-require 'test/fixtures/mixins'
-require 'test/fixtures/test_writer'
-
 require 'osheet/workbook'
 
-module Osheet
+require 'test/support/mixins'
+require 'test/support/test_writer'
+require 'osheet/worksheet'
+require 'osheet/style'
+require 'osheet/partial'
+require 'osheet/template'
 
-  class WorkbookTests < Assert::Context
-    desc "a Workbook"
+class Osheet::Workbook
+
+  class UnitTests < Assert::Context
+    desc "Osheet::Workbook"
     before do
-      @wkbk = Workbook.new
+      @wkbk = Osheet::Workbook.new
       @test_writer = TestWriter.new
     end
     subject { @wkbk }
@@ -43,16 +47,16 @@ module Osheet
     should "set it's defaults" do
       assert_equal nil, subject.workbook.title
 
-      assert_equal WorkbookElement.new, subject.workbook_element
+      assert_equal Osheet::WorkbookElement.new, subject.workbook_element
       assert_equal subject.workbook_element, subject.workbook
 
-      assert_kind_of Workbook::ElementStack, subject.element_stack
+      assert_kind_of Osheet::Workbook::ElementStack, subject.element_stack
       assert_equal 1, subject.element_stack.size
       assert_equal subject.workbook_element, subject.element_stack.current
     end
 
     should "set its title, casting it to a string" do
-      wb = Workbook.new { title :fun }
+      wb = Osheet::Workbook.new { title :fun }
       assert_equal "fun", wb.workbook.title
     end
 
@@ -60,7 +64,7 @@ module Osheet
 
   class ElementStackTests < Assert::Context
     desc "an ElementStack"
-    before { @s = Workbook::ElementStack.new }
+    before { @s = Osheet::Workbook::ElementStack.new }
     subject { @s }
 
     should "be an Array" do
@@ -118,10 +122,10 @@ module Osheet
 
   end
 
-  class WorkbookStyleTests < WorkbookTests
+  class WorkbookStyleTests < UnitTests
     desc "that defines styles"
     before do
-      @wkbk = Workbook.new(@test_writer) {
+      @wkbk = Osheet::Workbook.new(@test_writer) {
         style('.test')
         style('.test.awesome')
 
@@ -134,7 +138,7 @@ module Osheet
     should "return the style obj created" do
       style = subject.style(".a.test.style")
 
-      assert_kind_of Style, style
+      assert_kind_of Osheet::Style, style
       assert_equal '.a.test.style', style.selectors.first
     end
 
@@ -152,10 +156,10 @@ module Osheet
 
   end
 
-  class WorkbookWorksheetTests < WorkbookTests
+  class WorkbookWorksheetTests < UnitTests
     desc "with worksheets"
     before do
-      @wkbk = Workbook.new(@test_writer) {
+      @wkbk = Osheet::Workbook.new(@test_writer) {
         worksheet {
           name "one"
         }
@@ -167,7 +171,7 @@ module Osheet
     end
 
     should "return the worksheet obj created" do
-      assert_kind_of Worksheet, subject.worksheet("test")
+      assert_kind_of Osheet::Worksheet, subject.worksheet("test")
     end
 
     should "add them to it's worksheets reader" do
@@ -187,10 +191,10 @@ module Osheet
 
   end
 
-  class WorkbookRowCellMetaTests < WorkbookTests
+  class WorkbookRowCellMetaTests < UnitTests
     desc "with columns, meta, rows, and cells"
     before do
-      @wkbk = Workbook.new(@test_writer) {
+      @wkbk = Osheet::Workbook.new(@test_writer) {
         worksheet {
           column(100) { meta(:label => 'One') }
           column { meta(:label => 'Two') }
@@ -243,10 +247,10 @@ module Osheet
 
   end
 
-  class WorkbookPartialTests < WorkbookTests
+  class WorkbookPartialTests < UnitTests
     desc "that defines partials"
     before do
-      @wkbk = Workbook.new(@test_writer) {
+      @wkbk = Osheet::Workbook.new(@test_writer) {
         partial(:named_styles) { |name|
           style(".#{name}")
           style(".#{name}.awesome")
@@ -259,7 +263,7 @@ module Osheet
       assert_equal 2, subject.workbook.partials.keys.size
       assert subject.workbook.partials.has_key?('named_styles')
       assert subject.workbook.partials.has_key?('stuff')
-      assert_kind_of Partial, subject.workbook.partials.get('stuff')
+      assert_kind_of Osheet::Partial, subject.workbook.partials.get('stuff')
     end
 
     should "add it's partials to it's markup" do
@@ -271,10 +275,10 @@ module Osheet
 
   end
 
-  class WorkbookTemplateTests < WorkbookTests
+  class WorkbookTemplateTests < UnitTests
     desc "that defines templates"
     before do
-      @wkbk = Workbook.new(@test_writer) {
+      @wkbk = Osheet::Workbook.new(@test_writer) {
         template(:column, :yo) { |color|
           width 200
           meta(:color => color)
@@ -291,11 +295,11 @@ module Osheet
 
     should "add them to it's templates" do
       assert subject.templates
-      assert_kind_of WorkbookElement::TemplateSet, subject.templates
+      assert_kind_of Osheet::WorkbookElement::TemplateSet, subject.templates
       assert_equal 3, subject.templates.keys.size
-      assert_kind_of Template, subject.templates.get('column', 'yo')
-      assert_kind_of Template, subject.templates.get('row', 'yo_yo')
-      assert_kind_of Template, subject.templates.get('worksheet', 'go')
+      assert_kind_of Osheet::Template, subject.templates.get('column', 'yo')
+      assert_kind_of Osheet::Template, subject.templates.get('row', 'yo_yo')
+      assert_kind_of Osheet::Template, subject.templates.get('worksheet', 'go')
     end
 
     should "apply it's templates" do
@@ -307,10 +311,10 @@ module Osheet
 
   end
 
-  class WorkbookMixinTests < WorkbookTests
+  class WorkbookMixinTests < UnitTests
     desc "with mixins"
     before do
-      @wkbk = Workbook.new(@test_writer) {
+      @wkbk = Osheet::Workbook.new(@test_writer) {
         use StyledMixin
         use TemplatedMixin
         use PartialedMixin

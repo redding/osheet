@@ -1,13 +1,14 @@
 require "assert"
-
 require "osheet/column"
 
-module Osheet
+require 'osheet/format/general'
 
-  class ColumnTests < Assert::Context
-    desc "a Column"
-    before { @c = Column.new }
-    subject { @c }
+class Osheet::Column
+
+  class UnitTests < Assert::Context
+    desc "Osheet::Column"
+    before{ @c = Osheet::Column.new }
+    subject{ @c }
 
     should be_a_styled_element
     should be_a_meta_element
@@ -23,7 +24,7 @@ module Osheet
       assert !subject.autofit?
       assert_equal false, subject.hidden
       assert !subject.hidden?
-      assert_kind_of Format::General, subject.format
+      assert_kind_of Osheet::Format::General, subject.format
     end
 
     should "set it's width" do
@@ -36,11 +37,11 @@ module Osheet
       subject.width(nil)
       assert_equal 180, subject.width
 
-      assert_equal 200, Column.new(200).width
+      assert_equal 200, Osheet::Column.new(200).width
     end
 
     should "cast autofit and hidden to bool" do
-      col = Column.new
+      col = Osheet::Column.new
       col.autofit :true
       col.hidden 'false'
 

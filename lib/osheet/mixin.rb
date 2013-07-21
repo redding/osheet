@@ -46,6 +46,7 @@ module Osheet::Mixin
     def partials
       instance_variable_get("@p") || []
     end
+
   end
 
 end

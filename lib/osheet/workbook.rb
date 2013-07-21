@@ -5,7 +5,6 @@ require 'osheet/workbook_api'
 
 module Osheet
 
-
   class Workbook
 
     # This 'Workbook' class is really just a scope for workbook builds to run
@@ -96,8 +95,6 @@ module Osheet
 
   end
 
-
-
   class Workbook::ElementStack
 
     # this class is just a wrapper to Array.  I want to treat this as a
@@ -132,6 +129,5 @@ module Osheet
     end
 
   end
-
 
 end

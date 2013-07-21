@@ -2,8 +2,8 @@ require 'enumeration'
 require 'osheet/format/numeric'
 
 module Osheet::Format
-
   class Scientific < Osheet::Format::Numeric
+
     def initialize(opts={})
       super({
         :decimal_places => 2
@@ -21,5 +21,6 @@ module Osheet::Format
     def decimal_places_suffix
       "E+00"
     end
+
   end
 end

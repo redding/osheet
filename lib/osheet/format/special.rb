@@ -1,7 +1,6 @@
 require 'enumeration'
 
 module Osheet::Format
-
   class Special
     include Enumeration
 

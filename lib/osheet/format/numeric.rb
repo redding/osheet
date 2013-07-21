@@ -3,16 +3,17 @@
 require 'enumeration'
 
 module Osheet::Format
-
   class Numeric
     include Enumeration
 
     attr_accessor :decimal_places, :comma_separator
+
     enum :symbol, {
       :none => "none",
       :dollar => "dollar",
       :euro => "euro"
     }
+
     enum :negative_numbers, {
       :black => "black",
       :black_parenth => "black_parenth",

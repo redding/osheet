@@ -1,13 +1,14 @@
 require "assert"
-
-require 'osheet/cell'
 require 'osheet/row'
 
-module Osheet
+require 'osheet/cell'
+require 'osheet/format/general'
 
-  class RowTests < Assert::Context
-    desc "a Row"
-    before { @rw = Row.new }
+class Osheet::Row
+
+  class UnitTests < Assert::Context
+    desc "Osheet::Row"
+    before { @rw = Osheet::Row.new }
     subject { @rw }
 
     should be_a_styled_element
@@ -25,7 +26,7 @@ module Osheet
       assert !subject.autofit?
       assert_equal false, subject.hidden
       assert !subject.hidden?
-      assert_kind_of Format::General, subject.format
+      assert_kind_of Osheet::Format::General, subject.format
     end
 
     should "set it's width" do
@@ -38,11 +39,11 @@ module Osheet
       subject.height(nil)
       assert_equal 180, subject.height
 
-      assert_equal 200, Row.new(200).height
+      assert_equal 200, Osheet::Row.new(200).height
     end
 
     should "cast autofit and hidden to bool" do
-      row = Row.new
+      row = Osheet::Row.new
       row.autofit :true
       row.hidden 'false'
 
@@ -52,10 +53,10 @@ module Osheet
 
   end
 
-  class RowCellTests < RowTests
+  class RowCellTests < UnitTests
     desc "with cells"
     before {
-      @cell = Cell.new
+      @cell = Osheet::Cell.new
       @rw.cell(@cell)
     }
 

@@ -1,5 +1,6 @@
 require 'osheet/meta_element'
 require 'osheet/styled_element'
+require 'osheet/format'
 
 module Osheet
   class Column
@@ -10,9 +11,9 @@ module Osheet
     attr_reader :format
 
     def initialize(width=nil)
-      @width = width
+      @width   = width
       @autofit = false
-      @hidden = false
+      @hidden  = false
       @format  = Format.new(:general)
     end
 

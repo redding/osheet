@@ -1,12 +1,11 @@
 require "assert"
-
 require "osheet/style"
 
-module Osheet
+class Osheet::Style
 
-  class StyleTest < Assert::Context
-    desc "a Style"
-    before { @st = Style.new('.test') }
+  class UnitTests < Assert::Context
+    desc "Osheet::Style"
+    before { @st = Osheet::Style.new('.test') }
     subject { @st }
 
     should have_reader :selectors, :build
@@ -28,7 +27,7 @@ module Osheet
     should "complain about bad selectors" do
       ['poo', '#poo', 'poo poo', 'poo > poo', :poo, 123].each do |s|
         assert_raises ArgumentError do
-          Style.new(s)
+          Osheet::Style.new(s)
         end
       end
     end
@@ -36,7 +35,7 @@ module Osheet
     should "not complain about good selectors" do
       ['.poo', '.poo.poo', '.poo-poo', '.poo_poo'].each do |s|
         assert_nothing_raised do
-          Style.new(s)
+          Osheet::Style.new(s)
         end
       end
     end
@@ -60,13 +59,13 @@ module Osheet
     end
 
     should "match on style class strings" do
-      a = Style.new('.awesome') {}
-      at = Style.new('.awesome.thing') {}
-      b = Style.new('.boring') {}
-      bt = Style.new('.boring.thing') {}
-      a_b = Style.new('.awesome', '.boring') {}
-      t = Style.new('.thing') {}
-      s = Style.new('.stupid') {}
+      a   = Osheet::Style.new('.awesome') {}
+      at  = Osheet::Style.new('.awesome.thing') {}
+      b   = Osheet::Style.new('.boring') {}
+      bt  = Osheet::Style.new('.boring.thing') {}
+      a_b = Osheet::Style.new('.awesome', '.boring') {}
+      t   = Osheet::Style.new('.thing') {}
+      s   = Osheet::Style.new('.stupid') {}
 
       { 'awesome' => [a, a_b],
         'boring' => [b, a_b],

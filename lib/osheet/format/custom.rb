@@ -1,5 +1,4 @@
 module Osheet::Format
-
   class Custom
 
     def initialize(type)

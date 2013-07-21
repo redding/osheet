@@ -1,5 +1,4 @@
 module Osheet::Format
-
   class Datetime
 
     def initialize(string)

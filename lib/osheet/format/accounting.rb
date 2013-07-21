@@ -2,7 +2,6 @@ require 'enumeration'
 require 'osheet/format/currency'
 
 module Osheet::Format
-
   class Accounting < Osheet::Format::Currency
 
     protected

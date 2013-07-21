@@ -2,8 +2,8 @@ require 'enumeration'
 require 'osheet/format/numeric'
 
 module Osheet::Format
-
   class Currency < Osheet::Format::Numeric
+
     def initialize(opts={})
       super({
         :symbol => 'dollar',
