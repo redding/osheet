@@ -1,5 +1,4 @@
 require 'date'
-
 require 'osheet/format'
 require 'osheet/meta_element'
 require 'osheet/styled_element'

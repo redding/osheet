@@ -23,4 +23,5 @@ module Osheet::StyledElement
     style_class =~ /\.+/ ||
     style_class =~ />+/
   end
+
 end

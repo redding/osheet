@@ -1,5 +1,4 @@
 module Osheet::Format
-
   class Text
 
     def initialize(opts={}); end
