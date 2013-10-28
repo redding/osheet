@@ -8,6 +8,8 @@ class Osheet::Partial
     before{ @p = Osheet::Partial.new(:thing) {} }
     subject{ @p }
 
+    should have_reader :name
+
     should "be a Proc" do
       assert_kind_of ::Proc, subject
     end

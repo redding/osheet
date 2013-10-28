@@ -9,6 +9,8 @@ module Osheet
 
     ELEMENTS = ['worksheet', 'column', 'row', 'cell']
 
+    attr_reader :element
+
     def initialize(element, name)
       unless element.respond_to?(:to_s) && ELEMENTS.include?(element.to_s)
         raise ArgumentError, "you can only define a template for #{ELEMENTS.join(', ')} elements."
