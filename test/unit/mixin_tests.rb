@@ -1,6 +1,8 @@
 require "assert"
 require 'osheet/mixin'
 
+require "osheet/assert_test_helpers"
+require 'osheet/workbook'
 require "test/support/mixins"
 
 module Osheet::Mixin
@@ -47,6 +49,8 @@ module Osheet::Mixin
   end
 
   class MixinStyleTests < Assert::Context
+    include Osheet::AssertTestHelpers
+
     desc "that defines styles"
     subject { StyledMixin }
 
@@ -54,9 +58,22 @@ module Osheet::Mixin
       assert_equal 2, subject.styles.size
       assert_kind_of Osheet::Mixin::Args, subject.styles.first
     end
+
+    should "apply to a workbook" do
+      workbook = Osheet::Workbook.new{ use StyledMixin }
+
+      assert_equal 2, workbook.styles.size
+      test, test_awesome = workbook.styles
+
+      assert_style test, ['.test']
+      assert_style test_awesome, ['.test.awesome']
+    end
+
   end
 
   class MixinTemplateTests < Assert::Context
+    include Osheet::AssertTestHelpers
+
     desc "that defines templates"
     subject { TemplatedMixin }
 
@@ -65,9 +82,22 @@ module Osheet::Mixin
       assert_equal 3, subject.templates.size
       assert_kind_of Osheet::Mixin::Args, subject.templates.first
     end
+
+    should "apply to a workbook" do
+      workbook = Osheet::Workbook.new{ use TemplatedMixin }
+
+      assert_equal 3, workbook.templates.size
+
+      assert_template workbook.templates, :column, :yo
+      assert_template workbook.templates, :row, :yo_yo
+      assert_template workbook.templates, :worksheet, :go
+    end
+
   end
 
   class MixinPartialTests < Assert::Context
+    include Osheet::AssertTestHelpers
+
     desc "that defines partials"
     subject { PartialedMixin }
 
@@ -76,6 +106,16 @@ module Osheet::Mixin
       assert_equal 2, subject.partials.size
       assert_kind_of Osheet::Mixin::Args, subject.partials.first
     end
+
+    should "apply to a workbook" do
+      workbook = Osheet::Workbook.new{ use PartialedMixin }
+
+      assert_equal 2, workbook.partials.size
+
+      assert_partial workbook.partials, :three_empty_rows
+      assert_partial workbook.partials, :two_cells_in_a_row
+    end
+
   end
 
 end

@@ -5,6 +5,7 @@ module Osheet
     # block with arguments.  If the partial is added to an element,
     # any markup in it's definition block is applied to the element.
     # ie. the definition block will be instance_eval'd on workbook.
+    attr_reader :name
 
     def initialize(name)
       unless name.kind_of?(::String) || name.kind_of?(::Symbol)

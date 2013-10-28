@@ -12,6 +12,8 @@ class Osheet::Template
     end
     subject { @tmpl }
 
+    should have_reader :element
+
     should "define what elements it is valid for" do
       assert_equal ['worksheet', 'column', 'row', 'cell'], Osheet::Template::ELEMENTS
     end
